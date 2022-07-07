@@ -11,6 +11,7 @@ namespace IslandJamGame
     public class Game
     {
         public Script Script { get; set; }
+        public string[] Inventory { get; set; } = new string[6];
         public Scene PreviousScene { get; set; }
         public bool Running { get; set; } = true;
         public int DefaultSleepMillis { get; set; } = 100;
@@ -19,6 +20,8 @@ namespace IslandJamGame
         public bool FastForward { get; set; } = false;
         public ConsoleColor DefaultConsoleColor { get; } = Console.ForegroundColor;
         public Random random { get; } = new Random();
+        protected int TextPos { get; set; } = 0;
+        protected int TextPosY { get; set; } = 0;
 
         public Game(string[] args)
         {
@@ -68,20 +71,8 @@ namespace IslandJamGame
         {
             Scene = Script.Scenes[0];
 
-            Console.WriteLine($"{Console.WindowWidth}");
-            Console.WriteLine($"{Console.WindowHeight}");
-
-            //Test();
-            /*Console.ReadLine();
-
-            Console.WriteLine("hello");
-
-            for (int i = 5; i > 0; i--)
-            {
-                Thread.Sleep(500);
-                Console.SetCursorPosition(i, 2);
-                Console.WriteLine("      ");
-            }*/
+            //Console.WriteLine($"{Console.WindowWidth}");
+            //Console.WriteLine($"{Console.WindowHeight}");
 
             while (Running)
             {
@@ -89,66 +80,8 @@ namespace IslandJamGame
                 PlayScene(Scene);
                 PresentOptions(Scene);
                 ParseInput(Scene);
-
-                /*if (Scene.NextScene != "")
-                    LoadNextScene(Scene.NextScene);*/
-
-                /*Console.WriteLine("Hello world!");
-
-                ConsoleColor foreColor = Console.ForegroundColor;
-                ConsoleColor backColor = Console.BackgroundColor;
-                Console.WriteLine("Clearing the screen!");
-                ConsoleColor newForeColor = ConsoleColor.Blue;
-                ConsoleColor newBackColor = ConsoleColor.Yellow;
-
-                Console.WriteLine("Hello world!");
-                Console.ReadLine();
-                Clear();*/
-
-                //Console.ReadLine();
-
-                /*if (Delay >= DelayCounter)
-                    DelayCounter = 0;*/
             }
 
-        }
-
-        private void Test()
-        {
-            // Get an array with the values of ConsoleColor enumeration members.
-            ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
-            // Save the current background and foreground colors.
-            ConsoleColor currentBackground = Console.BackgroundColor;
-            ConsoleColor currentForeground = Console.ForegroundColor;
-
-            // Display all foreground colors except the one that matches the background.
-            Console.WriteLine("All the foreground colors except {0}, the background color:",
-                              currentBackground);
-            foreach (var color in colors)
-            {
-                if (color == currentBackground) continue;
-
-                Console.ForegroundColor = color;
-                Console.WriteLine("   The foreground color is {0}.", color);
-            }
-            Console.WriteLine();
-            // Restore the foreground color.
-            Console.ForegroundColor = currentForeground;
-
-            // Display each background color except the one that matches the current foreground color.
-            Console.WriteLine("All the background colors except {0}, the foreground color:",
-                              currentForeground);
-            foreach (var color in colors)
-            {
-                if (color == currentForeground) continue;
-
-                Console.BackgroundColor = color;
-                Console.WriteLine("   The background color is {0}.", color);
-            }
-
-            // Restore the original console colors.
-            Console.ResetColor();
-            Console.WriteLine("\nOriginal colors restored...");
         }
 
         private void ParseInput(Scene scene)
@@ -268,8 +201,30 @@ namespace IslandJamGame
 
         private void PrintSceneTitle(Scene scene)
         {
+            /*Console.WriteLine($"{Console.BufferWidth}");
+
+            int x = 0;
+
+            for (int i = 0; i < Console.BufferWidth; i++)
+            {
+                Console.Write(x);
+                Thread.Sleep(10);
+
+                x++;
+
+                if (x >= 10)
+                    x = 0;
+            }*/
+
+            string[] words = scene.Title.Split(' ');
+
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine(scene.Title);
+            foreach (string word in words)
+            {
+                Console.Write($"{word} ");
+                Thread.Sleep(20);
+                //Console.WriteLine(scene.Title);
+            }
             Console.WriteLine("");
             Console.ForegroundColor = DefaultConsoleColor;
             Thread.Sleep(DefaultTitleSleepMillis);
@@ -288,7 +243,46 @@ namespace IslandJamGame
         private void PlayScene(Scene scene)
         {
             PrintSceneTitle(scene);
+            PrintInventory();
             PrintText(scene.text);
+        }
+
+        private void PrintInventory()
+        {
+            int iw = 13;
+            int ih = 10;
+            TextPos = iw + 1;
+            TextPosY = 2;
+
+            string title = "INVENTORY";
+
+            for (int i = 0; i < iw; i++)
+                Console.Write('=');
+
+            Console.Write('\n');
+            Console.Write('|');
+            Console.Write(' ');
+
+            for (int i = 0; i < title.Length; i++)
+                Console.Write(title[i]);
+
+            Console.Write(' ');
+            Console.Write('|');
+            Console.Write('\n');
+
+            for (int i = 0; i < Inventory.Length; i++)
+            {
+                Console.Write('|');
+                for (int j = 0; j < iw - 2; j++)
+                    Console.Write('\u0000');
+                    //Console.Write(' ');
+                Console.Write('|');
+                Console.Write('\n');
+            }
+
+            for (int i = 0; i < iw; i++)
+                Console.Write('=');
+            Console.Write('\n');
         }
 
         private void PrintText(List<string> lines)
@@ -298,6 +292,10 @@ namespace IslandJamGame
 
         private void PrintText(string[] lines)
         {
+            Console.CursorLeft = TextPos;
+            Console.CursorTop = TextPosY;
+            int pos = TextPos;
+
             foreach (string text in lines)
             {
                 string[] words = text.Split(' ');
@@ -309,7 +307,7 @@ namespace IslandJamGame
                     else
                         Console.ForegroundColor = DefaultConsoleColor;
 
-                    foreach (Char c in word)
+                    /*foreach (Char c in word)
                     {
                         Console.Write(c);
 
@@ -319,8 +317,48 @@ namespace IslandJamGame
                                 Thread.Sleep(random.Next(500,750));
                         }
                         else
+                        {
                             if (!FastForward)
                             Thread.Sleep(10);
+                        }
+                    }*/
+
+                    int x = Console.CursorLeft;
+                    int y = Console.CursorTop;
+
+                    //Console.SetCursorPosition(0, 0);
+                    //Console.WriteLine($"{Console.BufferWidth}:{pos} {x},{y}                         ");
+
+                    pos += word.Length + ' ';
+
+                    if (x + word.Length + 1 > Console.BufferWidth)
+                    {
+                        x = TextPos;
+                        y += 1;
+                    }
+
+                    Console.SetCursorPosition(x, y);
+                    //Console.Write(word);
+
+                    if (word.Length > 0)
+                    {
+                        foreach (Char c in word)
+                        {
+                            Console.Write(c);
+
+                            //Char lastChar = word[word.Length - 1];
+
+                            if (c == '.' || c == ',' || c == ';' || c == ':' || c == '?' || c == '"')
+                            {
+                                if (!FastForward)
+                                    Thread.Sleep(random.Next(400, 600));
+                            }
+                            else
+                            {
+                                if (!FastForward)
+                                    Thread.Sleep(12);
+                            }
+                        }
                     }
 
                     Console.Write(' ');
@@ -331,6 +369,7 @@ namespace IslandJamGame
                 //Console.WriteLine(text);
                 Console.Write("\n");
                 Console.WriteLine("");
+                Console.SetCursorPosition(TextPos, Console.CursorTop);
                 Thread.Sleep(DefaultSleepMillis);
             }
         }
