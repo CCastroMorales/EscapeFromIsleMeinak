@@ -14,17 +14,68 @@ namespace ScriptEditor
         public string Filename { get; set; }
         public Script Script { get; set; }
         public TreeNode NodeScenes { get; set; }
+        protected Config Config { get; set; }
+        public string AppName { get => "ScriptEditor"; }
 
         public Form1()
         {
             InitializeComponent();
+            LoadConfig();
 
             textBox1.Font = new Font("Segoe UI", 12.0f);
             textBox2.Font = textBox1.Font;
 
             ReadCommandLineArguments();
             SetupTreeNodes();
-            openToolStripMenuItem_Click(null, new EventArgs());
+
+            if (Config.LastFile != null && Config.LastFile.Trim() != "")
+                LoadScriptFile(Config.LastFile);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Width = Config.Window.Width;
+            Height = Config.Window.Height;
+            Left = Config.Window.X;
+            Top = Config.Window.Y;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Config.Window.Width = Width;
+            Config.Window.Height = Height;
+            Config.Window.X = Left;
+            Config.Window.Y = Top;
+
+            SaveConfig();
+        }
+
+        private void LoadConfig()
+        {
+            string folderAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string folderEditor = $@"{folderAppData}\ScriptEditor\";
+            Directory.CreateDirectory(folderEditor);
+
+            string filename = $@"{folderEditor}\config.json";
+
+            if (File.Exists(filename))
+            {
+                string json = File.ReadAllText(filename);
+                Config = JsonConvert.DeserializeObject<Config>(json);
+            }
+            else
+                Config = new Config();
+        }
+
+        private void SaveConfig()
+        {
+            string folderAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string folderEditor = $@"{folderAppData}\ScriptEditor\";
+            Directory.CreateDirectory(folderEditor);
+
+            string filename = $@"{folderEditor}\config.json"; 
+            string json = JsonConvert.SerializeObject(Config);
+            File.WriteAllText(filename, json);
         }
 
         private void SetupTreeNodes()
@@ -48,10 +99,24 @@ namespace ScriptEditor
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string json = File.ReadAllText(Filename);
+            LoadScriptFile(Filename);
+        }
+
+        private void LoadScriptFile(string filename)
+        {
+            if (!File.Exists(filename))
+                return;
+
+            string json = File.ReadAllText(filename);
             Script = JsonConvert.DeserializeObject<Script>(json);
             BuildUIFromScript(Script);
             Analyze();
+
+            Config.LastFile = filename;
+            SaveConfig();
+
+            Filename = filename;
+            Text = $"{AppName} - {Filename}";
         }
 
         private void BuildUIFromScript(Script script)
@@ -60,30 +125,38 @@ namespace ScriptEditor
 
             foreach (Scene scene in script.Scenes)
             {
-                TreeNode sceneNode = NodeScenes.Nodes.Add($"{scene.SceneId}");
-                sceneNode.ImageIndex = 1;
-                sceneNode.SelectedImageIndex = 1;
-                sceneNode.ContextMenuStrip = contextMenuStrip1;
-                sceneNode.Tag = scene;
-
-                TreeNode exitParentNode = sceneNode.Nodes.Add("Exits");
-                exitParentNode.ImageIndex = 2;
-                exitParentNode.SelectedImageIndex = 2;
-
-                foreach (Exit exit in scene.Exits)
-                {
-                    TreeNode exitNode = exitParentNode.Nodes.Add(exit.Name);
-                    TreeNode exitSceneIdNode = exitNode.Nodes.Add(exit.Scene);
-
-                    exitNode.ImageIndex = 3;
-                    exitNode.SelectedImageIndex = 3;
-
-                    exitSceneIdNode.ImageIndex = 1;
-                    exitSceneIdNode.SelectedImageIndex = 1;
-                }
+                TreeNode sceneNode = BuildSceneNode(scene);
+                NodeScenes.Nodes.Add(sceneNode);
             }
 
             NodeScenes.Expand();
+        }
+
+        private TreeNode BuildSceneNode(Scene scene)
+        {
+            TreeNode sceneNode = new TreeNode(scene.SceneId);
+            sceneNode.ImageIndex = 1;
+            sceneNode.SelectedImageIndex = 1;
+            sceneNode.ContextMenuStrip = contextMenuStrip1;
+            sceneNode.Tag = scene;
+
+            TreeNode exitParentNode = sceneNode.Nodes.Add("Exits");
+            exitParentNode.ImageIndex = 2;
+            exitParentNode.SelectedImageIndex = 2;
+
+            foreach (Exit exit in scene.Exits)
+            {
+                TreeNode exitNode = exitParentNode.Nodes.Add(exit.Name);
+                TreeNode exitSceneIdNode = exitNode.Nodes.Add(exit.Scene);
+
+                exitNode.ImageIndex = 3;
+                exitNode.SelectedImageIndex = 3;
+
+                exitSceneIdNode.ImageIndex = 1;
+                exitSceneIdNode.SelectedImageIndex = 1;
+            }
+
+            return sceneNode;
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -231,10 +304,8 @@ namespace ScriptEditor
             Scene freshScene = new Scene();
             freshScene.SceneId = $"SCENE_{guid}";
 
-            TreeNode node = new TreeNode(freshScene.SceneId);
-            node.ContextMenuStrip = contextMenuStrip1;
-            node.Tag = freshScene;
-            NodeScenes.Nodes.Add(node);
+            TreeNode sceneNode = BuildSceneNode(freshScene);
+            NodeScenes.Nodes.Add(sceneNode);
         }
 
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -242,7 +313,8 @@ namespace ScriptEditor
             if (e.Node.Parent == NodeScenes)
             {
                 Scene scene = (Scene)e.Node.Tag;
-                scene.SceneId = e.Label;
+                if (e.Label != null && e.Label.Trim() != "")
+                    scene.SceneId = e.Label;
                 Analyze();
             }
             else if (e.Node.Parent.Text == "Exits")
@@ -377,5 +449,42 @@ namespace ScriptEditor
                 Analyze();
             }
         }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CompiledProject();
+        }
+
+        private void CompiledProject()
+        {
+            if (Config.ProjectFolder == null || Config.MSBuildFilename == null)
+                return;
+
+            Debug.WriteLine(Config.MSBuildFilename);
+            Debug.WriteLine(Config.ProjectFolder);
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.CreateNoWindow = false;
+            startInfo.UseShellExecute = false;
+            startInfo.FileName = Config.MSBuildFilename;
+            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            startInfo.Arguments = $"{Config.ProjectFolder}";
+            startInfo.WorkingDirectory = Config.ProjectFolder;
+            startInfo.RedirectStandardOutput = true;
+
+            Process process = Process.Start(startInfo);
+
+            while (!process.StandardOutput.EndOfStream)
+            {
+                string line = process.StandardOutput.ReadLine();
+                Debug.WriteLine(line);
+            }
+
+            if (Config.ProjectDebugFilename != null)
+                if (process.ExitCode == 0)
+                {
+                    Process.Start(Config.ProjectDebugFilename);
+                }
+        }        
     }
 }
