@@ -30,6 +30,8 @@ namespace ScriptEditor
         private void SetupTreeNodes()
         {
             NodeScenes = treeView1.Nodes.Add("Scenes");
+            NodeScenes.ImageIndex = 1;
+            NodeScenes.SelectedImageIndex = 1;
             NodeScenes.ContextMenuStrip = contextMenuStrip1;
         }
 
@@ -59,14 +61,25 @@ namespace ScriptEditor
             foreach (Scene scene in script.Scenes)
             {
                 TreeNode sceneNode = NodeScenes.Nodes.Add($"{scene.SceneId}");
+                sceneNode.ImageIndex = 1;
+                sceneNode.SelectedImageIndex = 1;
                 sceneNode.ContextMenuStrip = contextMenuStrip1;
                 sceneNode.Tag = scene;
 
                 TreeNode exitParentNode = sceneNode.Nodes.Add("Exits");
+                exitParentNode.ImageIndex = 2;
+                exitParentNode.SelectedImageIndex = 2;
+
                 foreach (Exit exit in scene.Exits)
                 {
                     TreeNode exitNode = exitParentNode.Nodes.Add(exit.Name);
                     TreeNode exitSceneIdNode = exitNode.Nodes.Add(exit.Scene);
+
+                    exitNode.ImageIndex = 3;
+                    exitNode.SelectedImageIndex = 3;
+
+                    exitSceneIdNode.ImageIndex = 1;
+                    exitSceneIdNode.SelectedImageIndex = 1;
                 }
             }
 
@@ -109,6 +122,16 @@ namespace ScriptEditor
             {
                 Scene scene = (Scene)node.Tag;
                 
+                if (scene.SceneId.Trim() == "")
+                {
+                    string msg = $"CRITICAL: Scene lacks ID.";
+                    string sceneId = $"{scene.SceneId}";
+                    Debug.WriteLine(msg);
+
+                    var item = new ListViewItem(new[] { msg, sceneId });
+                    listView1.Items.Add(item);
+                }
+
                 // Analyze exits
                 foreach (Exit exit in scene.Exits)
                 {
@@ -127,6 +150,17 @@ namespace ScriptEditor
                 if ((Scene)NodeScenes.Nodes[0].Tag != scene && scene.Title.Trim() == "")
                 {
                     string msg = $"ERROR: Scene has no title.";
+                    string sceneId = $"{scene.SceneId}";
+                    Debug.WriteLine(msg);
+
+                    var item = new ListViewItem(new[] { msg, sceneId });
+                    listView1.Items.Add(item);
+                }
+
+                // Analyze exits
+                if (scene.Exits.Count == 0)
+                {
+                    string msg = $"ERROR: Scene has no exits.";
                     string sceneId = $"{scene.SceneId}";
                     Debug.WriteLine(msg);
 
@@ -205,9 +239,31 @@ namespace ScriptEditor
 
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
-            Scene scene = (Scene)e.Node.Tag;
-            scene.SceneId = e.Label;
-            Analyze();
+            if (e.Node.Parent == NodeScenes)
+            {
+                Scene scene = (Scene)e.Node.Tag;
+                scene.SceneId = e.Label;
+                Analyze();
+            }
+            else if (e.Node.Parent.Text == "Exits")
+            {
+                e.Node.Text = e.Label;
+
+                TreeNode parentExitsNode = e.Node.Parent;
+
+                Scene scene = (Scene)parentExitsNode.Parent.Tag;
+                scene.Exits.Clear();
+
+                foreach (TreeNode node in parentExitsNode.Nodes)
+                {
+                    Exit exit = new Exit();
+                    exit.Name = node.Text;
+                    exit.Scene = node.Nodes[0].Text;
+                    scene.Exits.Add(exit);
+                }
+
+                Analyze();
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -273,6 +329,52 @@ namespace ScriptEditor
                     NodeScenes.Nodes.Remove(treeView1.SelectedNode);
                     Analyze();
                 }
+            }
+        }
+
+        private void expandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode.ExpandAll();
+        }
+
+        /* Drag and drop */
+        private void treeView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
+
+        private void treeView1_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = e.AllowedEffect;
+        }
+
+        private void treeView1_DragOver(object sender, DragEventArgs e)
+        {
+            Point point = treeView1.PointToClient(new Point(e.X, e.Y));
+            treeView1.SelectedNode = treeView1.GetNodeAt(point);
+        }
+
+        private void treeView1_DragDrop(object sender, DragEventArgs e)
+        {
+            Point point = treeView1.PointToClient(new Point(e.X, e.Y));
+            TreeNode dropNode = treeView1.GetNodeAt(point);
+            TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+            if (draggedNode != dropNode && dropNode.Text == "Exits")
+            {
+                string sceneId = draggedNode.Text;
+                string command = draggedNode.Text.ToLower();
+
+                TreeNode commandNode = dropNode.Nodes.Add(command);
+                TreeNode scenePointerNode = commandNode.Nodes.Add(sceneId);
+                dropNode.ExpandAll();
+
+                commandNode.ImageIndex = 3;
+                commandNode.SelectedImageIndex = 3;
+                scenePointerNode.ImageIndex = 1;
+                scenePointerNode.SelectedImageIndex = 1;
+
+                Analyze();
             }
         }
     }

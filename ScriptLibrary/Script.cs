@@ -56,6 +56,11 @@ namespace ScriptLibrary
         public List<InteractiveObject> Objects { get; set; } = new List<InteractiveObject>();
         public bool HasOptions { get => Options.Count > 0; }
 
+        public override string ToString()
+        {
+            return $"{SceneId} ({Title}), exits: {Exits.Count}";
+        }
+
         public bool HasExit(string exitName)
         {
             foreach (Exit exit in Exits)

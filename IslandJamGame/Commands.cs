@@ -6,4 +6,9 @@
         public static readonly string CHECK = "check";
         public static readonly string OPEN = "open";
     }
+
+    public class Arguments
+    {
+        public static readonly string BACK = "back";
+    }
 }

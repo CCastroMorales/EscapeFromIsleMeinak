@@ -11,6 +11,7 @@ namespace IslandJamGame
     public class Game
     {
         public Script Script { get; set; }
+        public Scene PreviousScene { get; set; }
         public bool Running { get; set; } = true;
         public int DefaultSleepMillis { get; set; } = 100;
         public int DefaultTitleSleepMillis { get; set; } = 1000;
@@ -194,6 +195,16 @@ namespace IslandJamGame
                 {
                     if (args.Length <= 1)
                         Console.WriteLine("Go where?");
+                    if (argument.ToLower() == Arguments.BACK)
+                    {
+                        if (PreviousScene == null)
+                            Console.WriteLine("There's nowhere to go back to.");
+                        else
+                        {
+                            LoadBackScene();
+                            requireInput = false;
+                        }
+                    }
                     else if (Scene.HasExit(argument))
                     {
                         LoadNextScene(scene.SceneFromExit(argument));
@@ -344,14 +355,37 @@ namespace IslandJamGame
             foreach (Scene scene in Script.Scenes)
                 if (scene.SceneId == sceneName)
                 {
+                    PreviousScene = Scene;
                     Scene = scene;
                     return;
                 }
             Scene = null;
         }
 
+        private void LoadBackScene()
+        {
+            Scene currentScene = Scene;
+            Scene = PreviousScene;
+            PreviousScene = currentScene;
+        }
+
         private void Clear()
         {
+            //Console.Clear();
+            for (int y = 0; y < Console.WindowHeight; y++)
+            {
+                //Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.SetCursorPosition(0, y);
+
+                for (int x = 0; x < Console.WindowWidth; x++)
+                {
+                    Console.Write(' ');
+                }
+                Console.Write('\n');
+
+                //Console.WriteLine($"new line of text {y}");
+                Thread.Sleep(1);
+            }
             Console.Clear();
         }
     }

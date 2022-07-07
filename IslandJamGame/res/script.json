@@ -99,13 +99,22 @@
     },
     {
       "text": [
-        "You're in the bathroom."
+        "You're in the bathroom.",
+        "",
+        "The bathroom is dark and really small. There is nothing of interest here. There appears to be a wrinkled note in the trash can.",
+        "",
+        "You can GO back to the ROOM you came from."
       ],
       "SceneId": "SCENE_BUNGALOW_BATHROOM",
       "Title": "INT. BUNGALOW BATHROOM - NIGHT",
       "NextScene": "",
       "Options": [],
-      "Exits": [],
+      "Exits": [
+        {
+          "Name": "room",
+          "Scene": "SCENE_BUNGALOW_ROOM"
+        }
+      ],
       "Containers": [],
       "Objects": [],
       "HasOptions": false
@@ -120,18 +129,34 @@
       "Title": "EXT. BETWEEN BUNGALOWS - NIGHT",
       "NextScene": "",
       "Options": [],
-      "Exits": [],
+      "Exits": [
+        {
+          "Name": "home",
+          "Scene": "SCENE_BUNGALOW_OUTSIDE"
+        },
+        {
+          "Name": "bungalow",
+          "Scene": "SCENE_NEIGHBOUR_BUNGALOW_OUTSIDE"
+        }
+      ],
       "Containers": [],
       "Objects": [],
       "HasOptions": false
     },
     {
-      "text": [],
+      "text": [
+        "Bungalow room"
+      ],
       "SceneId": "SCENE_NEIGHBOUR_BUNGALOW_ROOM",
       "Title": "???",
       "NextScene": "",
       "Options": [],
-      "Exits": [],
+      "Exits": [
+        {
+          "Name": "outside",
+          "Scene": "SCENE_NEIGHBOUR_BUNGALOW_OUTSIDE"
+        }
+      ],
       "Containers": [],
       "Objects": [],
       "HasOptions": false
@@ -143,6 +168,85 @@
       ],
       "SceneId": "SCENE_NEIGHBOUR_BUNGALOW_OUTSIDE",
       "Title": "EXT. NEIGHBOUR BUNGALOW BALCONY - NIGHT",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [
+        {
+          "Name": "down",
+          "Scene": "SCENE_INBETWEEN_BUNGALOWS"
+        },
+        {
+          "Name": "inside",
+          "Scene": "SCENE_NEIGHBOUR_BUNGALOW_ROOM"
+        }
+      ],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "You're by the village gas station. The car has broken down. You have no choice but to enter the village.",
+        "",
+        "You can GO SOUTH."
+      ],
+      "SceneId": "SCENE_VILLAGE_GAS_STATION",
+      "Title": "Gas station",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [
+        {
+          "Name": "south",
+          "Scene": "SCENE_VILLAGE_STORE"
+        }
+      ],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "this is a test why blank"
+      ],
+      "SceneId": "SCENE_TEST_2",
+      "Title": " sddfgdfg ",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "sdfefg"
+      ],
+      "SceneId": "SCENE_TEST",
+      "Title": "test",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "dfgdfg"
+      ],
+      "SceneId": "SCENE_tEST",
+      "Title": "dfgdfgh",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [],
+      "SceneId": "SCENE_VILLAGE_STORE",
+      "Title": "",
       "NextScene": "",
       "Options": [],
       "Exits": [],
