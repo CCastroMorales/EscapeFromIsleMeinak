@@ -8,8 +8,9 @@ using System.Threading;
 
 namespace IslandJamGame
 {
-    public class Game
+    public class Game : ParseCallback
     {
+        public InputParser Parser { get; set; }
         public Script Script { get; set; }
         public string[] Inventory { get; set; } = new string[6];
         public Scene PreviousScene { get; set; }
@@ -28,6 +29,8 @@ namespace IslandJamGame
             ParseCommandLineArguments(args);
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             LoadData();
+
+            Parser = new InputParser(this);
         }
 
         private void ParseCommandLineArguments(string[] args)
@@ -86,8 +89,19 @@ namespace IslandJamGame
 
         private void ParseInput(Scene scene)
         {
+            Parser.Reset();
             bool requireInput = true;
-            bool validInput = false;
+
+            while (!Parser.Done)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write('»');
+                string input = Console.ReadLine().Trim();
+                Console.ForegroundColor = DefaultConsoleColor;
+
+                Parser.Parse(input, scene);
+                requireInput = false;
+            }
 
             /*if (!scene.HasOptions)
             {
@@ -125,48 +139,7 @@ namespace IslandJamGame
                 }
 
 
-                if (cmd == Commands.GO)
-                {
-                    if (args.Length <= 1)
-                        Console.WriteLine("Go where?");
-                    if (argument.ToLower() == Arguments.BACK)
-                    {
-                        if (PreviousScene == null)
-                            Console.WriteLine("There's nowhere to go back to.");
-                        else
-                        {
-                            LoadBackScene();
-                            requireInput = false;
-                        }
-                    }
-                    else if (Scene.HasExit(argument))
-                    {
-                        LoadNextScene(scene.SceneFromExit(argument));
-                        validInput = true;
-                        requireInput = false;
-                    }
-                    else
-                        Console.WriteLine("Unknown location.");
-                }
-
-                else if (cmd == Commands.CHECK)
-                {
-                    if (args.Length <= 1)
-                    {
-                        Console.Write("Check what?\n");
-                        Console.WriteLine("");
-                    }
-                    else
-                    {
-                        if (scene.HasInteractiveObject(argument))
-                        {
-                            InteractiveObject interactiveObject = scene.ObjectbyName(argument);
-                            PrintCheckDescription(scene, interactiveObject);
-                        }
-                    }
-                }
-
-                else if (cmd == Commands.OPEN)
+                if (cmd == Commands.OPEN)
                 {
                     if (args.Length <= 1)
                         Console.WriteLine("Open what?");
@@ -179,14 +152,14 @@ namespace IslandJamGame
                     }
                 }
 
-                else if (scene.HasOptions)
+                /*else if (scene.HasOptions)
                     foreach (Option option in Scene.Options)
                         if (cmd != "" && option.Command == cmd)
                         {
                             LoadNextScene(option.NextScene);
                             validInput = true;
                             return;
-                        }
+                        }*/
                 else
                     Console.WriteLine(">>> Error: Command expected.");
             }
@@ -390,25 +363,6 @@ namespace IslandJamGame
             }
         }
 
-        private void LoadNextScene(string sceneName)
-        {
-            foreach (Scene scene in Script.Scenes)
-                if (scene.SceneId == sceneName)
-                {
-                    PreviousScene = Scene;
-                    Scene = scene;
-                    return;
-                }
-            Scene = null;
-        }
-
-        private void LoadBackScene()
-        {
-            Scene currentScene = Scene;
-            Scene = PreviousScene;
-            PreviousScene = currentScene;
-        }
-
         private void Clear()
         {
             //Console.Clear();
@@ -427,6 +381,38 @@ namespace IslandJamGame
                 Thread.Sleep(1);
             }
             Console.Clear();
+        }
+
+        /* Callbacks from InputParser */
+
+        public bool HasPreviousScene()
+        {
+            return PreviousScene != null;
+        }
+
+        public void OnPreviousScene()
+        {
+            Scene currentScene = Scene;
+            Scene = PreviousScene;
+            PreviousScene = currentScene;
+        }
+
+        public void OnExitScene(string sceneId, string exit)
+        {
+            foreach (Scene scene in Script.Scenes)
+                if (scene.SceneId == sceneId)
+                {
+                    PreviousScene = Scene;
+                    Scene = scene;
+                    return;
+                }
+            Scene = null;
+        }
+
+        public void OnCheckDescription(string objectName)
+        {
+            InteractiveObject interactiveObject = Scene.ObjectbyName(objectName);
+            PrintCheckDescription(Scene, interactiveObject);
         }
     }
 }
