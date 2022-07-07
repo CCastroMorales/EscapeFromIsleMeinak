@@ -18,6 +18,7 @@ namespace IslandJamGame
         public Scene Scene { get; set; }
         public bool FastForward { get; set; } = false;
         public ConsoleColor DefaultConsoleColor { get; } = Console.ForegroundColor;
+        public Random random { get; } = new Random();
 
         public Game(string[] args)
         {
@@ -315,11 +316,11 @@ namespace IslandJamGame
                         if (c == '.' || c == ',' || c == ';' || c == ':' || c == '?' || c == '"')
                         {
                             if (!FastForward)
-                                Thread.Sleep(1000);
+                                Thread.Sleep(random.Next(500,750));
                         }
                         else
                             if (!FastForward)
-                            Thread.Sleep(25);
+                            Thread.Sleep(10);
                     }
 
                     Console.Write(' ');

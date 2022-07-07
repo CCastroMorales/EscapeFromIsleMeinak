@@ -474,10 +474,18 @@ namespace ScriptEditor
 
             Process process = Process.Start(startInfo);
 
+            List<string> lines = new List<string>();
+            textBox3.Text = "";
+
             while (!process.StandardOutput.EndOfStream)
             {
                 string line = process.StandardOutput.ReadLine();
                 Debug.WriteLine(line);
+
+                lines.Add(line);
+                textBox3.Lines = lines.ToArray();
+                textBox3.SelectionStart = textBox3.Text.Length;
+                textBox3.ScrollToCaret();
             }
 
             if (Config.ProjectDebugFilename != null)

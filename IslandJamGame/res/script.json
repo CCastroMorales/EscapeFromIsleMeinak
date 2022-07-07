@@ -137,6 +137,10 @@
         {
           "Name": "bungalow",
           "Scene": "SCENE_NEIGHBOUR_BUNGALOW_OUTSIDE"
+        },
+        {
+          "Name": "jeep",
+          "Scene": "SCENE_TEMP_JEEP"
         }
       ],
       "Containers": [],
@@ -186,59 +190,24 @@
     },
     {
       "text": [
-        "You're by the village gas station. The car has broken down. You have no choice but to enter the village.",
+        "You're by the village gas station. Station might be an overstatement as it is just a rusty tank with a wooden roof over it. The car has broken down. You have no choice but to enter the village.",
         "",
-        "You can GO SOUTH."
+        "You can GO to the village road PROMENADE or ,,,"
       ],
       "SceneId": "SCENE_VILLAGE_GAS_STATION",
-      "Title": "Gas station",
+      "Title": "EXT. VILLAGE GAS STATION - DAWN",
       "NextScene": "",
       "Options": [],
       "Exits": [
         {
           "Name": "south",
           "Scene": "SCENE_VILLAGE_STORE"
+        },
+        {
+          "Name": "promenade",
+          "Scene": "SCENE_VILLAGE_ROAD_PROMENADE"
         }
       ],
-      "Containers": [],
-      "Objects": [],
-      "HasOptions": false
-    },
-    {
-      "text": [
-        "this is a test why blank"
-      ],
-      "SceneId": "SCENE_TEST_2",
-      "Title": " sddfgdfg ",
-      "NextScene": "",
-      "Options": [],
-      "Exits": [],
-      "Containers": [],
-      "Objects": [],
-      "HasOptions": false
-    },
-    {
-      "text": [
-        "sdfefg"
-      ],
-      "SceneId": "SCENE_TEST",
-      "Title": "test",
-      "NextScene": "",
-      "Options": [],
-      "Exits": [],
-      "Containers": [],
-      "Objects": [],
-      "HasOptions": false
-    },
-    {
-      "text": [
-        "dfgdfg"
-      ],
-      "SceneId": "SCENE_tEST",
-      "Title": "dfgdfgh",
-      "NextScene": "",
-      "Options": [],
-      "Exits": [],
       "Containers": [],
       "Objects": [],
       "HasOptions": false
@@ -249,7 +218,96 @@
       "Title": "",
       "NextScene": "",
       "Options": [],
-      "Exits": [],
+      "Exits": [
+        {
+          "Name": "harbor",
+          "Scene": "SCENE_VILLAGE_HARBOR"
+        }
+      ],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "You visit the harbor in hopes of leaving the island. There are several motor-driven fishing boats. The two closest boats seem to have people in them. Your hopes lie with the third fishing boat. You will need to pass the two boats nearby in order to reach the third BOAT.",
+        "",
+        "You can go back to the BEACH or go to the STORE."
+      ],
+      "SceneId": "SCENE_VILLAGE_HARBOR",
+      "Title": "EXT. VILLAGE HARBOR - DAWN",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [
+        {
+          "Name": "beach",
+          "Scene": "SCENE_VILLAGE_PROMENADE_BEACH"
+        }
+      ],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "You take the JEEP to the village. You reach the gas STATION."
+      ],
+      "SceneId": "SCENE_TEMP_JEEP",
+      "Title": "INT. JEEP - NIGHT",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [
+        {
+          "Name": "station",
+          "Scene": "SCENE_VILLAGE_GAS_STATION"
+        }
+      ],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "The village road promenade is a paved road that you remember taking from the harbor past the gas station to the bungalow yesterday when you arrived. You can see the harbor from here.",
+        "",
+        "You can reach the harbor by going to the BEACH or you can go back to the gas STATION."
+      ],
+      "SceneId": "SCENE_VILLAGE_ROAD_PROMENADE",
+      "Title": "EXT. ROAD PROMENADE - DAWN",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [
+        {
+          "Name": "beach",
+          "Scene": "SCENE_VILLAGE_PROMENADE_BEACH"
+        },
+        {
+          "Name": "station",
+          "Scene": "SCENE_VILLAGE_GAS_STATION"
+        }
+      ],
+      "Containers": [],
+      "Objects": [],
+      "HasOptions": false
+    },
+    {
+      "text": [
+        "promenade beach."
+      ],
+      "SceneId": "SCENE_VILLAGE_PROMENADE_BEACH",
+      "Title": "EXT. PROMENADE BEACH - DAWN",
+      "NextScene": "",
+      "Options": [],
+      "Exits": [
+        {
+          "Name": "promenade",
+          "Scene": "SCENE_VILLAGE_ROAD_PROMENADE"
+        },
+        {
+          "Name": "harbor",
+          "Scene": "SCENE_VILLAGE_HARBOR"
+        }
+      ],
       "Containers": [],
       "Objects": [],
       "HasOptions": false
