@@ -4,8 +4,32 @@
       "text": [
         "\"Where am I...?\"",
         "You're confused and your head hurts. As if you have been hit. You look around the room that is dimly lit by the rising full moon. Are you at home?",
-        "No... You remember now. You are in a small bungalow on vacation, the well-deserved vacation with your friend on a paradise island. Speaking of, where is your friend? You look around the room. You get a strange feeling in your gut. Something's wrong. ",
-        "You should CHECK the ROOM or your friend's BED. Or maybe you should just GO somewhere. You hear a faint noise from OUTSIDE."
+        "No... You remember now. You are in a small bungalow on vacation, the well-deserved vacation with your friend on a paradise island. Speaking of, where is your friend? You look around the room. You get a strange feeling in your gut. Something's wrong.",
+        "You should CHECK the ROOM or your friend's BED. Or maybe you should just GO somewhere. ENTITY_DESCRIPTIONS ITEM_DESCRIPTIONS You hear a faint noise from OUTSIDE."
+      ],
+      "Entities": [
+        {
+          "Id": "ENTITY_BUNGALOW_RAT",
+          "Name": "Rat",
+          "KillBy": [
+            "TYPE_MELEE"
+          ],
+          "ShowDescriptionWhenDead": false,
+          "Description": "There is a RAT in the corner. It seems to be comfortable and not at all afraid of you.",
+          "KilledDescription": "The RAT is dead.",
+          "DropItem": {
+            "Id": "ITEM_PASSED_OUT_RAT",
+            "Type": "TYPE_MEAT",
+            "Name": "Psd.out. Rat",
+            "Description": "There is a passed out RAT on the floor.",
+            "InventoryDescription": "You're carrying around a passed out rat. The stressful situation is clearly affecting your sanity.",
+            "Actions": [
+            ],
+            "Labels": [
+              "Rat"
+            ]
+          }
+        }
       ],
       "SceneId": "SCENE_BUNGALOW_ROOM_INTRODUCTION",
       "Title": "",
@@ -123,6 +147,7 @@
       "Items": [
         {
           "Id": "ITEM_NOTE",
+          "Type": "TYPE_NONE",
           "Name": "Note",
           "Description": "There appears to be a wrinkled NOTE in the trash can.",
           "InventoryDescription": "The note is from your friend; you recognize their handwriting.",
@@ -138,6 +163,7 @@
         },
         {
           "Id": "ITEM_BROKEN_BOTTLE",
+          "Type": "TYPE_MELEE",
           "Name": "Brk. Bottle",
           "Description": "There is a broken BOTTLE on the sink.",
           "InventoryDescription": "You don't drink so this bottle was left and broken by your friend.",

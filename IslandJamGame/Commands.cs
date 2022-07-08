@@ -7,6 +7,8 @@
         public static readonly string OPEN = "open";
         public static readonly string TAKE = "take";
         public static readonly string READ = "read";
+        public static readonly string HIT = "hit";
+        public static readonly string PUNCH = "punch";
     }
 
     public class Arguments

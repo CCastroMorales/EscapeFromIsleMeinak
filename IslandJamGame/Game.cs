@@ -322,7 +322,9 @@ namespace IslandJamGame
 
             foreach (string originalText in lines)
             {
-                string text = InsertItemDescriptions(Scene, originalText);
+                string textWithItemDesc = InsertItemDescriptions(Scene, originalText);
+                string text = InsertEntityDescriptions(Scene, textWithItemDesc);
+                text = text.Replace("  ", " ");
 
                 string[] words = text.Split(' ');
 
@@ -382,6 +384,24 @@ namespace IslandJamGame
                 descriptions += item.Description + " ";
 
             return text.Replace("ITEM_DESCRIPTIONS", descriptions.Trim()); ;
+        }
+
+        private string InsertEntityDescriptions(Scene scene, string text)
+        {
+            string descriptions = "";
+
+            foreach (Entity entity in scene.Entities)
+            {
+                if (entity.Dead)
+                {
+                    if (entity.ShowDescriptionWhenDead)
+                        descriptions += entity.Description + " ";
+                }
+                else
+                    descriptions += entity.Description + " ";
+            }
+
+            return text.Replace("ENTITY_DESCRIPTIONS", descriptions.Trim());
         }
 
         private bool IsCapitalized(string word)
@@ -510,7 +530,7 @@ namespace IslandJamGame
         {
             if (Inventory.Count == InventoryLimit)
             {
-                Console.WriteLine("You can't take the item; your inventory is full.");
+                PrintLine("You can't take the item; your inventory is full.");
                 return;
             }
 
@@ -518,7 +538,7 @@ namespace IslandJamGame
             Inventory.Add(item);
 
             string text = $"You take the {itemLabel.ToLower()}.";
-            Console.WriteLine(text);
+            PrintLine(text);
 
             int x = Console.CursorLeft;
             int y = Console.CursorTop;
@@ -529,7 +549,30 @@ namespace IslandJamGame
 
         public void OnReadItem(Item item, ItemAction action, string label)
         {
-            PrintLine(action.Text);
+            if (action == null)
+                PrintLine("You can't do that!");
+            else
+                PrintLine(action.Text);
+        }
+
+        public void OnPunchEntity(string entityName)
+        {
+            Entity entity = Scene.EntityByName(entityName);
+
+            if (entity.KillBy.Contains("TYPE_MELEE"))
+            {
+                Item drop = entity.Kill();
+
+                if (drop != null)
+                {
+                    PrintLine(drop.Description);
+                    Scene.Items.Add(drop);
+                }
+            } 
+            else
+            {
+                PrintLine($"You tried to punch {entity.Name} but hit nothing but air.");
+            }
         }
     }
 }

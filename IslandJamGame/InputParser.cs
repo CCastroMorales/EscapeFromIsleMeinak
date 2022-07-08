@@ -13,6 +13,7 @@ namespace IslandJamGame
         void OnCheckDescription(string objectName);
         void OnTakeItem(string itemLabel);
         void OnReadItem(Item item, ItemAction action, string label);
+        void OnPunchEntity(string entityName);
     }
 
     public class InputParser
@@ -52,6 +53,8 @@ namespace IslandJamGame
                 Done = true;
             if (ParseActionREAD(command, arguments))
                 Done = true;
+            if (ParseActionHIT(command, arguments))
+                Done = true;
         }
 
         private string[] ParseArguments(string input, out string command, out string[] arguments)
@@ -73,7 +76,7 @@ namespace IslandJamGame
 
             if (arguments.Length == 0)
             {
-                Console.WriteLine("Go where?");
+                Callback.OnPrint("Go where?");
                 return false;
             }
 
@@ -90,7 +93,7 @@ namespace IslandJamGame
                 }
                 else
                 {
-                    Console.WriteLine("There's nowhere to go back to.");
+                    Callback.OnPrint("There's nowhere to go back to.");
                     return false;
                 }
             }
@@ -112,7 +115,7 @@ namespace IslandJamGame
 
             if (arguments.Length == 0)
             {
-                Console.WriteLine("Check what?");
+                Callback.OnPrint("Check what?");
                 return false;
             }
 
@@ -134,7 +137,7 @@ namespace IslandJamGame
 
             if (arguments.Length == 0)
             {
-                Console.WriteLine("Take what?");
+                Callback.OnPrint("Take what?");
                 return false;
             }
 
@@ -156,7 +159,7 @@ namespace IslandJamGame
 
             if (arguments.Length == 0)
             {
-                Console.WriteLine("Read what?");
+                Callback.OnPrint("Read what?");
                 return false;
             }
 
@@ -199,6 +202,24 @@ namespace IslandJamGame
             if (!actionReadTaken)
                 Callback.OnPrint("You can't do that.");
             
+            return false;
+        }
+
+        private bool ParseActionHIT(string command, string[] arguments)
+        {
+            if (command != Commands.HIT && command != Commands.PUNCH)
+                return false;
+
+            if (arguments.Length == 0)
+            {
+                Callback.OnPrint("You punch a couple of times in the air. You look very cool while doing it.");
+            }
+
+            if (ActiveScene.HasEntity(arguments[0]))
+            {
+                Callback.OnPunchEntity(arguments[0]);
+            }
+
             return false;
         }
     }

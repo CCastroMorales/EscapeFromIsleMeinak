@@ -36,6 +36,7 @@ namespace ScriptLibrary
     {
         public string Id { get; set; } = "";
         public string Name { get; set; } = "";
+        public string Type { get; set; } = "";
         public string Description { get; set; } = "";
         public string InventoryDescription { get; set; } = "";
         public List<ItemAction> Actions { get; set; } = new List<ItemAction>();
@@ -75,6 +76,29 @@ namespace ScriptLibrary
         public List<string> Text { get; set; } = new List<string>();
     }
 
+    public class Entity
+    {
+        public string Id { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
+        public bool Dead { get; set; } = false;
+        public bool ShowDescriptionWhenDead { get; set; } = true;
+        public List<string> KillBy { get; set; } = new List<string>();
+        public Item DropItem { get; set; } = null;
+        public bool HasDropItem { get => DropItem != null; }
+
+        public override string ToString()
+        {
+            return Id;
+        }
+
+        public Item Kill()
+        {
+            Dead = true;
+            return DropItem;
+        }
+    }
+
     public class Scene
     {
         public string SceneId { get; set; } = "";
@@ -86,6 +110,7 @@ namespace ScriptLibrary
         public List<Container> Containers { get; set; } = new List<Container>();
         public List<InteractiveObject> Objects { get; set; } = new List<InteractiveObject>();
         public List<Item> Items { get; set; } = new List<Item>();
+        public List<Entity> Entities { get; set; } = new List<Entity>();
         public bool HasOptions { get => Options.Count > 0; }
 
         public override string ToString()
@@ -160,6 +185,22 @@ namespace ScriptLibrary
                         Items.Remove(item);
                         return takenItem;
                     }
+            return null;
+        }
+
+        public bool HasEntity(string entityName)
+        {
+            foreach (Entity entity in Entities)
+                if (entity.Name.ToLower() == entityName.ToLower())
+                    return true;
+            return false;
+        }
+
+        public Entity EntityByName(string entityName)
+        {
+            foreach (Entity entity in Entities)
+                if (entity.Name.ToLower() == entityName.ToLower())
+                    return entity;
             return null;
         }
     }
