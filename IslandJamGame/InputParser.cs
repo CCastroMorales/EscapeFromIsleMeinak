@@ -9,7 +9,7 @@ namespace IslandJamGame
         void OnPrint(string text);
         bool HasPreviousScene();
         void OnPreviousScene();
-        void OnExitScene(string sceneId, string exit);
+        void OnExitScene(string sceneId, string exit, string triggerEntityId);
         void OnCheckDescription(string objectName);
         void OnTakeItem(string itemLabel);
         void OnReadItem(Item item, ItemAction action, string label);
@@ -80,9 +80,9 @@ namespace IslandJamGame
                 return false;
             }
 
-            string argument = arguments[0];
+            string exitName = arguments[0];
 
-            if (argument == Arguments.BACK)
+            if (exitName == Arguments.BACK)
             {
                 bool canGoBack = Callback.HasPreviousScene();
 
@@ -98,10 +98,12 @@ namespace IslandJamGame
                 }
             }
 
-            if (ActiveScene.HasExit(argument))
+            if (ActiveScene.HasExit(exitName))
             {
-                string sceneId = ActiveScene.SceneFromExit(argument);
-                Callback.OnExitScene(sceneId, argument);
+                string sceneId = ActiveScene.SceneFromExit(exitName);
+                string triggerEntityId = ActiveScene.GetExitTriggerEntity(exitName);
+
+                Callback.OnExitScene(sceneId, exitName, triggerEntityId);
                 return true;
             }
 

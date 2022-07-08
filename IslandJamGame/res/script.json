@@ -225,7 +225,7 @@
     },
     {
       "text": [
-        "You see the shadowy figure hunching over the balcony railing.",
+        "ENTITY_DESCRIPTIONS",
         "You can GO INSIDE or GO DOWN the stairs."
       ],
       "SceneId": "SCENE_NEIGHBOUR_BUNGALOW_OUTSIDE",
@@ -239,13 +239,29 @@
         },
         {
           "Name": "inside",
+          "TriggerEntityId": "ENTITY_BUNGALOW_ZOMBIE",
           "Scene": "SCENE_NEIGHBOUR_BUNGALOW_ROOM"
         }
       ],
       "Containers": [],
       "Objects": [],
       "Items": [],
-      "HasOptions": false
+      "HasOptions": false,
+      "Entities": [
+        {
+          "Id": "ENTITY_BUNGALOW_ZOMBIE",
+          "Name": "Person",
+          "KillBy": [
+            "TYPE_MELEE"
+          ],
+          "ShowDescriptionWhenDead": false,
+          "Description": "You can see the shadowy figure hunching over the balcony railing.",
+          "KilledDescription": "The person appears to be dead.",
+          "DropItem": null,
+          "TriggerDescription": "The person turns around and launches toward you. You try to flee inside but you slip and fall. The person grabs you from behind and you can't get free. Eventually you start to feel dizzy and realize that you have a large wound on your shoulder. It's over.",
+          "TriggerGameOver": true
+        }
+      ]
     },
     {
       "text": [

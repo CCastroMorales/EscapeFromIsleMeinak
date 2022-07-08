@@ -205,11 +205,55 @@ namespace IslandJamGame
         private void GameOver()
         {
             Clear();
-            Console.WriteLine("G A M E    O V E R");
-            
-            Thread.Sleep(2000);
+            Console.CursorVisible = false;
+            Console.ForegroundColor = ConsoleColor.Red;
 
-            Scene = Script.Scenes[0];
+            string gameOver = "G  A  M  E        O  V  E  R";
+            gameOver = gameOver.Replace(' ', '═');
+
+            int x = (Console.BufferWidth / 2) - (gameOver.Length / 2);
+            int y = (Console.WindowHeight / 3);
+
+            Console.SetCursorPosition(0, y);
+
+            for (int i = 0; i < x; i++)
+            {
+                Console.Write('═');
+                Thread.Sleep(Timing.GameOverAnimationDuration);
+            }
+
+            for (int i = 0; i < gameOver.Length; i++)
+            {
+                Console.Write(gameOver[i]);
+                Thread.Sleep(Timing.GameOverAnimationDuration);
+            }
+
+            for (int i = x + gameOver.Length; i < Console.BufferWidth; i++)
+            {
+                Console.Write('═');
+                Thread.Sleep(Timing.GameOverAnimationDuration);
+            }
+
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            
+            string text = "[Press ENTER to try again]";
+            x = (Console.BufferWidth / 2) - (text.Length / 2);
+
+            Thread.Sleep(Timing.GameOverPressPromptDelay);
+            Console.SetCursorPosition(x, y+3);
+            Console.WriteLine(text);
+
+            var readkey = Console.ReadKey(true);
+            while (readkey.Key != ConsoleKey.Enter)
+            {
+                readkey = Console.ReadKey(true);
+            }
+
+            Console.CursorVisible = true;
+
+            Scene = PreviousScene;
+            PreviousScene = null;
         }
 
         private void PlayScene(Scene scene)
@@ -462,6 +506,27 @@ namespace IslandJamGame
             Console.Write('\n');
         }
 
+        private void PrintEnterToContinue()
+        {
+            int x = TextMarginLeft;
+            int y = Console.CursorTop;
+
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(x, y);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            string text = "[Press ENTER to continue]";
+            Console.Write(text);
+            
+            var readkey = Console.ReadKey(true);
+            while (readkey.Key != ConsoleKey.Enter)
+            {
+                readkey = Console.ReadKey(true);
+            }
+            Console.ForegroundColor = DefaultConsoleColor;
+            Console.CursorVisible = true;
+        }
+
         private void Clear()
         {
             Console.CursorVisible = false;
@@ -515,9 +580,20 @@ namespace IslandJamGame
             PreviousScene = currentScene;
         }
 
-        public void OnExitScene(string sceneId, string exit)
+        public void OnExitScene(string sceneId, string exit, string triggerEntityId)
         {
-            LoadScene(sceneId);
+            Entity entity = Scene.EntityById(triggerEntityId);
+
+            if (triggerEntityId != null && entity != null)
+            {
+                PrintLine(entity.TriggerDescription);
+                PrintEnterToContinue();
+
+                if (entity.TriggerGameOver)
+                    GameOver();
+            }
+            else
+                LoadScene(sceneId);
         }
 
         public void OnCheckDescription(string objectName)

@@ -19,6 +19,7 @@ namespace ScriptLibrary
     {
         public string Name { get; set; } = "";
         public string Scene { get; set; } = "";
+        public string TriggerEntityId { get; set; } = "";
     }
 
     public static class Action
@@ -81,6 +82,8 @@ namespace ScriptLibrary
         public string Id { get; set; } = "";
         public string Name { get; set; } = "";
         public string Description { get; set; } = "";
+        public string TriggerDescription { get; set; } = "";
+        public bool TriggerGameOver { get; set; } = false;
         public bool Dead { get; set; } = false;
         public bool ShowDescriptionWhenDead { get; set; } = true;
         public List<string> KillBy { get; set; } = new List<string>();
@@ -131,6 +134,14 @@ namespace ScriptLibrary
             foreach (Exit exit in Exits)
                 if (exit.Name == exitName)
                     return exit.Scene;
+            return null;
+        }
+
+        public string GetExitTriggerEntity(string exitName)
+        {
+            foreach (Exit exit in Exits)
+                if (exit.Name == exitName)
+                    return exit.TriggerEntityId;
             return null;
         }
         
@@ -200,6 +211,17 @@ namespace ScriptLibrary
         {
             foreach (Entity entity in Entities)
                 if (entity.Name.ToLower() == entityName.ToLower())
+                    return entity;
+            return null;
+        }
+
+        public Entity EntityById(string entityId)
+        {
+            if (entityId == null)
+                return null;
+
+            foreach (Entity entity in Entities)
+                if (entity.Id == entityId)
                     return entity;
             return null;
         }
