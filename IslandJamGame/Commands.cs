@@ -6,6 +6,7 @@
         public static readonly string CHECK = "check";
         public static readonly string OPEN = "open";
         public static readonly string TAKE = "take";
+        public static readonly string READ = "read";
     }
 
     public class Arguments

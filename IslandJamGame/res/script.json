@@ -36,6 +36,7 @@
           ]
         }
       ],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -71,6 +72,7 @@
           ]
         }
       ],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -95,6 +97,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -104,32 +107,6 @@
         "The bathroom is dark and really small. There is nothing of interest here. There appears to be a wrinkled NOTE in the trash can. ITEM_DESCRIPTIONS",
         "",
         "You can GO back to the ROOM you came from."
-      ],
-      "Items": [
-        {
-          "Id": "ITEM_NOTE",
-          "Name": "Note",
-          "Labels": [
-            "Note"
-          ],
-          "Description": "There appears to be a wrinkled NOTE in the trash can.",
-          "InventoryDescription": "The note is from your friend; you recognize their handwriting.",
-          "Actions": [
-            {
-              "Action":  "ACTION_READ",
-              "Text": "The note reads: \"What is this feeling? I shouldn't have gone near that person at the party. I guess I'll I have no choice than to be honest w ht\"... The note ends abruptly."
-            }
-          ]
-        },
-        {
-          "Id": "ITEM_BROKEN_BOTTLE",
-          "Name": "Brk. Bottle",
-          "Labels": [
-            "Bottle"
-          ],
-          "Description": "There is a broken BOTTLE on the sink.",
-          "InventoryDescription": "You don't drink so this bottle was left and broken by your friend."
-        }
       ],
       "SceneId": "SCENE_BUNGALOW_BATHROOM",
       "Title": "INT. BUNGALOW BATHROOM - NIGHT",
@@ -143,6 +120,33 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [
+        {
+          "Id": "ITEM_NOTE",
+          "Name": "Note",
+          "Description": "There appears to be a wrinkled NOTE in the trash can.",
+          "InventoryDescription": "The note is from your friend; you recognize their handwriting.",
+          "Actions": [
+            {
+              "Action": "ACTION_READ",
+              "Text": "The note reads: \"What is this feeling? I shouldn't have gone near that person at the party. I guess I'll I have no choice than to be honest w ht\"... The note ends abruptly."
+            }
+          ],
+          "Labels": [
+            "Note"
+          ]
+        },
+        {
+          "Id": "ITEM_BROKEN_BOTTLE",
+          "Name": "Brk. Bottle",
+          "Description": "There is a broken BOTTLE on the sink.",
+          "InventoryDescription": "You don't drink so this bottle was left and broken by your friend.",
+          "Actions": [],
+          "Labels": [
+            "Bottle"
+          ]
+        }
+      ],
       "HasOptions": false
     },
     {
@@ -171,14 +175,15 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
       "text": [
-        "Bungalow room"
+        "The bungalow is much like yours but it smells nicer. You clearly got ripped off."
       ],
       "SceneId": "SCENE_NEIGHBOUR_BUNGALOW_ROOM",
-      "Title": "???",
+      "Title": "INT. NEIGHBOUR BUNGALOW - NIGHT",
       "NextScene": "",
       "Options": [],
       "Exits": [
@@ -189,6 +194,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -212,6 +218,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -236,6 +243,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -252,6 +260,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -272,6 +281,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -290,11 +300,14 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
       "text": [
         "The village road promenade is a paved road that you remember taking from the harbor past the gas station to the bungalow yesterday when you arrived. You can see the harbor from here.",
+        "",
+        "You spot the JEEP that you rented yesterday. It has crashed into one of the houses. There is smoke coming from the JEEP.",
         "",
         "You can reach the harbor by going to the BEACH or you can go back to the gas STATION."
       ],
@@ -314,6 +327,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     },
     {
@@ -336,6 +350,7 @@
       ],
       "Containers": [],
       "Objects": [],
+      "Items": [],
       "HasOptions": false
     }
   ]

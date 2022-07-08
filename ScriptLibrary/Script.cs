@@ -53,6 +53,14 @@ namespace ScriptLibrary
                     return true;
             return false;
         }
+
+        public ItemAction GetAction(string actionId)
+        {
+            foreach (ItemAction action in Actions)
+                if (action.Action == actionId)
+                    return action;
+            return null;
+        }
     }
 
     public class Container

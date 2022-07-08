@@ -1,22 +1,26 @@
 ﻿using ScriptLibrary;
 using System;
+using System.Collections.Generic;
 
 namespace IslandJamGame
 {
     public interface ParseCallback
     {
+        void OnPrint(string text);
         bool HasPreviousScene();
         void OnPreviousScene();
         void OnExitScene(string sceneId, string exit);
         void OnCheckDescription(string objectName);
         void OnTakeItem(string itemLabel);
+        void OnReadItem(Item item, ItemAction action, string label);
     }
 
     public class InputParser
     {
         public ParseCallback Callback { get; set; }
-        public Scene ActiveScene { get; set; }
         public bool Done { get; set; } = false;
+        public Scene ActiveScene { get; set; }
+        public List<Item> Inventory { get; set; }
 
         public InputParser(ParseCallback callback)
         {
@@ -45,6 +49,8 @@ namespace IslandJamGame
             if (ParseCHECK(command, arguments))
                 Done = true;
             if (ParseTAKE(command, arguments))
+                Done = true;
+            if (ParseActionREAD(command, arguments))
                 Done = true;
         }
 
@@ -121,9 +127,9 @@ namespace IslandJamGame
             return false;
         }
 
-        protected bool ParseTAKE(string commands, string[] arguments)
+        protected bool ParseTAKE(string command, string[] arguments)
         {
-            if (commands != Commands.TAKE)
+            if (command != Commands.TAKE)
                 return false;
 
             if (arguments.Length == 0)
@@ -140,6 +146,59 @@ namespace IslandJamGame
                 return false;
             }
 
+            return false;
+        }
+
+        protected bool ParseActionREAD(string command, string[] arguments)
+        {
+            if (command != Commands.READ)
+                return false;
+
+            if (arguments.Length == 0)
+            {
+                Console.WriteLine("Read what?");
+                return false;
+            }
+
+            string itemLabel = arguments[0];
+            bool actionReadTaken = false;
+
+            // Check for item in inventory first.
+            foreach (Item item in Inventory)
+                foreach (string label in item.Labels)
+                {
+                    if (label.ToLower() == itemLabel.ToLower())
+                    {
+                        ItemAction action = item.GetAction("ACTION_READ");
+                        Callback.OnReadItem(item, action, label);
+                        actionReadTaken = true;
+                        break;
+                    }
+
+                    if (actionReadTaken)
+                        break;
+                }
+
+            if (!actionReadTaken) 
+            {
+                foreach (Item item in ActiveScene.Items)
+                    foreach (string label in item.Labels)
+                    {
+                        if (label.ToLower() == itemLabel.ToLower())
+                            if (item.HasAction("ACTION_READ"))
+                            {
+                                ItemAction action = item.GetAction("ACTION_READ");
+                                Callback.OnReadItem(item, action, label);
+                                actionReadTaken = true;
+                                break;
+                            }
+
+                    }
+            }
+
+            if (!actionReadTaken)
+                Callback.OnPrint("You can't do that.");
+            
             return false;
         }
     }

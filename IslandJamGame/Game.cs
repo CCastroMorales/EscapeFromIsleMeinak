@@ -17,13 +17,12 @@ namespace IslandJamGame
         public Scene PreviousScene { get; set; }
         public bool Running { get; set; } = true;
         public int DefaultSleepMillis { get; set; } = 100;
-        public int DefaultTitleSleepMillis { get; set; } = 1000;
         public Scene Scene { get; set; }
         public bool FastForward { get; set; } = false;
         public ConsoleColor DefaultConsoleColor { get; } = Console.ForegroundColor;
         public Random random { get; } = new Random();
-        protected int TextPos { get; set; } = 0;
-        protected int TextPosY { get; set; } = 0;
+        protected int TextMarginLeft { get; set; } = 0;
+        protected int TextMarginTop { get; set; } = 0;
         public bool Debug { get; set; } = false;
 
         public Game(string[] args)
@@ -94,19 +93,23 @@ namespace IslandJamGame
         private void ParseInput(Scene scene)
         {
             Parser.Reset();
+            Parser.Inventory = Inventory;
             bool requireInput = true;
 
             while (!Parser.Done)
             {
+
                 Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.CursorLeft = TextMarginLeft;
                 Console.Write('»');
                 string input = Console.ReadLine().Trim();
                 Console.ForegroundColor = DefaultConsoleColor;
 
-                if (Debug && input.Split().Length == 2 && input.Split(' ')[0] == "debug.scene")
+                if (Debug && input.Split().Length == 2 && input.Split(' ')[0] == "debug.load")
                 {
-                    LoadScene(input);
-                    break;
+                    string sceneId = input.Split(' ')[1];
+                    LoadScene(sceneId);
+                    return;
                 } else
                     Parser.Parse(input, scene);
                 
@@ -184,24 +187,10 @@ namespace IslandJamGame
 
         private void PrintSceneTitle(Scene scene)
         {
-            /*Console.WriteLine($"{Console.BufferWidth}");
-
-            int x = 0;
-
-            for (int i = 0; i < Console.BufferWidth; i++)
-            {
-                Console.Write(x);
-                Thread.Sleep(10);
-
-                x++;
-
-                if (x >= 10)
-                    x = 0;
-            }*/
-
             string[] words = scene.Title.Split(' ');
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.SetCursorPosition(TextMarginLeft, 0);
             foreach (string word in words)
             {
                 Console.Write($"{word} ");
@@ -210,7 +199,7 @@ namespace IslandJamGame
             }
             Console.WriteLine("");
             Console.ForegroundColor = DefaultConsoleColor;
-            Thread.Sleep(DefaultTitleSleepMillis);
+            Thread.Sleep(Timing.SleepTitleDuration);
         }
 
         private void GameOver()
@@ -225,44 +214,50 @@ namespace IslandJamGame
 
         private void PlayScene(Scene scene)
         {
+            PrintInventory(true);
             PrintSceneTitle(scene);
-            PrintInventory();
             PrintText(scene.text);
         }
 
-        private void PrintInventory()
+        private void PrintInventory(bool show)
         {
+            // Allow the margins to be set even if we're not displaying the inventory.
+
             int invWidth = 15;
             int ih = 10;
-            TextPos = invWidth + 1;
-            TextPosY = 2;
+            TextMarginLeft = invWidth + 1;
+            TextMarginTop = 2;
+
+            if (!show)
+                return;
 
             string title = "INVENTORY";
             bool evenPadding = (invWidth - title.Length - 2) % 2 == 0;
             int padding = (invWidth - title.Length - 2) / 2;
 
-            Console.SetCursorPosition(0,1);
+            Console.SetCursorPosition(0, 2);
+            Console.CursorVisible = false;
             Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            for (int i = 0; i < invWidth; i++)
-                Console.Write('=');
-            Console.Write('\n');
+            /*for (int i = 0; i < invWidth; i++)
+                Console.Write('═');
+            Console.Write('\n');*/
 
             // Print title
-            Console.Write('|');
+            Console.Write('╔');
 
             for (int i = 0; i < padding; i++)
-                Console.Write(' ');
+                Console.Write('═');
 
             for (int i = 0; i < title.Length; i++)
                 Console.Write(title[i]);
 
             // Assumes 15 width
             for (int i = 0; i < padding - 1; i++)
-                Console.Write(' ');
+                Console.Write('═');
 
-            Console.Write(' ');
-            Console.Write('|');
+            Console.Write('═');
+            Console.Write('╗');
             Console.Write('\n');
 
             // Print items
@@ -271,7 +266,7 @@ namespace IslandJamGame
             {
                 padding = invWidth - item.Name.Length - 3;
                 
-                Console.Write('|');
+                Console.Write('║');
                 Console.Write(' ');
 
                 Console.ForegroundColor = DefaultConsoleColor;
@@ -282,7 +277,7 @@ namespace IslandJamGame
                 for (int i = 0; i < padding; i++)
                     Console.Write(' ');
 
-                Console.Write('|');
+                Console.Write('║');
                 Console.Write('\n');   
             }
 
@@ -292,18 +287,27 @@ namespace IslandJamGame
             
             for (int i = 0; i < numEmptyLines; i++)
             {
-                Console.Write('|');
+                Console.Write('║');
                 for (int j = 0; j < invWidth - 2; j++)
                     Console.Write('\u0000');
-                Console.Write('|');
+                Console.Write('║');
                 Console.Write('\n');
             }
 
+            // Bottom line
             for (int i = 0; i < invWidth; i++)
-                Console.Write('=');
+            {
+                if (i == 0)
+                    Console.Write('╚');
+                else if (i == invWidth - 1)
+                    Console.Write('╝');
+                else
+                    Console.Write('═');
+            }
             Console.Write('\n');
 
             Console.ForegroundColor = DefaultConsoleColor;
+            Console.CursorVisible = true;
         }
 
         private void PrintText(List<string> lines)
@@ -313,13 +317,12 @@ namespace IslandJamGame
 
         private void PrintText(string[] lines)
         {
-            Console.CursorLeft = TextPos;
-            Console.CursorTop = TextPosY;
-            int pos = TextPos;
+            Console.CursorLeft = TextMarginLeft;
+            Console.CursorTop = TextMarginTop;
 
-            foreach (string t in lines)
+            foreach (string originalText in lines)
             {
-                string text = InsertItemDescriptions(Scene, t);
+                string text = InsertItemDescriptions(Scene, originalText);
 
                 string[] words = text.Split(' ');
 
@@ -330,38 +333,17 @@ namespace IslandJamGame
                     else
                         Console.ForegroundColor = DefaultConsoleColor;
 
-                    /*foreach (Char c in word)
-                    {
-                        Console.Write(c);
-
-                        if (c == '.' || c == ',' || c == ';' || c == ':' || c == '?' || c == '"')
-                        {
-                            if (!FastForward)
-                                Thread.Sleep(random.Next(500,750));
-                        }
-                        else
-                        {
-                            if (!FastForward)
-                            Thread.Sleep(10);
-                        }
-                    }*/
-
                     int x = Console.CursorLeft;
                     int y = Console.CursorTop;
+                    int length = x + word.Length + 1;
 
-                    //Console.SetCursorPosition(0, 0);
-                    //Console.WriteLine($"{Console.BufferWidth}:{pos} {x},{y}                         ");
-
-                    pos += word.Length + ' ';
-
-                    if (x + word.Length + 1 > Console.BufferWidth)
+                    if (length >= Console.BufferWidth)
                     {
-                        x = TextPos;
+                        x = TextMarginLeft;
                         y += 1;
                     }
 
                     Console.SetCursorPosition(x, y);
-                    //Console.Write(word);
 
                     if (word.Length > 0)
                     {
@@ -369,30 +351,25 @@ namespace IslandJamGame
                         {
                             Console.Write(c);
 
-                            //Char lastChar = word[word.Length - 1];
-
                             if (c == '.' || c == ',' || c == ';' || c == ':' || c == '?' || c == '"')
                             {
                                 if (!FastForward)
-                                    Thread.Sleep(random.Next(400, 600));
+                                    Thread.Sleep(Timing.PunctuationDuration);
                             }
                             else
                             {
                                 if (!FastForward)
-                                    Thread.Sleep(12);
+                                    Thread.Sleep(Timing.SleepCharDuration);
                             }
                         }
                     }
 
                     Console.Write(' ');
-                    //Console.Write("\n");
-                    //Console.WriteLine("");
                 }
 
-                //Console.WriteLine(text);
                 Console.Write("\n");
                 Console.WriteLine("");
-                Console.SetCursorPosition(TextPos, Console.CursorTop);
+                Console.SetCursorPosition(TextMarginLeft, Console.CursorTop);
                 Thread.Sleep(DefaultSleepMillis);
             }
         }
@@ -423,8 +400,51 @@ namespace IslandJamGame
             }
         }
 
+        private void PrintLine(string text)
+        {
+            int x = TextMarginLeft;
+            int y = Console.CursorTop;
+
+            Console.SetCursorPosition(x, y);
+
+            string[] words = text.Split(' ');
+            foreach (string word in words)
+            {
+                x = Console.CursorLeft;
+                y = Console.CursorTop;
+
+                if (x + word.Length + 1 > Console.BufferWidth)
+                {
+                    x = TextMarginLeft;
+                    y += 1;
+                    Console.SetCursorPosition(x, y);
+                }
+
+                foreach (Char c in word)
+                {
+                    Console.Write(c);
+
+                    if (c == '.' || c == ',' || c == ';' || c == ':' || c == '?' || c == '"')
+                    {
+                        if (!FastForward)
+                            Thread.Sleep(Timing.PunctuationDuration);
+                    }
+                    else
+                    {
+                        if (!FastForward)
+                            Thread.Sleep(Timing.SleepCharDuration);
+                    }
+                }
+
+                Console.Write(' ');
+            }
+
+            Console.Write('\n');
+        }
+
         private void Clear()
         {
+            Console.CursorVisible = false;
             //Console.Clear();
             for (int y = 0; y < Console.WindowHeight; y++)
             {
@@ -441,6 +461,7 @@ namespace IslandJamGame
                 Thread.Sleep(1);
             }
             Console.Clear();
+            Console.CursorVisible = true;
         }
 
         private void LoadScene(string sceneId)
@@ -456,6 +477,11 @@ namespace IslandJamGame
         }
 
         /* Callbacks from InputParser */
+
+        public void OnPrint(string text)
+        {
+            PrintLine(text);
+        }
 
         public bool HasPreviousScene()
         {
@@ -497,8 +523,13 @@ namespace IslandJamGame
             int x = Console.CursorLeft;
             int y = Console.CursorTop;
 
-            PrintInventory();
+            PrintInventory(true);
             Console.SetCursorPosition(x, y);
+        }
+
+        public void OnReadItem(Item item, ItemAction action, string label)
+        {
+            PrintLine(action.Text);
         }
     }
 }
