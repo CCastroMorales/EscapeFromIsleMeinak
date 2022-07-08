@@ -9,6 +9,7 @@
         public static readonly string READ = "read";
         public static readonly string HIT = "hit";
         public static readonly string PUNCH = "punch";
+        public static readonly string USE = "use";
     }
 
     public class Arguments

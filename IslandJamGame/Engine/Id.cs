@@ -18,6 +18,7 @@
         ITEM_JEEP_KEY,
         /* Actions */
         ACTION_READ,
+        ACTION_USE,
         /* Entities */
         ENTITY_BUNGALOW_RAT,
         ENTITY_BUNGALOW_SHADOWY_ZOMBIE

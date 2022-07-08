@@ -95,11 +95,12 @@ namespace IslandJamGame.Engine
             Entities.Add(entity);
         }
 
-        public Entity FindEntity(string entityName)
+        public Entity FindEntity(string searchLabel)
         {
             foreach (Entity entity in Entities)
-                if (entity.Name.ToLower() == entityName.ToLower())
-                    return entity;
+                foreach (string label in entity.Labels)
+                    if (label.ToLower() == searchLabel.ToLower())
+                        return entity;
             return null;
         }
 

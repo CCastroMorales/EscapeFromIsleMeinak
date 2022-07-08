@@ -13,6 +13,7 @@ namespace IslandJamGame
         void OnTakeItem(Item item, string itemLabel);
         void OnReadItem(Item item, ItemAction action, string label);
         void OnPunchEntity(Entity entity, string entityName);
+        void OnUse(Item item, string itemName, string target);
     }
 
     public class InputParser
@@ -53,6 +54,8 @@ namespace IslandJamGame
             if (ParseActionREAD(command, arguments))
                 Done = true;
             if (ParseActionHIT(command, arguments))
+                Done = true;
+            if (ParseActionUSE(command, arguments))
                 Done = true;
         }
 
@@ -212,6 +215,52 @@ namespace IslandJamGame
                 Callback.OnPunchEntity(entity, arguments[0]);
             }
 
+            return false;
+        }
+
+        private bool ParseActionUSE(string command, string[] arguments)
+        {
+            if (command != Commands.USE)
+                return false;
+
+            if (arguments.Length == 0)
+            {
+                Callback.OnPrint("What do you want to use it on?");
+                return false;
+            }
+
+            if (arguments.Length == 1)
+            {
+                Callback.OnPrint("What do you want to use it on?");
+                return false;
+            }
+
+            if (arguments.Length >= 2)
+            {
+                string itemName = arguments[0];
+                string target = arguments[1];
+
+                // Check for "on" preposition
+                if (arguments.Length >= 3 && arguments[1].ToLower() == "on")
+                    target = arguments[2];
+
+                // Check for item in inventory first
+                Item item = FindItem(Inventory, itemName);
+
+                if (item != null)
+                    Callback.OnUse(item, itemName, target);
+                else
+                {
+                    item = ActiveScene.FindItem(itemName);
+
+                    if (item != null)
+                        Callback.OnUse(item, itemName, target);
+                }
+
+                return false;
+            }
+
+            Callback.OnPrint($"You can't use that!");
             return false;
         }
 

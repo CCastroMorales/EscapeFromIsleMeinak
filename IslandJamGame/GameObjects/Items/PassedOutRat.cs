@@ -8,6 +8,7 @@ namespace IslandJamGame.GameObjects
         {
             Id = Id.ITEM_PASSED_OUT_RAT;
             Name = "Rat";
+            InventoryLabel = "Rat";
             Type = ItemType.MEAT;
             Name = "Psd.out. Rat";
             Description = "There is a passed out RAT on the floor";

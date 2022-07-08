@@ -6,8 +6,10 @@ namespace IslandJamGame.Engine
     {
         public Id Id { get; set; }
         public string Name { get; set; } = "";
+        public string[] Labels { get; set; } = new string[0];
         public string Description { get; set; } = "";
         public string TriggerDescription { get; set; } = "";
+        public string KilledDescription { get; set; } = "";
         public bool TriggerGameOver { get; set; } = false;
         public bool Dead { get; set; } = false;
         public bool ShowDescriptionWhenDead { get; set; } = true;

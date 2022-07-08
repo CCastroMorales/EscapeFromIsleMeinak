@@ -6,6 +6,7 @@ namespace IslandJamGame.Engine
     {
         public Id Id { get; set; }
         public string Name { get; set; } = "";
+        public string InventoryLabel { get; set; } = "";
         public ItemType Type { get; set; }
         public string Description { get; set; } = "";
         public string InventoryDescription { get; set; } = "";

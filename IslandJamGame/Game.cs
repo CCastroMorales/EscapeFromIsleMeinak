@@ -196,14 +196,15 @@ namespace IslandJamGame
             Console.ForegroundColor = ConsoleColor.DarkGray;
             foreach (Item item in Inventory)
             {
-                padding = invWidth - item.Name.Length - 3;
+                string label = item.InventoryLabel;
+                padding = invWidth - label.Length - 3;
                 
                 Console.Write('║');
                 Console.Write(' ');
 
                 Console.ForegroundColor = DefaultConsoleColor;
-                for (int i = 0; i < item.Name.Length; i++)
-                    Console.Write(item.Name[i]);
+                for (int i = 0; i < label.Length; i++)
+                    Console.Write(label[i]);
                 Console.ForegroundColor = ConsoleColor.DarkGray;
 
                 for (int i = 0; i < padding; i++)
@@ -532,6 +533,35 @@ namespace IslandJamGame
             {
                 PrintLine($"You tried to punch {entity.Name} but hit nothing but air.");
             }
+        }
+
+        public void OnUse(Item item, string itemName, string target)
+        {
+            Scene scene = Scenes.Active;
+
+            // Check if target is an entity
+            Entity entity = scene.FindEntity(target);
+
+            if (entity != null)
+            {
+                if (entity.KillBy.Contains(item.Type))
+                {
+                    PrintLine($"You use {item.Name.ToLower()} on {entity.Name.ToLower()}. {entity.KilledDescription}".Trim());
+                    Item drop = entity.Kill();
+                    // TODO: Check if remove?
+                    scene.Entities.Remove(entity);
+
+                    if (drop != null)
+                    {
+                        PrintLine(drop.Description);
+                        scene.Items.Add(drop);
+                    }
+                }
+
+                return;
+            }
+
+            PrintLine($"You can't use {item.Name} like that!");
         }
     }
 }
