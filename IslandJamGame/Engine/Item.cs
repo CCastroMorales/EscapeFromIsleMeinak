@@ -17,18 +17,10 @@ namespace IslandJamGame.Engine
             return $"{Id}: {Name}";
         }
 
-        public bool HasAction(string hasAction)
+        public ItemAction GetAction(Id actionId)
         {
             foreach (ItemAction action in Actions)
-                if (action.Action == hasAction)
-                    return true;
-            return false;
-        }
-
-        public ItemAction GetAction(string actionId)
-        {
-            foreach (ItemAction action in Actions)
-                if (action.Action == actionId)
+                if (action.Id == actionId)
                     return action;
             return null;
         }

@@ -50,8 +50,8 @@ namespace IslandJamGame
                 Done = true;*/
             if (ParseTAKE(command, arguments))
                 Done = true;
-            /*if (ParseActionREAD(command, arguments))
-                Done = true;*/
+            if (ParseActionREAD(command, arguments))
+                Done = true;
             if (ParseActionHIT(command, arguments))
                 Done = true;
         }
@@ -154,7 +154,7 @@ namespace IslandJamGame
             return false;
         }
 
-        /*protected bool ParseActionREAD(string command, string[] arguments)
+        protected bool ParseActionREAD(string command, string[] arguments)
         {
             if (command != Commands.READ)
                 return false;
@@ -169,43 +169,31 @@ namespace IslandJamGame
             bool actionReadTaken = false;
 
             // Check for item in inventory first.
-            foreach (Item item in Inventory)
-                foreach (string label in item.Labels)
-                {
-                    if (label.ToLower() == itemLabel.ToLower())
-                    {
-                        ItemAction action = item.GetAction("ACTION_READ");
-                        Callback.OnReadItem(item, action, label);
-                        actionReadTaken = true;
-                        break;
-                    }
+            Item item = FindItem(Inventory, itemLabel);
 
-                    if (actionReadTaken)
-                        break;
-                }
-
-            if (!actionReadTaken) 
+            if (item != null)
             {
-                foreach (Item item in ActiveScene.Items)
-                    foreach (string label in item.Labels)
-                    {
-                        if (label.ToLower() == itemLabel.ToLower())
-                            if (item.HasAction("ACTION_READ"))
-                            {
-                                ItemAction action = item.GetAction("ACTION_READ");
-                                Callback.OnReadItem(item, action, label);
-                                actionReadTaken = true;
-                                break;
-                            }
+                ItemAction action = item.GetAction(Id.ACTION_READ);
+                Callback.OnReadItem(item, action, itemLabel);
+                actionReadTaken = true;
+            }
+            else 
+            {
+                item = ActiveScene.FindItem(itemLabel);
 
-                    }
+                if (item != null)
+                {
+                    ItemAction action = item.GetAction(Id.ACTION_READ);
+                    Callback.OnReadItem(item, action, itemLabel);
+                    actionReadTaken = true;
+                }
             }
 
             if (!actionReadTaken)
                 Callback.OnPrint("You can't do that.");
             
             return false;
-        }*/
+        }
 
         private bool ParseActionHIT(string command, string[] arguments)
         {
@@ -225,6 +213,14 @@ namespace IslandJamGame
             }
 
             return false;
+        }
+
+        private Item FindItem(List<Item> items, string label)
+        {
+            foreach (Item item in items)
+                if (item.Labels.Contains(label.ToLower()))
+                    return item;
+            return null;
         }
     }
 }

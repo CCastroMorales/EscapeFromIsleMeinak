@@ -2,7 +2,13 @@
 {
     public class ItemAction
     {
-        public string Action { get; set; } = "";
+        public Id Id { get; set; }
         public string Text { get; set; } = "";
+
+        public ItemAction(Id id, string text)
+        {
+            Id = id;
+            Text = text;
+        }
     }
 }
