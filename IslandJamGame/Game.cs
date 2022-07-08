@@ -20,28 +20,20 @@ namespace IslandJamGame
         protected int TextMarginTop { get; set; } = 0;
         public bool Debug { get; set; } = false;
 
-        public Game(string[] args)
+        public Game()
         {
-            ParseCommandLineArguments(args);
             Parser = new InputParser(this);
-        }
-
-        private void ParseCommandLineArguments(string[] args)
-        {
-            if (args.Length > 0)
-                foreach (string arg in args)
-                {
-                    if (arg == "+ff")
-                        FastForward = true;
-                    if (arg == "+debug")
-                        Debug = true;
-                }
         }
 
         public void Run()
         {
+            TitleScreen.Display();
             Scenes.LoadFirstScene();
+            GameLoop();
+        }
 
+        private void GameLoop()
+        {
             while (Running)
             {
                 Clear();
@@ -49,7 +41,6 @@ namespace IslandJamGame
                 //PresentOptions(scene);
                 ParseInput(Scenes.Active);
             }
-
         }
 
         private void ParseInput(Scene scene)
