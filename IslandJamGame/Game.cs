@@ -483,25 +483,26 @@ namespace IslandJamGame
             PrintCheckDescription(Scene, interactiveObject);*/
         }
 
-        public void OnTakeItem(string itemLabel)
+        public void OnTakeItem(Item item, string label)
         {
-            /*if (Inventory.Count == InventoryLimit)
+            if (Inventory.Count == InventoryLimit)
             {
                 PrintLine("You can't take the item; your inventory is full.");
                 return;
             }
 
-            Item item = Scene.Take(itemLabel);
+            Scene scene = Scenes.Active;
+            scene.Items.Remove(item);
             Inventory.Add(item);
 
-            string text = $"You take the {itemLabel.ToLower()}.";
+            string text = $"You take the {label.ToLower()}.";
             PrintLine(text);
 
             int x = Console.CursorLeft;
             int y = Console.CursorTop;
 
             PrintInventory(true);
-            Console.SetCursorPosition(x, y);*/
+            Console.SetCursorPosition(x, y);
         }
 
         public void OnReadItem(Item item, ItemAction action, string label)
@@ -512,24 +513,26 @@ namespace IslandJamGame
                 PrintLine(action.Text);
         }
 
-        public void OnPunchEntity(string entityName)
+        public void OnPunchEntity(Entity entity, string entityName)
         {
-            /*Entity entity = Scene.EntityByName(entityName);
-
-            if (entity.KillBy.Contains("TYPE_MELEE"))
+            // Consider the punch a melee "item".
+            if (entity.KillBy.Contains(ItemType.MELEE))
             {
+                Scene scene = Scenes.Active;
+
                 Item drop = entity.Kill();
+                scene.Entities.Remove(entity);
 
                 if (drop != null)
                 {
                     PrintLine(drop.Description);
-                    Scene.Items.Add(drop);
+                    scene.Items.Add(drop);
                 }
             } 
             else
             {
                 PrintLine($"You tried to punch {entity.Name} but hit nothing but air.");
-            }*/
+            }
         }
     }
 }

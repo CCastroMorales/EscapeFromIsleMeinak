@@ -1,7 +1,6 @@
 ﻿using IslandJamGame.Engine;
-using System;
 
-namespace IslandJamGame.Scenes
+namespace IslandJamGame.GameObjects
 {
     public class BungalowBalcony : Scene
     {
@@ -27,6 +26,8 @@ namespace IslandJamGame.Scenes
         public override void OnLoad()
         {
             AddExit(Id.SCENE_BUNGALOW_ROOM, "room");
+            SpawnItem<Note>();
+            SpawnItem<BrokenBottle>();
         }
     }
 
@@ -41,6 +42,7 @@ namespace IslandJamGame.Scenes
         {
             AddExit(Id.SCENE_BUNGALOW_BATHROOM, "bathroom");
             AddExit(Id.SCENE_BUNGALOW_BALCONY, "outside");
+            SpawnEntity<Rat>();
         }
     }
 }

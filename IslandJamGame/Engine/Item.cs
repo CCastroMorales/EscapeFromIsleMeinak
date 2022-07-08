@@ -4,9 +4,9 @@ namespace IslandJamGame.Engine
 {
     public class Item
     {
-        public string Id { get; set; } = "";
+        public Id Id { get; set; }
         public string Name { get; set; } = "";
-        public string Type { get; set; } = "";
+        public ItemType Type { get; set; }
         public string Description { get; set; } = "";
         public string InventoryDescription { get; set; } = "";
         public List<ItemAction> Actions { get; set; } = new List<ItemAction>();

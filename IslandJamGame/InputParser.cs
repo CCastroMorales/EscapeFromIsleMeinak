@@ -10,9 +10,9 @@ namespace IslandJamGame
         void OnPreviousScene();
         void OnExitScene(Exit exit);
         void OnCheckDescription(string objectName);
-        void OnTakeItem(string itemLabel);
+        void OnTakeItem(Item item, string itemLabel);
         void OnReadItem(Item item, ItemAction action, string label);
-        void OnPunchEntity(string entityName);
+        void OnPunchEntity(Entity entity, string entityName);
     }
 
     public class InputParser
@@ -47,13 +47,13 @@ namespace IslandJamGame
             if (ParseGO(command, arguments))
                 Done = true;
             /*if (ParseCHECK(command, arguments))
-                Done = true;
+                Done = true;*/
             if (ParseTAKE(command, arguments))
                 Done = true;
-            if (ParseActionREAD(command, arguments))
-                Done = true;
-            if (ParseActionHIT(command, arguments))
+            /*if (ParseActionREAD(command, arguments))
                 Done = true;*/
+            if (ParseActionHIT(command, arguments))
+                Done = true;
         }
 
         private string[] ParseArguments(string input, out string command, out string[] arguments)
@@ -129,7 +129,7 @@ namespace IslandJamGame
             }
 
             return false;
-        }
+        }*/
 
         protected bool ParseTAKE(string command, string[] arguments)
         {
@@ -142,18 +142,19 @@ namespace IslandJamGame
                 return false;
             }
 
-            string itemLabel = arguments[0];
+            string label = arguments[0];
+            Item item = ActiveScene.FindItem(label);
 
-            if (ActiveScene.HasItem(itemLabel))
+            if (item != null)
             {
-                Callback.OnTakeItem(itemLabel);
+                Callback.OnTakeItem(item, label);
                 return false;
             }
 
             return false;
         }
 
-        protected bool ParseActionREAD(string command, string[] arguments)
+        /*protected bool ParseActionREAD(string command, string[] arguments)
         {
             if (command != Commands.READ)
                 return false;
@@ -204,7 +205,7 @@ namespace IslandJamGame
                 Callback.OnPrint("You can't do that.");
             
             return false;
-        }
+        }*/
 
         private bool ParseActionHIT(string command, string[] arguments)
         {
@@ -216,12 +217,14 @@ namespace IslandJamGame
                 Callback.OnPrint("You punch a couple of times in the air. You look very cool while doing it.");
             }
 
-            if (ActiveScene.HasEntity(arguments[0]))
+            Entity entity = ActiveScene.FindEntity(arguments[0]);
+
+            if (entity != null)
             {
-                Callback.OnPunchEntity(arguments[0]);
+                Callback.OnPunchEntity(entity, arguments[0]);
             }
 
             return false;
-        }*/
+        }
     }
 }

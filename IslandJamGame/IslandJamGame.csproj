@@ -43,13 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\ItemType.cs" />
     <Compile Include="Engine\Exit.cs" />
     <Compile Include="Engine\InteractiveObject.cs" />
     <Compile Include="Engine\ItemAction.cs" />
     <Compile Include="Engine\Item.cs" />
     <Compile Include="Engine\Entity.cs" />
+    <Compile Include="GameObjects\Entities\Rat.cs" />
+    <Compile Include="GameObjects\Items\BrokenBottle.cs" />
+    <Compile Include="GameObjects\Items\PassedOutRat.cs" />
+    <Compile Include="GameObjects\Items\Note.cs" />
     <Compile Include="SceneHandler.cs" />
-    <Compile Include="Scenes\Bungalow.cs" />
+    <Compile Include="GameObjects\Scenes\Bungalow.cs" />
     <Compile Include="Engine\Scene.cs" />
     <Compile Include="Engine\Id.cs" />
     <Compile Include="Timing.cs" />

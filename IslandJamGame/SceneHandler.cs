@@ -1,6 +1,5 @@
 ﻿using IslandJamGame.Engine;
-using IslandJamGame.Scenes;
-using System;
+using IslandJamGame.GameObjects;
 using System.Collections.Generic;
 
 namespace IslandJamGame

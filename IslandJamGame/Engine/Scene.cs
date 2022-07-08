@@ -1,4 +1,4 @@
-﻿using IslandJamGame.Scenes;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -52,6 +52,35 @@ namespace IslandJamGame.Engine
             foreach (Exit exit in Exits)
                 if (exit.Command == command)
                     return exit;
+            return null;
+        }
+
+        public void SpawnItem<T>() where T : Item, new()
+        {
+            T t = new T();
+            Item item = t;
+            Items.Add(item);
+        }
+
+        public Item FindItem(string itemLabel)
+        {
+            foreach (Item item in Items)
+                if (item.Labels.Contains(itemLabel.ToLower()))
+                    return item;
+            return null;
+        }
+
+        public void SpawnEntity<T>() where T : Entity, new()
+        {
+            Entity entity = new T();
+            Entities.Add(entity);
+        }
+
+        public Entity FindEntity(string entityName)
+        {
+            foreach (Entity entity in Entities)
+                if (entity.Name.ToLower() == entityName.ToLower())
+                    return entity;
             return null;
         }
     }
