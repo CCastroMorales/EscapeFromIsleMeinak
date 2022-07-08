@@ -33,7 +33,7 @@ namespace ScriptLibrary
         public string Text { get; set; } = "";
     }
 
-    public class Item
+    public class ItemV1
     {
         public string Id { get; set; } = "";
         public string Name { get; set; } = "";
@@ -77,7 +77,7 @@ namespace ScriptLibrary
         public List<string> Text { get; set; } = new List<string>();
     }
 
-    public class Entity
+    public class EntityV1
     {
         public string Id { get; set; } = "";
         public string Name { get; set; } = "";
@@ -87,7 +87,7 @@ namespace ScriptLibrary
         public bool Dead { get; set; } = false;
         public bool ShowDescriptionWhenDead { get; set; } = true;
         public List<string> KillBy { get; set; } = new List<string>();
-        public Item DropItem { get; set; } = null;
+        public ItemV1 DropItem { get; set; } = null;
         public bool HasDropItem { get => DropItem != null; }
 
         public override string ToString()
@@ -95,14 +95,14 @@ namespace ScriptLibrary
             return Id;
         }
 
-        public Item Kill()
+        public ItemV1 Kill()
         {
             Dead = true;
             return DropItem;
         }
     }
 
-    public class Scene
+    public class SceneV1
     {
         public string SceneId { get; set; } = "";
         public string Title { get; set; } = "";
@@ -112,8 +112,8 @@ namespace ScriptLibrary
         public List<Exit> Exits { get; set; } = new List<Exit>();
         public List<Container> Containers { get; set; } = new List<Container>();
         public List<InteractiveObject> Objects { get; set; } = new List<InteractiveObject>();
-        public List<Item> Items { get; set; } = new List<Item>();
-        public List<Entity> Entities { get; set; } = new List<Entity>();
+        public List<ItemV1> Items { get; set; } = new List<ItemV1>();
+        public List<EntityV1> Entities { get; set; } = new List<EntityV1>();
         public bool HasOptions { get => Options.Count > 0; }
 
         public override string ToString()
@@ -179,20 +179,20 @@ namespace ScriptLibrary
 
         public bool HasItem(string itemLabel)
         {
-            foreach (Item item in Items)
+            foreach (ItemV1 item in Items)
                 foreach (string label in item.Labels)
                     if (label.ToLower() == itemLabel.ToLower())
                         return true;
             return false;
         }
 
-        public Item Take(string itemLabel)
+        public ItemV1 Take(string itemLabel)
         {
-            foreach (Item item in Items)
+            foreach (ItemV1 item in Items)
                 foreach (string label in item.Labels)
                     if (label.ToLower() == itemLabel.ToLower())
                     {
-                        Item takenItem = item;
+                        ItemV1 takenItem = item;
                         Items.Remove(item);
                         return takenItem;
                     }
@@ -201,26 +201,26 @@ namespace ScriptLibrary
 
         public bool HasEntity(string entityName)
         {
-            foreach (Entity entity in Entities)
+            foreach (EntityV1 entity in Entities)
                 if (entity.Name.ToLower() == entityName.ToLower())
                     return true;
             return false;
         }
 
-        public Entity EntityByName(string entityName)
+        public EntityV1 EntityByName(string entityName)
         {
-            foreach (Entity entity in Entities)
+            foreach (EntityV1 entity in Entities)
                 if (entity.Name.ToLower() == entityName.ToLower())
                     return entity;
             return null;
         }
 
-        public Entity EntityById(string entityId)
+        public EntityV1 EntityById(string entityId)
         {
             if (entityId == null)
                 return null;
 
-            foreach (Entity entity in Entities)
+            foreach (EntityV1 entity in Entities)
                 if (entity.Id == entityId)
                     return entity;
             return null;
@@ -229,11 +229,11 @@ namespace ScriptLibrary
 
     public class Script
     {
-        public List<Scene> Scenes = new List<Scene>();
+        public List<SceneV1> Scenes = new List<SceneV1>();
 
         public bool SceneExists(string sceneId)
         {
-            foreach (Scene scene in Scenes)
+            foreach (SceneV1 scene in Scenes)
                 if (scene.SceneId == sceneId)
                     return true;
             return false;

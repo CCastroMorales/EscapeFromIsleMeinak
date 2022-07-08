@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Exit.cs" />
+    <Compile Include="Engine\InteractiveObject.cs" />
+    <Compile Include="Engine\ItemAction.cs" />
+    <Compile Include="Engine\Item.cs" />
+    <Compile Include="Engine\Entity.cs" />
+    <Compile Include="SceneHandler.cs" />
+    <Compile Include="Scenes\Bungalow.cs" />
+    <Compile Include="Engine\Scene.cs" />
+    <Compile Include="Engine\Id.cs" />
     <Compile Include="Timing.cs" />
     <Compile Include="InputParser.cs" />
     <Compile Include="Commands.cs" />
@@ -61,13 +67,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="res\script_old.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\script.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="res\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="res\SCENE_BUNGALOW_ROOM.txt" />
+    <EmbeddedResource Include="res\SCENE_BUNGALOW_BATHROOM.txt" />
+    <EmbeddedResource Include="res\SCENE_TEST.txt" />
+    <EmbeddedResource Include="res\SCENE_BUNGALOW_BALCONY.txt" />
     <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>

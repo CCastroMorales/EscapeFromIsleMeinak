@@ -1,23 +1,18 @@
-﻿using Newtonsoft.Json;
-using ScriptLibrary;
+﻿using IslandJamGame.Engine;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 
 namespace IslandJamGame
 {
     public class Game : ParseCallback
     {
+        public SceneHandler Scenes { get; } = new SceneHandler();
         public InputParser Parser { get; set; }
-        public Script Script { get; set; }
         public List<Item> Inventory { get; set; } = new List<Item>();
         public int InventoryLimit { get; set; } = 6;
-        public Scene PreviousScene { get; set; }
         public bool Running { get; set; } = true;
         public int DefaultSleepMillis { get; set; } = 100;
-        public Scene Scene { get; set; }
         public bool FastForward { get; set; } = false;
         public ConsoleColor DefaultConsoleColor { get; } = Console.ForegroundColor;
         public Random random { get; } = new Random();
@@ -28,9 +23,6 @@ namespace IslandJamGame
         public Game(string[] args)
         {
             ParseCommandLineArguments(args);
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            LoadData();
-
             Parser = new InputParser(this);
         }
 
@@ -46,46 +38,16 @@ namespace IslandJamGame
                 }
         }
 
-        private void LoadData()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            string[] names = assembly.GetManifestResourceNames();
-            using (var stream = assembly.GetManifestResourceStream("IslandJamGame.res.script.json"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    string json = reader.ReadToEnd();
-                    Script = JsonConvert.DeserializeObject<Script>(json);
-                }
-            }
-
-            //string json = File.ReadAllText("res/script/script.json");
-        }
-
-        // https://denhamcoder.net/2018/08/25/embedding-net-assemblies-inside-net-assemblies/
-        static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("IslandJamGame.res.Newtonsoft.Json.dll"))
-            {
-                var assemblyData = new Byte[stream.Length];
-                stream.Read(assemblyData, 0, assemblyData.Length);
-                return Assembly.Load(assemblyData);
-            }
-        }
-
         public void Run()
         {
-            Scene = Script.Scenes[0];
-
-            //Console.WriteLine($"{Console.WindowWidth}");
-            //Console.WriteLine($"{Console.WindowHeight}");
+            Scenes.LoadFirstScene();
 
             while (Running)
             {
                 Clear();
-                PlayScene(Scene);
-                PresentOptions(Scene);
-                ParseInput(Scene);
+                PlayScene(Scenes.Active);
+                //PresentOptions(scene);
+                ParseInput(Scenes.Active);
             }
 
         }
@@ -94,87 +56,22 @@ namespace IslandJamGame
         {
             Parser.Reset();
             Parser.Inventory = Inventory;
-            bool requireInput = true;
 
             while (!Parser.Done)
             {
-
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.CursorLeft = TextMarginLeft;
                 Console.Write('»');
                 string input = Console.ReadLine().Trim();
                 Console.ForegroundColor = DefaultConsoleColor;
 
-                if (Debug && input.Split().Length == 2 && input.Split(' ')[0] == "debug.load")
+                /*if (Debug && input.Split().Length == 2 && input.Split(' ')[0] == "debug.load")
                 {
                     string sceneId = input.Split(' ')[1];
                     LoadScene(sceneId);
                     return;
-                } else
-                    Parser.Parse(input, scene);
-                
-                requireInput = false;
-            }
-
-            /*if (!scene.HasOptions)
-            {
-                Console.ReadLine();
-
-                if (scene.NextScene == "GAME_OVER")
-                    GameOver();
-                else
-                    LoadNextScene(scene.NextScene);
-                return;
-            }*/
-
-            while (requireInput)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write("> ");
-                string input = Console.ReadLine().Trim();
-                Console.ForegroundColor = DefaultConsoleColor;
-
-                string[] args = input.Split(' ');
-
-                for (int i = 0; i < args.Length; i++)
-                    args[i] = args[i].Trim();
-                
-                string cmd;
-                string argument = "";
-
-
-                if (args.Length == 1)
-                    cmd = input.ToLower();
-                else
-                {
-                    cmd = args[0];
-                    argument = args[1];
-                }
-
-
-                if (cmd == Commands.OPEN)
-                {
-                    if (args.Length <= 1)
-                        Console.WriteLine("Open what?");
-                    else if (Scene.HasContainer(argument))
-                    {
-                        Container container = scene.Container(argument);
-                        foreach (string item in container.Items)
-                            Console.WriteLine(item);
-                        return;
-                    }
-                }
-
-                /*else if (scene.HasOptions)
-                    foreach (Option option in Scene.Options)
-                        if (cmd != "" && option.Command == cmd)
-                        {
-                            LoadNextScene(option.NextScene);
-                            validInput = true;
-                            return;
-                        }*/
-                else
-                    Console.WriteLine(">>> Error: Command expected.");
+                } else*/
+                Parser.Parse(input, scene);
             }
         }
 
@@ -252,15 +149,14 @@ namespace IslandJamGame
 
             Console.CursorVisible = true;
 
-            Scene = PreviousScene;
-            PreviousScene = null;
+            Scenes.RestorePreviousScene();
         }
 
         private void PlayScene(Scene scene)
         {
             PrintInventory(true);
             PrintSceneTitle(scene);
-            PrintText(scene.text);
+            PrintText(scene.Text);
         }
 
         private void PrintInventory(bool show)
@@ -268,7 +164,6 @@ namespace IslandJamGame
             // Allow the margins to be set even if we're not displaying the inventory.
 
             int invWidth = 15;
-            int ih = 10;
             TextMarginLeft = invWidth + 1;
             TextMarginTop = 2;
 
@@ -366,8 +261,9 @@ namespace IslandJamGame
 
             foreach (string originalText in lines)
             {
-                string textWithItemDesc = InsertItemDescriptions(Scene, originalText);
-                string text = InsertEntityDescriptions(Scene, textWithItemDesc);
+                string textWithItemDesc = InsertItemDescriptions(Scenes.Active, originalText);
+                string text = InsertEntityDescriptions(Scenes.Active, textWithItemDesc);
+                text = text.Replace("\r","");
                 text = text.Replace("  ", " ");
 
                 string[] words = text.Split(' ');
@@ -387,9 +283,8 @@ namespace IslandJamGame
                     {
                         x = TextMarginLeft;
                         y += 1;
+                        Console.SetCursorPosition(x, y);
                     }
-
-                    Console.SetCursorPosition(x, y);
 
                     if (word.Length > 0)
                     {
@@ -414,7 +309,6 @@ namespace IslandJamGame
                 }
 
                 Console.Write("\n");
-                Console.WriteLine("");
                 Console.SetCursorPosition(TextMarginLeft, Console.CursorTop);
                 Thread.Sleep(DefaultSleepMillis);
             }
@@ -424,7 +318,7 @@ namespace IslandJamGame
         {
             string descriptions = "";
 
-            foreach (Item item in Scene.Items)
+            foreach (Item item in scene.Items)
                 descriptions += item.Description + " ";
 
             return text.Replace("ITEM_DESCRIPTIONS", descriptions.Trim()); ;
@@ -456,13 +350,13 @@ namespace IslandJamGame
             return true;
         }
 
-        private void PresentOptions(Scene scene)
+        /*private void PresentOptions(SceneV1 scene)
         {
             foreach (Option option in scene.Options)
             {
                 Console.WriteLine(option.text);
             }
-        }
+        }*/
 
         private void PrintLine(string text)
         {
@@ -549,18 +443,6 @@ namespace IslandJamGame
             Console.CursorVisible = true;
         }
 
-        private void LoadScene(string sceneId)
-        {
-            foreach (Scene scene in Script.Scenes)
-                if (scene.SceneId == sceneId)
-                {
-                    PreviousScene = Scene;
-                    Scene = scene;
-                    return;
-                }
-            Scene = null;
-        }
-
         /* Callbacks from InputParser */
 
         public void OnPrint(string text)
@@ -570,21 +452,20 @@ namespace IslandJamGame
 
         public bool HasPreviousScene()
         {
-            return PreviousScene != null;
+            return Scenes.Previous != null;
         }
 
         public void OnPreviousScene()
         {
-            Scene currentScene = Scene;
-            Scene = PreviousScene;
-            PreviousScene = currentScene;
+            Scenes.LoadPreviousScene();
         }
 
-        public void OnExitScene(string sceneId, string exit, string triggerEntityId)
+        public void OnExitScene(Exit exit)
         {
-            Entity entity = Scene.EntityById(triggerEntityId);
+            //Entity entity = Scene.EntityById(triggerEntityId);
+            Entity entity = null;
 
-            if (triggerEntityId != null && entity != null)
+            if (entity != null)
             {
                 PrintLine(entity.TriggerDescription);
                 PrintEnterToContinue();
@@ -593,18 +474,18 @@ namespace IslandJamGame
                     GameOver();
             }
             else
-                LoadScene(sceneId);
+                Scenes.LoadScene(exit.Destination);
         }
 
         public void OnCheckDescription(string objectName)
         {
-            InteractiveObject interactiveObject = Scene.ObjectbyName(objectName);
-            PrintCheckDescription(Scene, interactiveObject);
+            /*InteractiveObject interactiveObject = Scene.ObjectbyName(objectName);
+            PrintCheckDescription(Scene, interactiveObject);*/
         }
 
         public void OnTakeItem(string itemLabel)
         {
-            if (Inventory.Count == InventoryLimit)
+            /*if (Inventory.Count == InventoryLimit)
             {
                 PrintLine("You can't take the item; your inventory is full.");
                 return;
@@ -620,7 +501,7 @@ namespace IslandJamGame
             int y = Console.CursorTop;
 
             PrintInventory(true);
-            Console.SetCursorPosition(x, y);
+            Console.SetCursorPosition(x, y);*/
         }
 
         public void OnReadItem(Item item, ItemAction action, string label)
@@ -633,7 +514,7 @@ namespace IslandJamGame
 
         public void OnPunchEntity(string entityName)
         {
-            Entity entity = Scene.EntityByName(entityName);
+            /*Entity entity = Scene.EntityByName(entityName);
 
             if (entity.KillBy.Contains("TYPE_MELEE"))
             {
@@ -648,7 +529,7 @@ namespace IslandJamGame
             else
             {
                 PrintLine($"You tried to punch {entity.Name} but hit nothing but air.");
-            }
+            }*/
         }
     }
 }

@@ -123,7 +123,7 @@ namespace ScriptEditor
         {
             NodeScenes.Nodes.Clear();
 
-            foreach (Scene scene in script.Scenes)
+            foreach (SceneV1 scene in script.Scenes)
             {
                 TreeNode sceneNode = BuildSceneNode(scene);
                 NodeScenes.Nodes.Add(sceneNode);
@@ -132,7 +132,7 @@ namespace ScriptEditor
             NodeScenes.Expand();
         }
 
-        private TreeNode BuildSceneNode(Scene scene)
+        private TreeNode BuildSceneNode(SceneV1 scene)
         {
             TreeNode sceneNode = new TreeNode(scene.SceneId);
             sceneNode.ImageIndex = 1;
@@ -175,7 +175,7 @@ namespace ScriptEditor
             }*/
         }
 
-        private void ShowSceneTextInTextbox(Scene scene)
+        private void ShowSceneTextInTextbox(SceneV1 scene)
         {
             textBox2.Tag = null;
             textBox2.Text = scene.Title;
@@ -193,7 +193,7 @@ namespace ScriptEditor
 
             foreach (TreeNode node in NodeScenes.Nodes)
             {
-                Scene scene = (Scene)node.Tag;
+                SceneV1 scene = (SceneV1)node.Tag;
                 
                 if (scene.SceneId.Trim() == "")
                 {
@@ -220,7 +220,7 @@ namespace ScriptEditor
                 }
 
                 // Analyze title
-                if ((Scene)NodeScenes.Nodes[0].Tag != scene && scene.Title.Trim() == "")
+                if ((SceneV1)NodeScenes.Nodes[0].Tag != scene && scene.Title.Trim() == "")
                 {
                     string msg = $"ERROR: Scene has no title.";
                     string sceneId = $"{scene.SceneId}";
@@ -261,8 +261,8 @@ namespace ScriptEditor
 
                 // Analyze if inaccessible
                 // Check if this is the first scene, if so don't do the accessibility test.
-                bool accessible = (Scene)NodeScenes.Nodes[0].Tag == scene ? true : false;
-                foreach (Scene compiledScene in CompiledScenes())
+                bool accessible = (SceneV1)NodeScenes.Nodes[0].Tag == scene ? true : false;
+                foreach (SceneV1 compiledScene in CompiledScenes())
                 {
                     foreach (Exit exit in compiledScene.Exits)
                     {
@@ -289,11 +289,11 @@ namespace ScriptEditor
             listView1.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
-        private Scene[] CompiledScenes()
+        private SceneV1[] CompiledScenes()
         {
-            List<Scene> scenes = new List<Scene>();
+            List<SceneV1> scenes = new List<SceneV1>();
             foreach (TreeNode node in NodeScenes.Nodes)
-                scenes.Add((Scene)node.Tag);
+                scenes.Add((SceneV1)node.Tag);
             return scenes.ToArray();
         }
 
@@ -301,7 +301,7 @@ namespace ScriptEditor
         {
             string guid = Guid.NewGuid().ToString();
 
-            Scene freshScene = new Scene();
+            SceneV1 freshScene = new SceneV1();
             freshScene.SceneId = $"SCENE_{guid}";
 
             TreeNode sceneNode = BuildSceneNode(freshScene);
@@ -312,7 +312,7 @@ namespace ScriptEditor
         {
             if (e.Node.Parent == NodeScenes)
             {
-                Scene scene = (Scene)e.Node.Tag;
+                SceneV1 scene = (SceneV1)e.Node.Tag;
                 if (e.Label != null && e.Label.Trim() != "")
                     scene.SceneId = e.Label;
                 Analyze();
@@ -323,7 +323,7 @@ namespace ScriptEditor
 
                 TreeNode parentExitsNode = e.Node.Parent;
 
-                Scene scene = (Scene)parentExitsNode.Parent.Tag;
+                SceneV1 scene = (SceneV1)parentExitsNode.Parent.Tag;
                 scene.Exits.Clear();
 
                 foreach (TreeNode node in parentExitsNode.Nodes)
@@ -354,7 +354,7 @@ namespace ScriptEditor
 
             foreach (TreeNode node in NodeScenes.Nodes)
             {
-                Scene sceneFromNode = (Scene)node.Tag;
+                SceneV1 sceneFromNode = (SceneV1)node.Tag;
                 script.Scenes.Add(sceneFromNode);
             }
 
@@ -363,7 +363,7 @@ namespace ScriptEditor
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            Scene scene = (Scene)textBox1.Tag;
+            SceneV1 scene = (SceneV1)textBox1.Tag;
             
             // Check for null or else this will trigger when changing scenes.
             if (scene != null)
@@ -375,7 +375,7 @@ namespace ScriptEditor
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            Scene scene = (Scene)textBox2.Tag;
+            SceneV1 scene = (SceneV1)textBox2.Tag;
 
             // Check for null or else this will trigger when changing scenes.
             if (scene != null)
@@ -384,7 +384,7 @@ namespace ScriptEditor
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            Scene scene = (Scene)e.Node.Tag;
+            SceneV1 scene = (SceneV1)e.Node.Tag;
             if (scene != null)
                 ShowSceneTextInTextbox(scene);
         }
@@ -393,7 +393,7 @@ namespace ScriptEditor
         {
             if (treeView1.SelectedNode.Parent == NodeScenes)
             {
-                Scene scene = (Scene)treeView1.SelectedNode.Tag;
+                SceneV1 scene = (SceneV1)treeView1.SelectedNode.Tag;
                 string message = $"Delete scene \"{scene.SceneId}\" with title \"{scene.Title}\"?";
                 
                 if (MessageBox.Show(message, "Delete scene", MessageBoxButtons.YesNo) == DialogResult.Yes)

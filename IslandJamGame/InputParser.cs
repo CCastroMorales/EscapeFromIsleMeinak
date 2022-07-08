@@ -1,5 +1,4 @@
-﻿using ScriptLibrary;
-using System;
+﻿using IslandJamGame.Engine;
 using System.Collections.Generic;
 
 namespace IslandJamGame
@@ -9,7 +8,7 @@ namespace IslandJamGame
         void OnPrint(string text);
         bool HasPreviousScene();
         void OnPreviousScene();
-        void OnExitScene(string sceneId, string exit, string triggerEntityId);
+        void OnExitScene(Exit exit);
         void OnCheckDescription(string objectName);
         void OnTakeItem(string itemLabel);
         void OnReadItem(Item item, ItemAction action, string label);
@@ -47,14 +46,14 @@ namespace IslandJamGame
 
             if (ParseGO(command, arguments))
                 Done = true;
-            if (ParseCHECK(command, arguments))
+            /*if (ParseCHECK(command, arguments))
                 Done = true;
             if (ParseTAKE(command, arguments))
                 Done = true;
             if (ParseActionREAD(command, arguments))
                 Done = true;
             if (ParseActionHIT(command, arguments))
-                Done = true;
+                Done = true;*/
         }
 
         private string[] ParseArguments(string input, out string command, out string[] arguments)
@@ -98,19 +97,19 @@ namespace IslandJamGame
                 }
             }
 
-            if (ActiveScene.HasExit(exitName))
-            {
-                string sceneId = ActiveScene.SceneFromExit(exitName);
-                string triggerEntityId = ActiveScene.GetExitTriggerEntity(exitName);
 
-                Callback.OnExitScene(sceneId, exitName, triggerEntityId);
+            Exit exit = ActiveScene.FindExit(exitName);
+
+            if (exit != null)
+            {
+                Callback.OnExitScene(exit);
                 return true;
             }
 
             return false;
         }
 
-        protected bool ParseCHECK(string command, string[] arguments)
+        /*protected bool ParseCHECK(string command, string[] arguments)
         {
             if (command != Commands.CHECK)
                 return false;
@@ -223,6 +222,6 @@ namespace IslandJamGame
             }
 
             return false;
-        }
+        }*/
     }
 }
