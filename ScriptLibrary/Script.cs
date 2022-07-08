@@ -21,14 +21,37 @@ namespace ScriptLibrary
         public string Scene { get; set; } = "";
     }
 
+    public static class Action
+    {
+        public static readonly string READ = "ACTION_READ";
+    }
+
+    public class ItemAction
+    {
+        public string Action { get; set; } = "";
+        public string Text { get; set; } = "";
+    }
+
     public class Item
     {
         public string Id { get; set; } = "";
         public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string InventoryDescription { get; set; } = "";
+        public List<ItemAction> Actions { get; set; } = new List<ItemAction>();
+        public List<string> Labels { get; set; } = new List<string>();
 
         public override string ToString()
         {
             return $"{Id}: {Name}";
+        }
+
+        public bool HasAction(string hasAction)
+        {
+            foreach (ItemAction action in Actions)
+                if (action.Action == hasAction)
+                    return true;
+            return false;
         }
     }
 
@@ -54,6 +77,7 @@ namespace ScriptLibrary
         public List<Exit> Exits { get; set; } = new List<Exit>();
         public List<Container> Containers { get; set; } = new List<Container>();
         public List<InteractiveObject> Objects { get; set; } = new List<InteractiveObject>();
+        public List<Item> Items { get; set; } = new List<Item>();
         public bool HasOptions { get => Options.Count > 0; }
 
         public override string ToString()
@@ -106,6 +130,28 @@ namespace ScriptLibrary
             foreach (InteractiveObject interactiveObject in Objects)
                 if (interactiveObject.Name == objectName)
                     return interactiveObject;
+            return null;
+        }
+
+        public bool HasItem(string itemLabel)
+        {
+            foreach (Item item in Items)
+                foreach (string label in item.Labels)
+                    if (label.ToLower() == itemLabel.ToLower())
+                        return true;
+            return false;
+        }
+
+        public Item Take(string itemLabel)
+        {
+            foreach (Item item in Items)
+                foreach (string label in item.Labels)
+                    if (label.ToLower() == itemLabel.ToLower())
+                    {
+                        Item takenItem = item;
+                        Items.Remove(item);
+                        return takenItem;
+                    }
             return null;
         }
     }

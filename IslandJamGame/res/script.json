@@ -101,9 +101,35 @@
       "text": [
         "You're in the bathroom.",
         "",
-        "The bathroom is dark and really small. There is nothing of interest here. There appears to be a wrinkled note in the trash can.",
+        "The bathroom is dark and really small. There is nothing of interest here. There appears to be a wrinkled NOTE in the trash can. ITEM_DESCRIPTIONS",
         "",
         "You can GO back to the ROOM you came from."
+      ],
+      "Items": [
+        {
+          "Id": "ITEM_NOTE",
+          "Name": "Note",
+          "Labels": [
+            "Note"
+          ],
+          "Description": "There appears to be a wrinkled NOTE in the trash can.",
+          "InventoryDescription": "The note is from your friend; you recognize their handwriting.",
+          "Actions": [
+            {
+              "Action":  "ACTION_READ",
+              "Text": "The note reads: \"What is this feeling? I shouldn't have gone near that person at the party. I guess I'll I have no choice than to be honest w ht\"... The note ends abruptly."
+            }
+          ]
+        },
+        {
+          "Id": "ITEM_BROKEN_BOTTLE",
+          "Name": "Brk. Bottle",
+          "Labels": [
+            "Bottle"
+          ],
+          "Description": "There is a broken BOTTLE on the sink.",
+          "InventoryDescription": "You don't drink so this bottle was left and broken by your friend."
+        }
       ],
       "SceneId": "SCENE_BUNGALOW_BATHROOM",
       "Title": "INT. BUNGALOW BATHROOM - NIGHT",

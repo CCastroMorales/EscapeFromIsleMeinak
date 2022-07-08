@@ -12,7 +12,8 @@ namespace IslandJamGame
     {
         public InputParser Parser { get; set; }
         public Script Script { get; set; }
-        public string[] Inventory { get; set; } = new string[6];
+        public List<Item> Inventory { get; set; } = new List<Item>();
+        public int InventoryLimit { get; set; } = 6;
         public Scene PreviousScene { get; set; }
         public bool Running { get; set; } = true;
         public int DefaultSleepMillis { get; set; } = 100;
@@ -23,6 +24,7 @@ namespace IslandJamGame
         public Random random { get; } = new Random();
         protected int TextPos { get; set; } = 0;
         protected int TextPosY { get; set; } = 0;
+        public bool Debug { get; set; } = false;
 
         public Game(string[] args)
         {
@@ -40,6 +42,8 @@ namespace IslandJamGame
                 {
                     if (arg == "+ff")
                         FastForward = true;
+                    if (arg == "+debug")
+                        Debug = true;
                 }
         }
 
@@ -99,7 +103,13 @@ namespace IslandJamGame
                 string input = Console.ReadLine().Trim();
                 Console.ForegroundColor = DefaultConsoleColor;
 
-                Parser.Parse(input, scene);
+                if (Debug && input.Split().Length == 2 && input.Split(' ')[0] == "debug.scene")
+                {
+                    LoadScene(input);
+                    break;
+                } else
+                    Parser.Parse(input, scene);
+                
                 requireInput = false;
             }
 
@@ -222,40 +232,78 @@ namespace IslandJamGame
 
         private void PrintInventory()
         {
-            int iw = 13;
+            int invWidth = 15;
             int ih = 10;
-            TextPos = iw + 1;
+            TextPos = invWidth + 1;
             TextPosY = 2;
 
             string title = "INVENTORY";
+            bool evenPadding = (invWidth - title.Length - 2) % 2 == 0;
+            int padding = (invWidth - title.Length - 2) / 2;
 
-            for (int i = 0; i < iw; i++)
+            Console.SetCursorPosition(0,1);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            for (int i = 0; i < invWidth; i++)
                 Console.Write('=');
-
             Console.Write('\n');
+
+            // Print title
             Console.Write('|');
-            Console.Write(' ');
+
+            for (int i = 0; i < padding; i++)
+                Console.Write(' ');
 
             for (int i = 0; i < title.Length; i++)
                 Console.Write(title[i]);
 
+            // Assumes 15 width
+            for (int i = 0; i < padding - 1; i++)
+                Console.Write(' ');
+
             Console.Write(' ');
             Console.Write('|');
             Console.Write('\n');
 
-            for (int i = 0; i < Inventory.Length; i++)
+            // Print items
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            foreach (Item item in Inventory)
+            {
+                padding = invWidth - item.Name.Length - 3;
+                
+                Console.Write('|');
+                Console.Write(' ');
+
+                Console.ForegroundColor = DefaultConsoleColor;
+                for (int i = 0; i < item.Name.Length; i++)
+                    Console.Write(item.Name[i]);
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
+                for (int i = 0; i < padding; i++)
+                    Console.Write(' ');
+
+                Console.Write('|');
+                Console.Write('\n');   
+            }
+
+            // Print empty lines
+            int numEmptyLines = InventoryLimit - Inventory.Count;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            
+            for (int i = 0; i < numEmptyLines; i++)
             {
                 Console.Write('|');
-                for (int j = 0; j < iw - 2; j++)
+                for (int j = 0; j < invWidth - 2; j++)
                     Console.Write('\u0000');
-                    //Console.Write(' ');
                 Console.Write('|');
                 Console.Write('\n');
             }
 
-            for (int i = 0; i < iw; i++)
+            for (int i = 0; i < invWidth; i++)
                 Console.Write('=');
             Console.Write('\n');
+
+            Console.ForegroundColor = DefaultConsoleColor;
         }
 
         private void PrintText(List<string> lines)
@@ -269,8 +317,10 @@ namespace IslandJamGame
             Console.CursorTop = TextPosY;
             int pos = TextPos;
 
-            foreach (string text in lines)
+            foreach (string t in lines)
             {
+                string text = InsertItemDescriptions(Scene, t);
+
                 string[] words = text.Split(' ');
 
                 foreach (string word in words)
@@ -347,6 +397,16 @@ namespace IslandJamGame
             }
         }
 
+        private string InsertItemDescriptions(Scene scene, string text)
+        {
+            string descriptions = "";
+
+            foreach (Item item in Scene.Items)
+                descriptions += item.Description + " ";
+
+            return text.Replace("ITEM_DESCRIPTIONS", descriptions.Trim()); ;
+        }
+
         private bool IsCapitalized(string word)
         {
             for (int i = 0; i < word.Length; i++)
@@ -383,6 +443,18 @@ namespace IslandJamGame
             Console.Clear();
         }
 
+        private void LoadScene(string sceneId)
+        {
+            foreach (Scene scene in Script.Scenes)
+                if (scene.SceneId == sceneId)
+                {
+                    PreviousScene = Scene;
+                    Scene = scene;
+                    return;
+                }
+            Scene = null;
+        }
+
         /* Callbacks from InputParser */
 
         public bool HasPreviousScene()
@@ -399,20 +471,34 @@ namespace IslandJamGame
 
         public void OnExitScene(string sceneId, string exit)
         {
-            foreach (Scene scene in Script.Scenes)
-                if (scene.SceneId == sceneId)
-                {
-                    PreviousScene = Scene;
-                    Scene = scene;
-                    return;
-                }
-            Scene = null;
+            LoadScene(sceneId);
         }
 
         public void OnCheckDescription(string objectName)
         {
             InteractiveObject interactiveObject = Scene.ObjectbyName(objectName);
             PrintCheckDescription(Scene, interactiveObject);
+        }
+
+        public void OnTakeItem(string itemLabel)
+        {
+            if (Inventory.Count == InventoryLimit)
+            {
+                Console.WriteLine("You can't take the item; your inventory is full.");
+                return;
+            }
+
+            Item item = Scene.Take(itemLabel);
+            Inventory.Add(item);
+
+            string text = $"You take the {itemLabel.ToLower()}.";
+            Console.WriteLine(text);
+
+            int x = Console.CursorLeft;
+            int y = Console.CursorTop;
+
+            PrintInventory();
+            Console.SetCursorPosition(x, y);
         }
     }
 }

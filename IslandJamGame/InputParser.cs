@@ -9,6 +9,7 @@ namespace IslandJamGame
         void OnPreviousScene();
         void OnExitScene(string sceneId, string exit);
         void OnCheckDescription(string objectName);
+        void OnTakeItem(string itemLabel);
     }
 
     public class InputParser
@@ -42,6 +43,8 @@ namespace IslandJamGame
             if (ParseGO(command, arguments))
                 Done = true;
             if (ParseCHECK(command, arguments))
+                Done = true;
+            if (ParseTAKE(command, arguments))
                 Done = true;
         }
 
@@ -112,6 +115,28 @@ namespace IslandJamGame
             if (ActiveScene.HasInteractiveObject(objectName))
             {
                 Callback.OnCheckDescription(objectName);
+                return false;
+            }
+
+            return false;
+        }
+
+        protected bool ParseTAKE(string commands, string[] arguments)
+        {
+            if (commands != Commands.TAKE)
+                return false;
+
+            if (arguments.Length == 0)
+            {
+                Console.WriteLine("Take what?");
+                return false;
+            }
+
+            string itemLabel = arguments[0];
+
+            if (ActiveScene.HasItem(itemLabel))
+            {
+                Callback.OnTakeItem(itemLabel);
                 return false;
             }
 
