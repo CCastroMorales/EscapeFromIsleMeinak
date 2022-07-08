@@ -52,17 +52,24 @@ namespace IslandJamGame
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.CursorLeft = TextMarginLeft;
+                int y = Console.CursorTop;
                 Console.Write('»');
                 string input = Console.ReadLine().Trim();
-                Console.ForegroundColor = DefaultConsoleColor;
 
-                /*if (Debug && input.Split().Length == 2 && input.Split(' ')[0] == "debug.load")
+                if (input != "")
                 {
-                    string sceneId = input.Split(' ')[1];
-                    LoadScene(sceneId);
-                    return;
-                } else*/
-                Parser.Parse(input, scene);
+                    Console.ForegroundColor = DefaultConsoleColor;
+
+                    /*if (Debug && input.Split().Length == 2 && input.Split(' ')[0] == "debug.load")
+                    {
+                        string sceneId = input.Split(' ')[1];
+                        LoadScene(sceneId);
+                        return;
+                    } else*/
+                    Parser.Parse(input, scene);
+                }
+                else
+                    Console.SetCursorPosition(Console.CursorLeft, y);
             }
         }
 

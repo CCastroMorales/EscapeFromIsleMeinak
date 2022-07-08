@@ -12,8 +12,8 @@ namespace IslandJamGame.GameObjects
 
         public override void OnLoad()
         {
-            AddExit(Id.SCENE_BUNGALOW_ROOM, "inside");
-            AddExit(Id.SCENE_INBETWEEN_BUNGALOWS, "down");
+            AddExit(Id.SCENE_BUNGALOW_ROOM, new string[] { "bedroom", "room", "in", "inside" });
+            AddExit(Id.SCENE_INBETWEEN_BUNGALOWS, new string[] { "down", "stairs", "patio" });
         }
     }
 
@@ -26,7 +26,7 @@ namespace IslandJamGame.GameObjects
 
         public override void OnLoad()
         {
-            AddExit(Id.SCENE_BUNGALOW_ROOM, "room");
+            AddExit(Id.SCENE_BUNGALOW_ROOM, new string[] { "room", "bedroom" });
             SpawnItem<Note>();
             SpawnItem<BrokenBottle>();
         }
@@ -41,8 +41,8 @@ namespace IslandJamGame.GameObjects
 
         public override void OnLoad()
         {
-            AddExit(Id.SCENE_BUNGALOW_BATHROOM, "bathroom");
-            AddExit(Id.SCENE_BUNGALOW_BALCONY, "outside");
+            AddExit(Id.SCENE_BUNGALOW_BATHROOM, new string[] { "bathroom", "toilet", "bath" });
+            AddExit(Id.SCENE_BUNGALOW_BALCONY, new string[] { "outside", "out", "balcony" } );
             SpawnEntity<Rat>();
         }
     }
