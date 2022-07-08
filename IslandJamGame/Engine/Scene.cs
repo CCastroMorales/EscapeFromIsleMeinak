@@ -25,7 +25,11 @@ namespace IslandJamGame.Engine
                 {
                     string json = reader.ReadToEnd();
                     string[] lines = json.Split('\n');
-                    Text.AddRange(lines);
+
+                    Title = lines[0];
+
+                    for (int i = 2; i < lines.Length; i++)
+                        Text.Add(lines[i]);
                 }
             }
         }
@@ -39,19 +43,25 @@ namespace IslandJamGame.Engine
 
         public abstract void OnLoad();
 
-        protected void AddExit(Id id, string command)
+        protected void AddExit(Id id, string[] commands)
         {
             Exit exit = new Exit();
             exit.Destination = id;
-            exit.Command = command;
+            exit.Commands.AddRange(commands);
             Exits.Add(exit);
         }
 
-        public Exit FindExit(string command)
+        protected void AddExit(Id id, string command)
+        {
+            AddExit(id, new string[] { command });
+        }
+
+        public Exit FindExit(string exitCommand)
         {
             foreach (Exit exit in Exits)
-                if (exit.Command == command)
-                    return exit;
+                foreach (string command in exit.Commands)
+                    if (command.ToLower() == exitCommand.ToLower())
+                        return exit;
             return null;
         }
 

@@ -1,4 +1,5 @@
 ﻿using IslandJamGame.Engine;
+using System;
 
 namespace IslandJamGame.GameObjects
 {
@@ -12,7 +13,7 @@ namespace IslandJamGame.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_BUNGALOW_ROOM, "inside");
-            // Id.SCENE_INBETWEEN
+            AddExit(Id.SCENE_INBETWEEN_BUNGALOWS, "down");
         }
     }
 
@@ -31,9 +32,9 @@ namespace IslandJamGame.GameObjects
         }
     }
 
-    public class Bungalow : Scene
+    public class BungalowRoom : Scene
     {
-        public Bungalow()
+        public BungalowRoom()
         {
             Id = Id.SCENE_BUNGALOW_ROOM;
         }

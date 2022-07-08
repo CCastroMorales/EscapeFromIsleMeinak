@@ -1,4 +1,6 @@
-﻿You're in the bathroom.
+﻿INT. BUNGALOW BATHROOM - NIGHT
+
+You're in the bathroom.
 
 The bathroom is dark and really small. There is nothing of interest here. ITEM_DESCRIPTIONS
 

@@ -1,6 +1,8 @@
 ﻿using IslandJamGame.Engine;
 using IslandJamGame.GameObjects;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace IslandJamGame
 {
@@ -13,14 +15,18 @@ namespace IslandJamGame
 
         public SceneHandler()
         {
-            AddScene<Bungalow>();
+            AddScene<BungalowRoom>();
             AddScene<BungalowBathroom>();
+            AddScene<BungalowBalcony>();
+            AddScene<BetweenBungalows>();
+            AddScene<NeighbourBungalowBalcony>();
+            AddScene<NeighbourBungalowRoom>();
+            AddScene<NeighbourBungalowBathroom>();
         }
 
-        public void AddScene<T>() where T : new()
+        public void AddScene<T>() where T : Scene, new()
         {
-            T t = new T();
-            Scene scene = (Scene)(object)t;
+            Scene scene = new T();
             scene.Load();
             Scenes.Add(scene);
         }

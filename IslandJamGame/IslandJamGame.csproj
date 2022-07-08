@@ -51,8 +51,11 @@
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="GameObjects\Entities\Rat.cs" />
     <Compile Include="GameObjects\Items\BrokenBottle.cs" />
+    <Compile Include="GameObjects\Items\JeepKey.cs" />
     <Compile Include="GameObjects\Items\PassedOutRat.cs" />
     <Compile Include="GameObjects\Items\Note.cs" />
+    <Compile Include="GameObjects\Scenes\BetweenBungalows.cs" />
+    <Compile Include="GameObjects\Scenes\NeighbourBungalow.cs" />
     <Compile Include="SceneHandler.cs" />
     <Compile Include="GameObjects\Scenes\Bungalow.cs" />
     <Compile Include="Engine\Scene.cs" />
@@ -81,6 +84,10 @@
     <EmbeddedResource Include="res\SCENE_BUNGALOW_BATHROOM.txt" />
     <EmbeddedResource Include="res\SCENE_TEST.txt" />
     <EmbeddedResource Include="res\SCENE_BUNGALOW_BALCONY.txt" />
+    <EmbeddedResource Include="res\SCENE_INBETWEEN_BUNGALOWS.txt" />
+    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_BALCONY.txt" />
+    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_BATHROOM.txt" />
+    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_ROOM.txt" />
     <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>

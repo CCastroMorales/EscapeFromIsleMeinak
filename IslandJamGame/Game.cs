@@ -87,6 +87,7 @@ namespace IslandJamGame
             string[] words = scene.Title.Split(' ');
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.CursorVisible = false;
             Console.SetCursorPosition(TextMarginLeft, 0);
             foreach (string word in words)
             {
@@ -96,6 +97,7 @@ namespace IslandJamGame
             }
             Console.WriteLine("");
             Console.ForegroundColor = DefaultConsoleColor;
+            Console.CursorVisible = true;
             Thread.Sleep(Timing.SleepTitleDuration);
         }
 
@@ -256,6 +258,7 @@ namespace IslandJamGame
 
         private void PrintText(string[] lines)
         {
+            Console.CursorVisible = false;
             Console.CursorLeft = TextMarginLeft;
             Console.CursorTop = TextMarginTop;
 
@@ -312,6 +315,7 @@ namespace IslandJamGame
                 Console.SetCursorPosition(TextMarginLeft, Console.CursorTop);
                 Thread.Sleep(DefaultSleepMillis);
             }
+            Console.CursorVisible = true;
         }
 
         private string InsertItemDescriptions(Scene scene, string text)
@@ -474,7 +478,12 @@ namespace IslandJamGame
                     GameOver();
             }
             else
-                Scenes.LoadScene(exit.Destination);
+            {
+                Scene loadedScene = Scenes.LoadScene(exit.Destination);
+
+                if (loadedScene == null)
+                    throw new Exception($"There is no loaded scene (exit:[\"{exit.Commands}\":{exit.Destination}])");
+            }
         }
 
         public void OnCheckDescription(string objectName)
