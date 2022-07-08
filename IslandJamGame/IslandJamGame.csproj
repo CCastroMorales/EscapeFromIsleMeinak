@@ -49,6 +49,7 @@
     <Compile Include="Engine\ItemAction.cs" />
     <Compile Include="Engine\Item.cs" />
     <Compile Include="Engine\Entity.cs" />
+    <Compile Include="GameObjects\Entities\ShadowyZombie.cs" />
     <Compile Include="GameObjects\Entities\Rat.cs" />
     <Compile Include="GameObjects\Items\BrokenBottle.cs" />
     <Compile Include="GameObjects\Items\JeepKey.cs" />

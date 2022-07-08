@@ -43,6 +43,15 @@ namespace IslandJamGame.Engine
 
         public abstract void OnLoad();
 
+        protected void AddExit(Id id, Id triggerEntityId, string[] commands)
+        {
+            Exit exit = new Exit();
+            exit.Destination = id;
+            exit.Commands.AddRange(commands);
+            exit.TriggerEntityId = triggerEntityId;
+            Exits.Add(exit);
+        }
+
         protected void AddExit(Id id, string[] commands)
         {
             Exit exit = new Exit();
@@ -90,6 +99,14 @@ namespace IslandJamGame.Engine
         {
             foreach (Entity entity in Entities)
                 if (entity.Name.ToLower() == entityName.ToLower())
+                    return entity;
+            return null;
+        }
+
+        public Entity FindEntity(Id entityId)
+        {
+            foreach (Entity entity in Entities)
+                if (entity.Id == entityId)
                     return entity;
             return null;
         }

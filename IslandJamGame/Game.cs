@@ -466,8 +466,7 @@ namespace IslandJamGame
 
         public void OnExitScene(Exit exit)
         {
-            //Entity entity = Scene.EntityById(triggerEntityId);
-            Entity entity = null;
+            Entity entity = Scenes.Active.FindEntity(exit.TriggerEntityId);
 
             if (entity != null)
             {

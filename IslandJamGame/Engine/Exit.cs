@@ -6,6 +6,6 @@ namespace IslandJamGame.Engine
     {
         public Id Destination { get; set; }
         public List<string> Commands { get; set; } = new List<string>();
-        public string TriggerEntityId { get; set; } = "";
+        public Id TriggerEntityId { get; set; }
     }
 }

@@ -19,7 +19,8 @@
         /* Actions */
         ACTION_READ,
         /* Entities */
-        ENTITY_BUNGALOW_RAT
+        ENTITY_BUNGALOW_RAT,
+        ENTITY_BUNGALOW_SHADOWY_ZOMBIE
     }
 
 }
