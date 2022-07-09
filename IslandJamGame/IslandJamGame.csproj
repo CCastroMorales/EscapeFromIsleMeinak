@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Strings.cs" />
     <Compile Include="TitleScreen.cs" />
     <Compile Include="Engine\ItemType.cs" />
     <Compile Include="Engine\Exit.cs" />

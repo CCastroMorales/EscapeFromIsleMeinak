@@ -23,6 +23,7 @@ namespace IslandJamGame
         public Game()
         {
             Parser = new InputParser(this);
+            Console.Title = Strings.GAME_TITLE;
         }
 
         public void Run()
@@ -105,8 +106,7 @@ namespace IslandJamGame
             Console.CursorVisible = false;
             Console.ForegroundColor = ConsoleColor.Red;
 
-            string gameOver = "G  A  M  E        O  V  E  R";
-            gameOver = gameOver.Replace(' ', '═');
+            string gameOver = Strings.GAME_OVER.Replace(' ', '═');
 
             int x = (Console.BufferWidth / 2) - (gameOver.Length / 2);
             int y = (Console.WindowHeight / 3);
@@ -134,7 +134,7 @@ namespace IslandJamGame
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             
-            string text = "[Press ENTER to try again]";
+            string text = Strings.PROMPT_ENTER_TO_TRY_AGAIN;
             x = (Console.BufferWidth / 2) - (text.Length / 2);
 
             Thread.Sleep(Timing.GameOverPressPromptDelay);
@@ -413,11 +413,6 @@ namespace IslandJamGame
             }
         }
 
-        private void PrintReturn()
-        {
-            Console.Write('\n');
-        }
-
         private void PrintEnterToContinue()
         {
             int x = TextMarginLeft;
@@ -427,7 +422,7 @@ namespace IslandJamGame
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            string text = "[Press ENTER to continue]";
+            string text = Strings.PROMPT_ENTER_TO_CONTINUE;
             Console.Write(text);
             
             var readkey = Console.ReadKey(true);

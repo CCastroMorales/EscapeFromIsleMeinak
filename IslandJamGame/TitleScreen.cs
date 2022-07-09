@@ -11,14 +11,14 @@ namespace IslandJamGame
         {
             Console.CursorVisible = false;
 
-            string titleSub = "E S C A P E     F R O M ";
+            string titleSuper = Strings.SUPERSCRIPT_TITLE;
             string[] titleAscii = LoadAscii();
 
             int x = (Console.BufferWidth / 2) - (titleAscii[0].Length / 2);
             int y = Console.WindowHeight / 4;
 
             Console.SetCursorPosition(x, y - 1);
-            Console.WriteLine(titleSub);
+            Console.WriteLine(titleSuper);
 
             foreach (string line in titleAscii)
             {
@@ -27,7 +27,7 @@ namespace IslandJamGame
                 y++;
             }
 
-            string text = "[Press ENTER to play]";
+            string text = Strings.PROMPT_ENTER_TO_PLAY;
             x = (Console.BufferWidth / 2) - (text.Length / 2);
 
             Thread.Sleep(Timing.GameOverPressPromptDelay);
