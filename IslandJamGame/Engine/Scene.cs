@@ -16,6 +16,7 @@ namespace IslandJamGame.Engine
         public List<Entity> Entities { get; } = new List<Entity>();
         public List<Exit> Exits { get; } = new List<Exit>();
         public bool AllowGoBack { get; set; } = true;
+        public bool InitialVisit { get; set; } = true;
 
         public void LoadTextFromResource(string resource)
         {

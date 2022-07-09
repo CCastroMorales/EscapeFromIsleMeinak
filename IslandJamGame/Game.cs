@@ -74,13 +74,6 @@ namespace IslandJamGame
             }
         }
 
-        private void PrintCheckDescription(Scene scene, InteractiveObject interactiveObject)
-        {
-            //Clear();
-            //PrintSceneTitle(scene);
-            PrintText(interactiveObject.Text);
-        }
-
         private void PrintSceneTitle(Scene scene)
         {
             string[] words = scene.Title.Split(' ');
@@ -156,7 +149,7 @@ namespace IslandJamGame
         {
             PrintInventory(true);
             PrintSceneTitle(scene);
-            PrintText(scene.Script);
+            PrintSceneScript(scene);
         }
 
         private void PrintInventory(bool show)
@@ -250,18 +243,21 @@ namespace IslandJamGame
             Console.CursorVisible = true;
         }
 
-        private void PrintText(List<string> lines)
-        {
-            PrintText(lines.ToArray());
-        }
-
-        private void PrintText(string[] lines)
+        private void PrintSceneScript(Scene scene)
         {
             Console.CursorVisible = false;
             Console.CursorLeft = TextMarginLeft;
             Console.CursorTop = TextMarginTop;
 
-            foreach (string originalText in lines)
+            string[] scriptLines;
+
+            if (scene.InitialVisit && scene.InitialScript.Count > 0)
+                scriptLines = scene.InitialScript.ToArray();
+            else
+                scriptLines = scene.Script.ToArray();
+
+
+            foreach (string originalText in scriptLines)
             {
                 string textWithItemDesc = InsertItemDescriptions(Scenes.Active, originalText);
                 string text = InsertEntityDescriptions(Scenes.Active, textWithItemDesc);
@@ -315,6 +311,8 @@ namespace IslandJamGame
                 Thread.Sleep(DefaultSleepMillis);
             }
             Console.CursorVisible = true;
+
+            Scenes.Active.InitialVisit = false;
         }
 
         private string InsertItemDescriptions(Scene scene, string text)
