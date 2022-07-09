@@ -17,6 +17,7 @@ namespace IslandJamGame.Engine
         public List<Exit> Exits { get; } = new List<Exit>();
         public bool AllowGoBack { get; set; } = true;
         public bool InitialVisit { get; set; } = true;
+        public bool AutoEnd { get; set; } = false;
 
         public void LoadTextFromResource(string resource)
         {

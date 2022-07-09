@@ -35,6 +35,8 @@ namespace IslandJamGame
 
         private void GameLoop()
         {
+            Running = true;
+
             while (Running)
             {
                 Clear();
@@ -48,6 +50,30 @@ namespace IslandJamGame
         {
             Parser.Reset();
             Parser.Inventory = Inventory;
+
+            if (scene.AutoEnd)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
+                int x = TextMarginLeft;
+                int y = Console.CursorTop;
+
+                string text = Strings.PROMPT_ENTER_TO_TRY_AGAIN;
+                x = (Console.BufferWidth / 2) - (text.Length / 2);
+
+                Thread.Sleep(Timing.GameOverPressPromptDelay);
+                Console.SetCursorPosition(x, y + 3);
+                Console.WriteLine(text);
+
+                var readkey = Console.ReadKey(true);
+                while (readkey.Key != ConsoleKey.Enter)
+                {
+                    readkey = Console.ReadKey(true);
+                }
+
+                End();
+                return;
+            }
 
             while (!Parser.Done)
             {
@@ -143,6 +169,17 @@ namespace IslandJamGame
             Console.CursorVisible = true;
 
             Scenes.RestorePreviousScene();
+        }
+
+        private void End()
+        {
+            Clear();
+            Console.WriteLine("You're winner.");
+            Console.ReadLine();
+
+            Clear();
+            Running = false;
+            Run(new string[0]);
         }
 
         private void PlayScene(Scene scene)
@@ -590,6 +627,13 @@ namespace IslandJamGame
             else if (target == "VEHICLE_JEEP")
             {
                 Scenes.LoadScene(Id.SCENE_SPECIAL_VEHICLE_JEEP_DRIVING);
+                Scenes.Previous = null;
+                LoseItem(item, true);
+                return;
+            }
+            else if (target == "VEHICLE_BOAT_46")
+            {
+                Scenes.LoadScene(Id.SCENE_SPECIAL_VEHICLE_BOAT_DRIVING);
                 Scenes.Previous = null;
                 LoseItem(item, true);
                 return;

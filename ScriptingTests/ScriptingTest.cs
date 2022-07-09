@@ -38,6 +38,26 @@ namespace ScriptingTests
         }
 
         [TestMethod]
+        public void TestSceneAutoEnd()
+        {
+            string script = @"
+            
+            scene.title AutoEnd test scene
+            scene.autoEnd 1
+
+            ";
+
+            Scene scene = new TestScene();
+
+            Scripting scripting = new Scripting();
+            scripting.Scene = scene;
+            scripting.Parse(script);
+
+            Assert.AreEqual("AutoEnd test scene", scene.Title);
+            Assert.AreEqual(true, scene.AutoEnd);
+        }
+
+        [TestMethod]
         public void TestSceneInitialScript()
         {
             string script = @"

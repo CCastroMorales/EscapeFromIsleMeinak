@@ -240,6 +240,12 @@ namespace IslandJamGame
                     Callback.OnUse(item, itemName, "VEHICLE_JEEP");
                     return true;
                 }
+                // Check for special boat use case
+                else if (item != null && item.Id == Id.ITEM_BOAT_KEY)
+                {
+                    Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
+                    return true;
+                }
                 else
                     Callback.OnPrint("What do you want to use it on?");
                 return false;
@@ -260,6 +266,12 @@ namespace IslandJamGame
                 if (item != null && item.Id == Id.ITEM_JEEP_KEY)
                 {
                     Callback.OnUse(item, itemName, "VEHICLE_JEEP");
+                    return true;
+                }
+                // Check for special boat use case
+                else if (item != null && item.Id == Id.ITEM_BOAT_KEY)
+                {
+                    Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
                     return true;
                 }
                 else if (item != null)

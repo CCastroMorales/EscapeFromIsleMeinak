@@ -1,4 +1,6 @@
 ﻿scene.title EXT. VILLAGE HARBOR JETTY - DAWN
 scene.scriptBegin
-<<Village promenade>>
+
+Debug: ITEM_DESCRIPTIONS
+
 scene.scriptEnd

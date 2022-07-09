@@ -50,18 +50,7 @@ namespace IslandJamGame
 
                 if (!validSymbol && parseRawLines)
                     lineBuffer.Add(line);
-                    /*foreach (Char c in line)
-                    {
-                        if (c == '\n')
-                        {
-                            string[] temp = lineBuffer;
-                            lineBuffer = new string[temp.Length + 1];
-                            for int (i = 0; )
-                        }
-                        else
-                            lineBuffer[lineBuffer.Length - 1] += c;
-                    }*/
-
+                
                 linenum++;
             }
         }
@@ -78,6 +67,16 @@ namespace IslandJamGame
                     AssignSceneTitleValue(input.Substring(symbol.Length, length).Trim());
                     return true;
                 } 
+                else if (symbol == "autoEnd" && c == ' ' && !parseRawLines)
+                {
+                    char charSymbol = input.Substring(symbol.Length + 1, 1)[0];
+                    if (charSymbol != '1' || charSymbol != '0')
+                    {
+                        bool autoEnd = charSymbol == '1' ? true : false;
+                        AssignSceneAutoEnd(autoEnd);
+                        return true;
+                    }
+                }
                 else
                     symbol += c;
 
@@ -107,6 +106,11 @@ namespace IslandJamGame
         private void AssignSceneTitleValue(string input)
         {
             Scene.Title = input;
+        }
+
+        private void AssignSceneAutoEnd(bool autoEnd)
+        {
+            Scene.AutoEnd = autoEnd;
         }
 
         private void AssignSceneInitialScriptValue(string[] input)

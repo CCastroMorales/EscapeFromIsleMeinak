@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameObjects\Items\BoatKey.cs" />
+    <Compile Include="GameObjects\Scenes\Boat.cs" />
     <Compile Include="Scripting.cs" />
     <Compile Include="Dev.cs" />
     <Compile Include="GameObjects\Scenes\Harbor.cs" />
@@ -83,6 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_BOAT.script" />
+    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_BOAT_DRIVING.script" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\script.json" />

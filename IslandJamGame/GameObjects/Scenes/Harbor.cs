@@ -21,6 +21,8 @@ namespace IslandJamGame.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_HARBOR_ENTRANCE, new string[] { "harbor", "entrance", "village" });
+            AddExit(Id.SCENE_SPECIAL_VEHICLE_BOAT, new string[] { "boat", "46" });
+            SpawnItem<BoatKey>();
         }
 
         public override Id OnRegisterId()
