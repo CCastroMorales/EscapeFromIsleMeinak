@@ -7,11 +7,11 @@ namespace IslandJamGame
 {
     public static class TitleScreen
     {
-        public static void Display(bool debug, string[] args)
+        public static void Display(bool debug, bool restarted, string[] args)
         {
             Console.CursorVisible = false;
 
-            string titleSuper = Strings.SUPERSCRIPT_TITLE;
+            string titleSuper = restarted ? Strings.SUPERSCRIPT_TITLE_ALT : Strings.SUPERSCRIPT_TITLE;
             string[] titleAscii = LoadAscii();
 
             int x = (Console.BufferWidth / 2) - (titleAscii[0].Length / 2);

@@ -45,13 +45,13 @@
   <ItemGroup>
     <Compile Include="GameObjects\Items\BoatKey.cs" />
     <Compile Include="GameObjects\Scenes\Boat.cs" />
-    <Compile Include="Scripting.cs" />
+    <Compile Include="Controllers\Scripting.cs" />
     <Compile Include="Dev.cs" />
     <Compile Include="GameObjects\Scenes\Harbor.cs" />
     <Compile Include="GameObjects\Scenes\Village.cs" />
     <Compile Include="GameObjects\Scenes\GasStation.cs" />
     <Compile Include="GameObjects\Scenes\Jeep.cs" />
-    <Compile Include="Strings.cs" />
+    <Compile Include="Utils\Strings.cs" />
     <Compile Include="TitleScreen.cs" />
     <Compile Include="Engine\ItemType.cs" />
     <Compile Include="Engine\Exit.cs" />
@@ -67,13 +67,13 @@
     <Compile Include="GameObjects\Items\Note.cs" />
     <Compile Include="GameObjects\Scenes\BetweenBungalows.cs" />
     <Compile Include="GameObjects\Scenes\NeighbourBungalow.cs" />
-    <Compile Include="SceneHandler.cs" />
+    <Compile Include="Controllers\SceneHandler.cs" />
     <Compile Include="GameObjects\Scenes\Bungalow.cs" />
     <Compile Include="Engine\Scene.cs" />
     <Compile Include="Engine\Id.cs" />
-    <Compile Include="Timing.cs" />
-    <Compile Include="InputParser.cs" />
-    <Compile Include="Commands.cs" />
+    <Compile Include="Utils\Timing.cs" />
+    <Compile Include="Controllers\InputParser.cs" />
+    <Compile Include="Utils\Commands.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

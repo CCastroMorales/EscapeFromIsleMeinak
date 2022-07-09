@@ -19,6 +19,7 @@ namespace IslandJamGame
         protected int TextMarginLeft { get; set; } = 0;
         protected int TextMarginTop { get; set; } = 0;
         public bool Debug { get; set; } = false;
+        private bool Restarted { get; set; } = false;
 
         public Game()
         {
@@ -28,7 +29,7 @@ namespace IslandJamGame
 
         public void Run(string[] args)
         {
-            TitleScreen.Display(Debug, args);
+            TitleScreen.Display(Debug, Restarted, args);
             Scenes.LoadFirstScene();
             GameLoop();
         }
@@ -179,6 +180,7 @@ namespace IslandJamGame
 
             Clear();
             Running = false;
+            Restarted = true;
             Run(new string[0]);
         }
 
