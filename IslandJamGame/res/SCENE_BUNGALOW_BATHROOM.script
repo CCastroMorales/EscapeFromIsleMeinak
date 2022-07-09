@@ -1,0 +1,10 @@
+﻿scene.title = INT. BUNGALOW BATHROOM - NIGHT
+scene.scriptBegin
+
+You're in the bathroom.
+
+The bathroom is dark and really small. There is nothing of interest here. ITEM_DESCRIPTIONS
+
+You can GO back to the ROOM you came from.
+
+scene.scriptEnd

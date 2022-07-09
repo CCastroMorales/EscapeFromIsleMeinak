@@ -88,22 +88,21 @@
     <EmbeddedResource Include="res\script.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="res\SCENE_BUNGALOW_ROOM.txt" />
-    <EmbeddedResource Include="res\SCENE_BUNGALOW_BATHROOM.txt" />
-    <EmbeddedResource Include="res\SCENE_BUNGALOW_BALCONY.txt" />
-    <EmbeddedResource Include="res\SCENE_INBETWEEN_BUNGALOWS.txt" />
-    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_BALCONY.txt" />
-    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_BATHROOM.txt" />
-    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_ROOM.txt" />
+    <EmbeddedResource Include="res\SCENE_BUNGALOW_BATHROOM.script" />
+    <EmbeddedResource Include="res\SCENE_BUNGALOW_BALCONY.script" />
+    <EmbeddedResource Include="res\SCENE_INBETWEEN_BUNGALOWS.script" />
+    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_BALCONY.script" />
+    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_BATHROOM.script" />
+    <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_ROOM.script" />
     <EmbeddedResource Include="res\TITLE_ASCII.txt" />
-    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP.txt" />
-    <EmbeddedResource Include="res\SCENE_GAS_STATION.txt" />
-    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP_DRIVING.txt" />
-    <EmbeddedResource Include="res\SCENE_HARBOR_ENTRANCE.txt" />
-    <EmbeddedResource Include="res\SCENE_VILLAGE_PROMENADE.txt" />
-    <EmbeddedResource Include="res\SCENE_VILLAGE_BEACH.txt" />
-    <EmbeddedResource Include="res\SCENE_HARBOR_JETTY.txt" />
-    <None Include="res\SCENE_BUNGALOW_ROOM.script" />
+    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP.script" />
+    <EmbeddedResource Include="res\SCENE_GAS_STATION.script" />
+    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP_DRIVING.script" />
+    <EmbeddedResource Include="res\SCENE_HARBOR_ENTRANCE.script" />
+    <EmbeddedResource Include="res\SCENE_VILLAGE_PROMENADE.script" />
+    <EmbeddedResource Include="res\SCENE_VILLAGE_BEACH.script" />
+    <EmbeddedResource Include="res\SCENE_HARBOR_JETTY.script" />
+    <EmbeddedResource Include="res\SCENE_BUNGALOW_ROOM.script" />
     <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>

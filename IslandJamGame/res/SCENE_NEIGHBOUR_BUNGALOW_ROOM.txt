@@ -1,5 +1,0 @@
-INT. NEIGHBOUR BUNGALOW ROOM - NIGHT
-
-This looks much like the room in your bungalow. ITEM_DESCRIPTIONS
-
-You can GO back OUTSIDE or to the BATHROOM.

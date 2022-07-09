@@ -1,7 +1,8 @@
-﻿INT/EXT. JEEP - NIGHT
-
+﻿scene.title INT/EXT. JEEP - NIGHT
+scene.scriptBegin
 You're sitting in the jeep. The seats are old and leathery and teared up. You need a KEY to use the vehicle. The road ahead leads to the village and the harbor. You might find your friend there or find out what's going on.
 
 You start to feel anxious. You get a feeling that you won't be coming back here if you drive away.
 
 You spot the slightly open glove COMPARTMENT.
+scene.scriptEnd

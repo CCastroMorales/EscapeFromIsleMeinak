@@ -1,7 +1,6 @@
-﻿INT/EXT. JEEP - NIGHT
-
+﻿scene.title INT/EXT. JEEP - NIGHT
+scene.scriptBegin
 You're driving to the village nearby. The island is quite large but all of it is covered by lush rainforest.
 
 You hear and feel the jeep engine break down. Darn it. But it's probably going to be alright because you can see the GAS STATION in the distance.
-
-Scene.AutoEnd true
+scene.scriptEnd

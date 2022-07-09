@@ -1,6 +1,10 @@
 ﻿using IslandJamGame.Engine;
 using IslandJamGame.GameObjects;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace IslandJamGame
 {
@@ -10,6 +14,7 @@ namespace IslandJamGame
         public Scene Previous { get; set; }
         public List<Scene> Scenes { get; set; } = new List<Scene>();
         public Scene First { get => Scenes[0]; }
+        public Scripting Parser { get; } = new Scripting();
 
         public SceneHandler()
         {
@@ -34,6 +39,7 @@ namespace IslandJamGame
         {
             Scene scene = new T();
             scene.Load();
+            LoadScript(scene);
             Scenes.Add(scene);
         }
 
@@ -74,6 +80,37 @@ namespace IslandJamGame
             Scene activeScene = Active;
             Active = Previous;
             Previous = activeScene;
+        }
+
+        public void LoadScript(Scene scene)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            string path = $"IslandJamGame.res.{scene.Id}.script";
+
+            bool resourceExits = false;
+            foreach (string resourceName in assembly.GetManifestResourceNames())
+                if (resourceName == path)
+                {
+                    resourceExits = true;
+                    break;
+                }
+
+            if (!resourceExits)
+            {
+                string message = $"Resource {path} is not embedded.";
+                Debug.WriteLine(message);
+                throw new Exception(message);
+            }
+
+            using (var stream = assembly.GetManifestResourceStream(path))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    string scriptData = reader.ReadToEnd();
+                    Parser.Scene = scene;
+                    Parser.Parse(scriptData);
+                }
+            }
         }
     }
 }

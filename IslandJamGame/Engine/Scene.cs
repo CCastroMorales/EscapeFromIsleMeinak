@@ -59,7 +59,7 @@ namespace IslandJamGame.Engine
         {
             Id = OnRegisterId();
             string id = Id.ToString();
-            LoadTextFromResource($"{id}.txt");
+            //LoadTextFromResource($"{id}.txt");
             OnLoad();
         }
 
