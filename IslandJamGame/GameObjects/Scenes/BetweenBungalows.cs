@@ -2,11 +2,11 @@
 
 namespace IslandJamGame.GameObjects
 {
-    public class BetweenBungalows : Scene
+    public class SceneBetweenBungalows : Scene
     {
-        public BetweenBungalows()
+        public override Id OnRegisterId()
         {
-            Id = Id.SCENE_INBETWEEN_BUNGALOWS;
+            return Id.SCENE_INBETWEEN_BUNGALOWS;
         }
 
         public override void OnLoad()

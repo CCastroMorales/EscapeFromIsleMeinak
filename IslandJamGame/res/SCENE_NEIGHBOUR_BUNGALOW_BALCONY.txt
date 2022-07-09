@@ -1,6 +1,6 @@
 ﻿EXT. NEIGHBOUR BUNGALOW BALCONY - NIGHT
 
-The balcony looks much like the one that belongs to your rented bungalow. This one is slightly clearner though. The person who is renting this one must have been living here for at least a few days.
+The balcony looks much like the one that belongs to your rented bungalow. This one is slightly cleaner though. The person who is renting this one must have been living here for at least a few days.
 
 ENTITY_DESCRIPTIONS
 

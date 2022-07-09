@@ -86,7 +86,7 @@ namespace IslandJamGame
 
             if (exitName == Arguments.BACK)
             {
-                bool canGoBack = Callback.HasPreviousScene();
+                bool canGoBack = Callback.HasPreviousScene() && ActiveScene.AllowGoBack;
 
                 if (canGoBack)
                 {
@@ -229,15 +229,24 @@ namespace IslandJamGame
                 return false;
             }
 
+            string itemName = arguments[0];
+
             if (arguments.Length == 1)
             {
-                Callback.OnPrint("What do you want to use it on?");
+                // Check for special jeep use case
+                Item item = FindItem(Inventory, itemName);
+                if (item != null && item.Id == Id.ITEM_JEEP_KEY)
+                {
+                    Callback.OnUse(item, itemName, "VEHICLE_JEEP");
+                    return true;
+                }
+                else
+                    Callback.OnPrint("What do you want to use it on?");
                 return false;
             }
 
             if (arguments.Length >= 2)
             {
-                string itemName = arguments[0];
                 string target = arguments[1];
 
                 // Check for "on" preposition
@@ -247,9 +256,16 @@ namespace IslandJamGame
                 // Check for item in inventory first
                 Item item = FindItem(Inventory, itemName);
 
-                if (item != null)
+                // Check for special jeep use case
+                if (item != null && item.Id == Id.ITEM_JEEP_KEY)
+                {
+                    Callback.OnUse(item, itemName, "VEHICLE_JEEP");
+                    return true;
+                }
+                else if (item != null)
                     Callback.OnUse(item, itemName, target);
                 else
+                // Check for item in scene.
                 {
                     item = ActiveScene.FindItem(itemName);
 

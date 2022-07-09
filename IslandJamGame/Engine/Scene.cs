@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -13,11 +14,27 @@ namespace IslandJamGame.Engine
         public List<Item> Items { get; } = new List<Item>();
         public List<Entity> Entities { get; } = new List<Entity>();
         public List<Exit> Exits { get; } = new List<Exit>();
+        public bool AllowGoBack { get; set; } = true;
 
         public void LoadTextFromResource(string resource)
         {
             var assembly = Assembly.GetExecutingAssembly();
             string path = $"IslandJamGame.res.{resource}";
+
+            bool resourceExits = false;
+            foreach (string resourceName in assembly.GetManifestResourceNames())
+                if (resourceName == path)
+                {
+                    resourceExits = true;
+                    break;
+                }
+
+            if (!resourceExits)
+            {
+                string message = $"Resource {path} is not embedded.";
+                Debug.WriteLine(message);
+                throw new Exception(message);
+            }
 
             using (var stream = assembly.GetManifestResourceStream(path))
             {
@@ -34,13 +51,18 @@ namespace IslandJamGame.Engine
             }
         }
 
+        public abstract Id OnRegisterId();
+
+        // TODO: Change to Init as Load implies being loaded in-game by the player.
         public void Load()
         {
+            Id = OnRegisterId();
             string id = Id.ToString();
             LoadTextFromResource($"{id}.txt");
             OnLoad();
         }
 
+        // TODO: Change to OnInit as OnLoad implies being loaded in-game by the player.
         public abstract void OnLoad();
 
         protected void AddExit(Id id, Id triggerEntityId, string[] commands)

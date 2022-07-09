@@ -2,11 +2,11 @@
 
 namespace IslandJamGame.GameObjects
 {
-    public class NeighbourBungalowBalcony : Scene
+    public class SceneNeighbourBungalowBalcony : Scene
     {
-        public NeighbourBungalowBalcony()
+        public override Id OnRegisterId()
         {
-            Id = Id.SCENE_NEIGHBOUR_BUNGALOW_BALCONY;
+            return Id.SCENE_NEIGHBOUR_BUNGALOW_BALCONY;
         }
 
         public override void OnLoad()
@@ -17,11 +17,11 @@ namespace IslandJamGame.GameObjects
         }
     }
 
-    public class NeighbourBungalowRoom : Scene
+    public class SceneNeighbourBungalowRoom : Scene
     {
-        public NeighbourBungalowRoom()
+        public override Id OnRegisterId()
         {
-            Id = Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM;
+            return Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM;
         }
 
         public override void OnLoad()
@@ -32,11 +32,11 @@ namespace IslandJamGame.GameObjects
         }
     }
 
-    public class NeighbourBungalowBathroom : Scene
+    public class SceneNeighbourBungalowBathroom : Scene
     {
-        public NeighbourBungalowBathroom()
+        public override Id OnRegisterId()
         {
-            Id = Id.SCENE_NEIGHBOUR_BUNGALOW_BATHROOM;
+            return Id.SCENE_NEIGHBOUR_BUNGALOW_BATHROOM;
         }
 
         public override void OnLoad()

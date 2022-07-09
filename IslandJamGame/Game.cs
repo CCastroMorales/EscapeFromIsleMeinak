@@ -26,9 +26,9 @@ namespace IslandJamGame
             Console.Title = Strings.GAME_TITLE;
         }
 
-        public void Run()
+        public void Run(string[] args)
         {
-            TitleScreen.Display();
+            TitleScreen.Display(Debug, args);
             Scenes.LoadFirstScene();
             GameLoop();
         }
@@ -586,22 +586,34 @@ namespace IslandJamGame
                     entity.Passify();
                 }
 
-                if (item.LoseOnUse)
-                {
-                    Inventory.Remove(item);
-                    PrintLine($"You lose the {item.LowerCaseName}.");
-
-                    int x = Console.CursorLeft;
-                    int y = Console.CursorTop;
-
-                    PrintInventory(true);
-                    Console.SetCursorPosition(x, y);
-                }
-
+                LoseItem(item, false);
+                return;
+            }
+            else if (target == "VEHICLE_JEEP")
+            {
+                Scenes.LoadScene(Id.SCENE_SPECIAL_VEHICLE_JEEP_DRIVING);
+                Scenes.Previous = null;
+                LoseItem(item, true);
                 return;
             }
 
             PrintLine($"You can't use {item.LowerCaseName} like that!");
+        }
+
+        private void LoseItem(Item item, bool silent)
+        {
+            if (item.LoseOnUse)
+            {
+                Inventory.Remove(item);
+                if (!silent)
+                    PrintLine($"You lose the {item.LowerCaseName}.");
+
+                int x = Console.CursorLeft;
+                int y = Console.CursorTop;
+
+                PrintInventory(true);
+                Console.SetCursorPosition(x, y);
+            }
         }
     }
 }

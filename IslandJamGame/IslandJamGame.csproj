@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dev.cs" />
+    <Compile Include="GameObjects\Scenes\GasStation.cs" />
+    <Compile Include="GameObjects\Scenes\Jeep.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="TitleScreen.cs" />
     <Compile Include="Engine\ItemType.cs" />
@@ -90,6 +93,9 @@
     <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_BATHROOM.txt" />
     <EmbeddedResource Include="res\SCENE_NEIGHBOUR_BUNGALOW_ROOM.txt" />
     <EmbeddedResource Include="res\TITLE_ASCII.txt" />
+    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP.txt" />
+    <EmbeddedResource Include="res\SCENE_GAS_STATION.txt" />
+    <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP_DRIVING.txt" />
     <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>

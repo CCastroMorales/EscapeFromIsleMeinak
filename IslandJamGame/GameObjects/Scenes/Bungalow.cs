@@ -3,11 +3,11 @@ using System;
 
 namespace IslandJamGame.GameObjects
 {
-    public class BungalowBalcony : Scene
+    public class SceneBungalowBalcony : Scene
     {
-        public BungalowBalcony()
+        public override Id OnRegisterId()
         {
-            Id = Id.SCENE_BUNGALOW_BALCONY;
+            return Id.SCENE_BUNGALOW_BALCONY;
         }
 
         public override void OnLoad()
@@ -17,26 +17,28 @@ namespace IslandJamGame.GameObjects
         }
     }
 
-    public class BungalowBathroom : Scene
+    public class SceneBungalowBathroom : Scene
     {
-        public BungalowBathroom()
+        public override Id OnRegisterId()
         {
-            Id = Id.SCENE_BUNGALOW_BATHROOM;
+            return Id.SCENE_BUNGALOW_BATHROOM;
         }
 
         public override void OnLoad()
         {
-            AddExit(Id.SCENE_BUNGALOW_ROOM, new string[] { "room", "bedroom" });
+            AddExit(Id.SCENE_BUNGALOW_ROOM, new string[] { "room", "bedroom", "out" });
             SpawnItem<Note>();
             SpawnItem<BrokenBottle>();
         }
+
+        
     }
 
-    public class BungalowRoom : Scene
+    public class SceneBungalowRoom : Scene
     {
-        public BungalowRoom()
+        public override Id OnRegisterId()
         {
-            Id = Id.SCENE_BUNGALOW_ROOM;
+            return Id.SCENE_BUNGALOW_ROOM;
         }
 
         public override void OnLoad()

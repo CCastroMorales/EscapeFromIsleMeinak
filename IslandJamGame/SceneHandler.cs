@@ -13,13 +13,17 @@ namespace IslandJamGame
 
         public SceneHandler()
         {
-            AddScene<BungalowRoom>();
-            AddScene<BungalowBathroom>();
-            AddScene<BungalowBalcony>();
-            AddScene<BetweenBungalows>();
-            AddScene<NeighbourBungalowBalcony>();
-            AddScene<NeighbourBungalowRoom>();
-            AddScene<NeighbourBungalowBathroom>();
+            // Ugh... This could've been handled by scripting or recursion.
+            AddScene<SceneBungalowRoom>();
+            AddScene<SceneBungalowBathroom>();
+            AddScene<SceneBungalowBalcony>();
+            AddScene<SceneBetweenBungalows>();
+            AddScene<SceneNeighbourBungalowBalcony>();
+            AddScene<SceneNeighbourBungalowRoom>();
+            AddScene<SceneNeighbourBungalowBathroom>();
+            AddScene<SceneJeep>();
+            AddScene<SceneJeepDriving>();
+            AddScene<SceneGasStation>();
         }
 
         public void AddScene<T>() where T : Scene, new()

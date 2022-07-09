@@ -7,7 +7,7 @@ namespace IslandJamGame
 {
     public static class TitleScreen
     {
-        public static void Display()
+        public static void Display(bool debug, string[] args)
         {
             Console.CursorVisible = false;
 
@@ -33,6 +33,20 @@ namespace IslandJamGame
             Thread.Sleep(Timing.GameOverPressPromptDelay);
             Console.SetCursorPosition(x, y + 3);
             Console.WriteLine(text);
+
+            if (debug)
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                string argline = "";
+                foreach (string arg in args)
+                    argline += $"{arg} ";
+
+                x = (Console.BufferWidth / 2) - (argline.Length / 2);
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine(argline);
+            }
 
             var readkey = Console.ReadKey(true);
             while (readkey.Key != ConsoleKey.Enter)
