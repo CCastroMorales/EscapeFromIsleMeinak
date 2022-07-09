@@ -156,7 +156,7 @@ namespace IslandJamGame
         {
             PrintInventory(true);
             PrintSceneTitle(scene);
-            PrintText(scene.Text);
+            PrintText(scene.Script);
         }
 
         private void PrintInventory(bool show)

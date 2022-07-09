@@ -17,6 +17,7 @@
         SCENE_VILLAGE_BEACH,
         SCENE_HARBOR_ENTRANCE,
         SCENE_HARBOR_JETTY,
+        SCENE_TEST,
         /* Items */
         ITEM_NOTE,
         ITEM_BROKEN_BOTTLE,

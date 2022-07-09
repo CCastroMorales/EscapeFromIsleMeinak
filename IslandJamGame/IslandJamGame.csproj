@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scripting.cs" />
     <Compile Include="Dev.cs" />
     <Compile Include="GameObjects\Scenes\Harbor.cs" />
     <Compile Include="GameObjects\Scenes\Village.cs" />
@@ -102,6 +103,7 @@
     <EmbeddedResource Include="res\SCENE_VILLAGE_PROMENADE.txt" />
     <EmbeddedResource Include="res\SCENE_VILLAGE_BEACH.txt" />
     <EmbeddedResource Include="res\SCENE_HARBOR_JETTY.txt" />
+    <None Include="res\SCENE_BUNGALOW_ROOM.script" />
     <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>

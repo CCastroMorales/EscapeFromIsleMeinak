@@ -10,7 +10,8 @@ namespace IslandJamGame.Engine
     {
         public Id Id { get; set; }
         public string Title { get; set; } = "";
-        public List<string> Text { get; } = new List<string>();
+        public List<string> InitialScript { get; } = new List<string>();
+        public List<string> Script { get; } = new List<string>();
         public List<Item> Items { get; } = new List<Item>();
         public List<Entity> Entities { get; } = new List<Entity>();
         public List<Exit> Exits { get; } = new List<Exit>();
@@ -46,7 +47,7 @@ namespace IslandJamGame.Engine
                     Title = lines[0];
 
                     for (int i = 2; i < lines.Length; i++)
-                        Text.Add(lines[i]);
+                        Script.Add(lines[i]);
                 }
             }
         }
