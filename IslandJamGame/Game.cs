@@ -330,16 +330,22 @@ namespace IslandJamGame
         private string InsertEntityDescriptions(Scene scene, string text)
         {
             string descriptions = "";
+            Func<Entity, string> addEntityDescription = x => descriptions += x.Description + " ";
 
             foreach (Entity entity in scene.Entities)
             {
                 if (entity.Dead)
                 {
                     if (entity.ShowDescriptionWhenDead)
-                        descriptions += entity.Description + " ";
+                        addEntityDescription(entity);
+                }
+                else if (entity.Passive)
+                {
+                    if (entity.ShowDescriptionWhenPassive)
+                        addEntityDescription(entity);
                 }
                 else
-                    descriptions += entity.Description + " ";
+                    addEntityDescription(entity);
             }
 
             return text.Replace("ENTITY_DESCRIPTIONS", descriptions.Trim());
@@ -362,6 +368,12 @@ namespace IslandJamGame
         }*/
 
         private void PrintLine(string text)
+        {
+            Print(text);
+            Console.Write('\n');
+        }
+
+        private void Print(string text)
         {
             int x = TextMarginLeft;
             int y = Console.CursorTop;
@@ -399,7 +411,10 @@ namespace IslandJamGame
 
                 Console.Write(' ');
             }
+        }
 
+        private void PrintReturn()
+        {
             Console.Write('\n');
         }
 
@@ -465,23 +480,29 @@ namespace IslandJamGame
 
         public void OnExitScene(Exit exit)
         {
-            Entity entity = Scenes.Active.FindEntity(exit.TriggerEntityId);
-
-            if (entity != null)
-            {
-                PrintLine(entity.TriggerDescription);
-                PrintEnterToContinue();
-
-                if (entity.TriggerGameOver)
-                    GameOver();
-            }
-            else
+            if (!TriggerEntity(exit.TriggerEntityId))
             {
                 Scene loadedScene = Scenes.LoadScene(exit.Destination);
 
                 if (loadedScene == null)
                     throw new Exception($"There is no loaded scene (exit:[\"{exit.Commands}\":{exit.Destination}])");
             }
+        }
+
+        public bool TriggerEntity(Id triggerEntityId)
+        {
+            Entity entity = Scenes.Active.FindEntity(triggerEntityId);
+
+            if (entity == null || entity.Passive)
+                return false;
+
+            PrintLine(entity.TriggerDescription);
+            PrintEnterToContinue();
+
+            if (entity.TriggerGameOver)
+                GameOver();
+
+            return true;
         }
 
         public void OnCheckDescription(string objectName)
@@ -553,7 +574,7 @@ namespace IslandJamGame
             {
                 if (entity.KillBy.Contains(item.Type))
                 {
-                    PrintLine($"You use {item.Name.ToLower()} on {entity.Name.ToLower()}. {entity.KilledDescription}".Trim());
+                    PrintLine(entity.KilledDescription);
                     Item drop = entity.Kill();
                     // TODO: Check if remove?
                     scene.Entities.Remove(entity);
@@ -564,11 +585,28 @@ namespace IslandJamGame
                         scene.Items.Add(drop);
                     }
                 }
+                else if (entity.PassifyWith.Contains(item.Type))
+                {
+                    PrintLine(entity.PassifyDescription);
+                    entity.Passify();
+                }
+
+                if (item.LoseOnUse)
+                {
+                    Inventory.Remove(item);
+                    PrintLine($"You lose the {item.LowerCaseName}.");
+
+                    int x = Console.CursorLeft;
+                    int y = Console.CursorTop;
+
+                    PrintInventory(true);
+                    Console.SetCursorPosition(x, y);
+                }
 
                 return;
             }
 
-            PrintLine($"You can't use {item.Name} like that!");
+            PrintLine($"You can't use {item.LowerCaseName} like that!");
         }
     }
 }
