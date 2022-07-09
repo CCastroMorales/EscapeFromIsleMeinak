@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dev.cs" />
+    <Compile Include="GameObjects\Scenes\Harbor.cs" />
+    <Compile Include="GameObjects\Scenes\Village.cs" />
     <Compile Include="GameObjects\Scenes\GasStation.cs" />
     <Compile Include="GameObjects\Scenes\Jeep.cs" />
     <Compile Include="Strings.cs" />
@@ -96,6 +98,10 @@
     <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP.txt" />
     <EmbeddedResource Include="res\SCENE_GAS_STATION.txt" />
     <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_JEEP_DRIVING.txt" />
+    <EmbeddedResource Include="res\SCENE_HARBOR_ENTRANCE.txt" />
+    <EmbeddedResource Include="res\SCENE_VILLAGE_PROMENADE.txt" />
+    <EmbeddedResource Include="res\SCENE_VILLAGE_BEACH.txt" />
+    <EmbeddedResource Include="res\SCENE_HARBOR_JETTY.txt" />
     <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ namespace IslandJamGame.GameObjects
         public override void OnLoad()
         {
             AllowGoBack = false;
+            AddExit(Id.SCENE_VILLAGE_PROMENADE, "promenade");
         }
 
         public override Id OnRegisterId()

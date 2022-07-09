@@ -24,6 +24,10 @@ namespace IslandJamGame
             AddScene<SceneJeep>();
             AddScene<SceneJeepDriving>();
             AddScene<SceneGasStation>();
+            AddScene<SceneVillagePromenade>();
+            AddScene<SceneVillageBeach>();
+            AddScene<SceneHarborEntrance>();
+            AddScene<SceneHarborJetty>();
         }
 
         public void AddScene<T>() where T : Scene, new()
