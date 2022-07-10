@@ -236,7 +236,13 @@ namespace EscapeFromIsleMainak
             Console.ForegroundColor = ConsoleColor.DarkGray;
             foreach (Item item in Inventory)
             {
-                string label = item.InventoryLabel;
+                string label;
+
+                if (item.Type == ItemType.WEAPON_FIREARM)
+                    label = $"[{item.UsesRemaining}] {item.InventoryLabel}";
+                else
+                    label = item.InventoryLabel;
+
                 padding = invWidth - label.Length - 3;
                 
                 Console.Write('║');
@@ -299,7 +305,7 @@ namespace EscapeFromIsleMainak
 
             foreach (string originalText in scriptLines)
             {
-                string textWithItemDesc = InsertItemDescriptions(Scenes.Active, originalText);
+                string textWithItemDesc = InsertItemDescriptions(Scenes.Active.Items, originalText);
                 string text = InsertEntityDescriptions(Scenes.Active, textWithItemDesc);
                 text = text.Replace("\r","");
                 text = text.Replace("  ", " ");
@@ -355,11 +361,11 @@ namespace EscapeFromIsleMainak
             Scenes.Active.InitialVisit = false;
         }
 
-        private string InsertItemDescriptions(Scene scene, string text)
+        private string InsertItemDescriptions(List<Item> items, string text)
         {
             string descriptions = "";
 
-            foreach (Item item in scene.Items)
+            foreach (Item item in items)
                 descriptions += item.Description + " ";
 
             return text.Replace("ITEM_DESCRIPTIONS", descriptions.Trim()); ;
@@ -540,10 +546,11 @@ namespace EscapeFromIsleMainak
 
         public void OnCheckDescription(string objectName)
         {
-            CheckObject checkObject = Scenes.Active.FindCheckObject(objectName);
-            if (checkObject != null)
+            CheckObject @object = Scenes.Active.FindCheckObject(objectName);
+            if (@object != null)
             {
-                PrintLine(checkObject.Description);
+                string description = InsertItemDescriptions(@object.Items, @object.Description);
+                PrintLine(description);
             }
         }
 
@@ -556,7 +563,8 @@ namespace EscapeFromIsleMainak
             }
 
             Scene scene = Scenes.Active;
-            scene.Items.Remove(item);
+
+            scene.RemoveItem(item);
             Inventory.Add(item);
 
             string text = $"You take the {label.ToLower()}.";
@@ -629,41 +637,54 @@ namespace EscapeFromIsleMainak
                     entity.Passify();
                 }
 
-                LoseItem(item, false);
+                ItemUsed(item, false);
                 return;
             }
             else if (target == "VEHICLE_JEEP")
             {
                 Scenes.LoadScene(Id.SCENE_SPECIAL_VEHICLE_JEEP_DRIVING);
                 Scenes.Previous = null;
-                LoseItem(item, true);
+                ItemUsed(item, true);
                 return;
             }
             else if (target == "VEHICLE_BOAT_46")
             {
                 Scenes.LoadScene(Id.SCENE_SPECIAL_VEHICLE_BOAT_DRIVING);
                 Scenes.Previous = null;
-                LoseItem(item, true);
+                ItemUsed(item, true);
                 return;
             }
 
             PrintLine($"You can't use {item.LowerCaseName} like that!");
         }
 
-        private void LoseItem(Item item, bool silent)
+        private void ItemUsed(Item item, bool silenceLoseDescription)
         {
-            if (item.LoseOnUse)
-            {
-                Inventory.Remove(item);
-                if (!silent)
-                    PrintLine($"You lose the {item.LowerCaseName}.");
+            item.Use();
 
-                int x = Console.CursorLeft;
-                int y = Console.CursorTop;
+            if (item.UsesRemaining == 0 && item.LoseOnNoRemainingUses)
+                LoseItem(item, silenceLoseDescription);
+            else if (item.LoseOnUse)
+                LoseItem(item, silenceLoseDescription);
 
-                PrintInventory(true);
-                Console.SetCursorPosition(x, y);
-            }
+            UpdateInventoryScreen();
+        }
+
+        private void LoseItem(Item item, bool silenceLoseDescription)
+        {
+            Inventory.Remove(item);
+            if (!silenceLoseDescription)
+                PrintLine($"You lose the {item.LowerCaseName}.");
+            UpdateInventoryScreen();
+        }
+
+        private void UpdateInventoryScreen()
+        {
+            int x = Console.CursorLeft;
+            int y = Console.CursorTop;
+
+            PrintInventory(true);
+            Console.SetCursorPosition(x, y);
         }
     }
 }

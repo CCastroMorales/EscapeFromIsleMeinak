@@ -110,11 +110,12 @@ namespace EscapeFromIsleMainak.Components
             return null;
         }
 
-        public void SpawnItem<T>() where T : Item, new()
+        public Item SpawnItem<T>() where T : Item, new()
         {
             T t = new T();
             Item item = t;
             Items.Add(item);
+            return item;
         }
 
         public Item FindItem(string itemLabel)
@@ -122,7 +123,31 @@ namespace EscapeFromIsleMainak.Components
             foreach (Item item in Items)
                 if (item.Labels.Contains(itemLabel.ToLower()))
                     return item;
+
+            foreach (CheckObject @object in Objects)
+                foreach (Item item in @object.Items)
+                    if (item.Labels.Contains(itemLabel.ToLower()))
+                        return item;
+
             return null;
+        }
+
+        public bool RemoveItem(Item item)
+        {
+            if (Items.Contains(item))
+            {
+                Items.Remove(item);
+                return true;
+            }
+            else
+                foreach (CheckObject @object in Objects)
+                    if (@object.Items.Contains(item))
+                    {
+                        @object.Items.Remove(item);
+                        return true;
+                    }
+
+            return false;
         }
 
         public void SpawnEntity<T>() where T : Entity, new()
@@ -163,10 +188,11 @@ namespace EscapeFromIsleMainak.Components
             return null;
         }
 
-        public void RegisterCheckObject<T>() where T : CheckObject, new()
+        public CheckObject RegisterCheckObject<T>() where T : CheckObject, new()
         {
             CheckObject checkObject = new T();
             Objects.Add(checkObject);
+            return checkObject;
         }
     }
 }

@@ -4,7 +4,11 @@ namespace EscapeFromIsleMainak.GameObjects
 {
     public abstract class Human : Entity
     {
-        // Do nothing
+        protected Human()
+        {
+            KillBy.Add(ItemType.WEAPON_MELEE);
+            KillBy.Add(ItemType.WEAPON_FIREARM);
+        }
     }
 
     public class ShadowyPerson : Human
@@ -17,7 +21,6 @@ namespace EscapeFromIsleMainak.GameObjects
             Description = "You can see the shadowy figure hunching over the balcony railing.";
             TriggerDescription = "The person turns around and launches toward you. You try to flee inside but you slip and fall. The person grabs you from behind and you can't get free. Eventually you start to feel dizzy and realize that you have a large wound on your shoulder. It's over.";
 
-            KillBy.Add(ItemType.WEAPON_MELEE);
             KilledDescription = "You hit the person on the head. The person is not moving anymore. It must have been the person who lived in this bungalow. You have no memory of this person when arriving yesterday. You leave the person hanging over the railing.";
             ShowDescriptionWhenDead = false;
             TriggerGameOver = true;

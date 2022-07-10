@@ -25,6 +25,7 @@
         ITEM_NOTE,
         ITEM_BOTTLE,
         ITEM_BROKEN_BOTTLE,
+        ITEM_PISTOL,
         ITEM_PASSED_OUT_RAT,
         ITEM_BOAT_KEY,
         ITEM_JEEP_KEY,

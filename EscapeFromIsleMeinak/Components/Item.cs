@@ -2,7 +2,7 @@
 
 namespace EscapeFromIsleMainak.Components
 {
-    public class Item
+    public abstract class Item
     {
         public Id Id { get; set; }
         public string Name { get; set; } = "";
@@ -13,7 +13,9 @@ namespace EscapeFromIsleMainak.Components
         public string InventoryDescription { get; set; } = "";
         public List<ItemAction> Actions { get; set; } = new List<ItemAction>();
         public List<string> Labels { get; set; } = new List<string>();
+        public int UsesRemaining { get; set; } = -1;
         public bool LoseOnUse { get; set; } = false;
+        public bool LoseOnNoRemainingUses { get; set; } = false;
 
         public override string ToString()
         {
@@ -26,6 +28,12 @@ namespace EscapeFromIsleMainak.Components
                 if (action.Id == actionId)
                     return action;
             return null;
+        }
+
+        public void Use()
+        {
+            if (UsesRemaining > 0)
+                UsesRemaining--;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace EscapeFromIsleMeinak.GameObjects
         {
             Id = Id.CHECK_OBJECT_COMPARTMENT;
             Name = "Compartment";
-            Description = "You peek inside the compartment. There's nothing there.";
+            Description = "You peek inside the compartment. Hm, there's not much in there. ITEM_DESCRIPTIONS";
             Labels.AddRange(new string[] { "compartment", "box" });
         }
     }

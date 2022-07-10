@@ -5,6 +5,7 @@
         USELESS,
         MEAT,
         FIST,
-        WEAPON_MELEE
+        WEAPON_MELEE,
+        WEAPON_FIREARM
     }
 }
