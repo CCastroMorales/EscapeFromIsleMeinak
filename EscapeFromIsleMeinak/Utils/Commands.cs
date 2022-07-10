@@ -11,6 +11,8 @@
         public static readonly string PUNCH = "punch";
         public static readonly string USE = "use";
         public static readonly string DROP = "drop";
+        public static readonly string EXIT = "exit";
+        public static readonly string QUIT = "quit";
     }
 
     public class Arguments

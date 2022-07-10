@@ -1,5 +1,6 @@
 ﻿using EscapeFromIsleMeinak;
 using MeinakEsc.Components;
+using System;
 using System.Collections.Generic;
 
 namespace MeinakEsc
@@ -48,6 +49,8 @@ namespace MeinakEsc
 
             InputBundle bundle = new InputBundle(command, arguments);
 
+            if (ParseQuit(ctx, command))
+                Done = true;
             if (ParseGO(command, arguments))
                 Done = true;
             // Testing a new interpreter design with parsers for each action.
@@ -63,6 +66,32 @@ namespace MeinakEsc
                 Done = true;
             if (ParseActionUSE(command, arguments))
                 Done = true;
+        }
+
+        private bool ParseQuit(Ctx ctx, string command)
+        {
+            if (command != Commands.QUIT && command != Commands.EXIT)
+                return false;
+
+            ctx.Game.PrintLine("Do you want to close the game? (y/n)");
+
+            bool waitForInput = true;
+            var readkey = Console.ReadKey(true);
+
+            while (waitForInput)
+            {
+                if (readkey.Key == ConsoleKey.Y)
+                {
+                    ctx.Game.Running = false;
+                    return true;
+                }
+                else if (readkey.Key == ConsoleKey.N)
+                    return false;
+                else
+                    readkey = Console.ReadKey(true);
+            }
+
+            return false;
         }
 
         private string[] ParseArguments(string input, out string command, out string[] arguments)

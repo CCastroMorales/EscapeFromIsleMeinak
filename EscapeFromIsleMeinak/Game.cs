@@ -363,7 +363,8 @@ namespace MeinakEsc
                 "check",
                 "take",
                 "hit",
-                "drop"
+                "drop",
+                "exit/quit"
             };
 
             foreach (string command in commands)
