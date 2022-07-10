@@ -614,6 +614,26 @@ namespace EscapeFromIsleMainak
                 PrintLine(action.Text);
         }
 
+        private bool KillEntityWith(Entity entity, ItemType itemType)
+        {
+            if (entity.KillBy.Contains(itemType))
+            {
+                PrintLine(entity.KilledDescription);
+                Item drop = entity.Kill();
+                Scenes.Active.Entities.Remove(entity);
+
+                if (drop != null)
+                {
+                    PrintLine(drop.Description);
+                    Scenes.Active.Items.Add(drop);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         public void OnPunchEntity(Entity entity, string entityName)
         {
             if (entity is Human && entity.MaxKillAttempts > 0)
@@ -632,10 +652,10 @@ namespace EscapeFromIsleMainak
                     return;
                 }
             }
+            else if (KillEntityWith(entity, ItemType.FIST))
+                return;
             else
-            {
-                PrintLine($"You tried to punch {entity.Name} but hit nothing but air.");
-            }
+                PrintLine($"You tried to punch {entity.Name.ToLower()} but hit nothing but air.");
         }
 
         public void OnUse(Item item, string itemName, string target)
@@ -647,25 +667,21 @@ namespace EscapeFromIsleMainak
 
             if (entity != null)
             {
-                if (entity.KillBy.Contains(item.Type))
+                if (KillEntityWith(entity, item.Type))
                 {
-                    PrintLine(entity.KilledDescription);
-                    Item drop = entity.Kill();
-                    // TODO: Check if remove?
-                    scene.Entities.Remove(entity);
-
-                    if (drop != null)
-                    {
-                        PrintLine(drop.Description);
-                        scene.Items.Add(drop);
-                    }
+                    ItemUsed(item, false);
+                    return;
                 }
                 else if (entity.PassifyWith.Contains(item.Type))
                 {
                     PrintLine(entity.PassifyDescription);
                     entity.Passify();
-                }
 
+                    ItemUsed(item, false);
+                    return;
+                }
+                
+                // Do we really reach this?
                 ItemUsed(item, false);
                 return;
             }
