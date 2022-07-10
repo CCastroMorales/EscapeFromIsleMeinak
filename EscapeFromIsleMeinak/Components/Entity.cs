@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EscapeFromIsleMainak.Engine
+namespace EscapeFromIsleMainak.Components
 {
     public class Entity
     {

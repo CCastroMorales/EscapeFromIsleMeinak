@@ -1,5 +1,5 @@
 ﻿using EscapeFromIsleMainak;
-using EscapeFromIsleMainak.Engine;
+using EscapeFromIsleMainak.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ScriptingTests

@@ -1,4 +1,4 @@
-﻿using EscapeFromIsleMainak.Engine;
+﻿using EscapeFromIsleMainak.Components;
 using System;
 
 namespace EscapeFromIsleMainak.GameObjects
