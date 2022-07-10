@@ -1,5 +1,5 @@
-﻿using IslandJamGame;
-using IslandJamGame.Engine;
+﻿using EscapeFromIsleMainak;
+using EscapeFromIsleMainak.Engine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ScriptingTests

@@ -1,0 +1,47 @@
+﻿using EscapeFromIsleMainak.Engine;
+
+namespace EscapeFromIsleMainak.GameObjects
+{
+    public class SceneNeighbourBungalowBalcony : Scene
+    {
+        public override Id OnRegisterId()
+        {
+            return Id.SCENE_NEIGHBOUR_BUNGALOW_BALCONY;
+        }
+
+        public override void OnLoad()
+        {
+            AddExit(Id.SCENE_INBETWEEN_BUNGALOWS, new string[] { "down", "stairs" });
+            AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM, Id.ENTITY_BUNGALOW_SHADOWY_ZOMBIE, new string[] { "room", "inside", "in" });
+            SpawnEntity<ShadowyZombie>();
+        }
+    }
+
+    public class SceneNeighbourBungalowRoom : Scene
+    {
+        public override Id OnRegisterId()
+        {
+            return Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM;
+        }
+
+        public override void OnLoad()
+        {
+            AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_BALCONY, new string[] { "balcony", "outside", "out" });
+            AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_BATHROOM, new string[] { "bathroom", "toilet", "bath" });
+            SpawnItem<JeepKey>();
+        }
+    }
+
+    public class SceneNeighbourBungalowBathroom : Scene
+    {
+        public override Id OnRegisterId()
+        {
+            return Id.SCENE_NEIGHBOUR_BUNGALOW_BATHROOM;
+        }
+
+        public override void OnLoad()
+        {
+            AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM, new string[] { "room", "out" });
+        }
+    }
+}

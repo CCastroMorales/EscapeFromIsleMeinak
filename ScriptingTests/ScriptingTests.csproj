@@ -56,7 +56,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IslandJamGame\EscapeFromIsleMeinak.csproj">
+    <ProjectReference Include="..\EscapeFromIsleMeinak\EscapeFromIsleMeinak.csproj">
       <Project>{1FE70236-F7DF-455E-B929-BC150DA197A7}</Project>
       <Name>EscapeFromIsleMeinak</Name>
     </ProjectReference>
