@@ -9,6 +9,7 @@ namespace EscapeFromIsleMainak
     {
         public static void Display(bool debug, bool restarted, string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.CursorVisible = false;
 
             string titleSuper = restarted ? Strings.SUPERSCRIPT_TITLE_ALT : Strings.SUPERSCRIPT_TITLE;
