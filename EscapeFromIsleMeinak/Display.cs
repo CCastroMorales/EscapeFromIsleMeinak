@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 
-namespace EscapeFromIsleMainak
+namespace EscapeFromIsleMeinak
 {
     public static class Display
     {

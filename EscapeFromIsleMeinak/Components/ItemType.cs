@@ -1,4 +1,4 @@
-﻿namespace EscapeFromIsleMainak.Components
+﻿namespace EscapeFromIsleMeinak.Components
 {
     public enum ItemType
     {

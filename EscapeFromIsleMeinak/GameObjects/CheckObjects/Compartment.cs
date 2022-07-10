@@ -1,4 +1,4 @@
-﻿using EscapeFromIsleMainak.Components;
+﻿using EscapeFromIsleMeinak.Components;
 
 namespace EscapeFromIsleMeinak.GameObjects
 {

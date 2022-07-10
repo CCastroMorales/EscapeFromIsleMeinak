@@ -1,4 +1,4 @@
-﻿namespace EscapeFromIsleMainak
+﻿namespace EscapeFromIsleMeinak
 {
     public static class Strings
     {

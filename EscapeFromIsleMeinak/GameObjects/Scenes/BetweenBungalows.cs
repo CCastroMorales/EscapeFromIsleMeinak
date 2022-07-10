@@ -1,6 +1,6 @@
-﻿using EscapeFromIsleMainak.Components;
+﻿using EscapeFromIsleMeinak.Components;
 
-namespace EscapeFromIsleMainak.GameObjects
+namespace EscapeFromIsleMeinak.GameObjects
 {
     public class SceneBetweenBungalows : Scene
     {

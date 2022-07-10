@@ -1,6 +1,6 @@
-﻿using EscapeFromIsleMainak.Components;
+﻿using EscapeFromIsleMeinak.Components;
 
-namespace EscapeFromIsleMainak
+namespace EscapeFromIsleMeinak
 {
     public class Program
     {

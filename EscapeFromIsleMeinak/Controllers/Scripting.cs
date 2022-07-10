@@ -1,8 +1,8 @@
-﻿using EscapeFromIsleMainak.Components;
+﻿using EscapeFromIsleMeinak.Components;
 using System;
 using System.Collections.Generic;
 
-namespace EscapeFromIsleMainak
+namespace EscapeFromIsleMeinak
 {
     public class Scripting
     {

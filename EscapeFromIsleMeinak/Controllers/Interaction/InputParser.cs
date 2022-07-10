@@ -1,9 +1,7 @@
-﻿using EscapeFromIsleMainak.Components;
-using EscapeFromIsleMeinak;
-using EscapeFromIsleMeinak.Components;
+﻿using EscapeFromIsleMeinak.Components;
 using System.Collections.Generic;
 
-namespace EscapeFromIsleMainak
+namespace EscapeFromIsleMeinak
 {
     public interface ParseCallback
     {

@@ -1,12 +1,12 @@
-﻿using EscapeFromIsleMainak.Components;
-using EscapeFromIsleMainak.GameObjects;
+﻿using EscapeFromIsleMeinak.Components;
+using EscapeFromIsleMeinak.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace EscapeFromIsleMainak
+namespace EscapeFromIsleMeinak
 {
     public class SceneHandler
     {
