@@ -57,7 +57,7 @@
     <Compile Include="GameObjects\Scenes\GasStation.cs" />
     <Compile Include="GameObjects\Scenes\Jeep.cs" />
     <Compile Include="Utils\Strings.cs" />
-    <Compile Include="TitleScreen.cs" />
+    <Compile Include="Display.cs" />
     <Compile Include="Components\ItemType.cs" />
     <Compile Include="Components\Exit.cs" />
     <Compile Include="Components\CheckObject.cs" />

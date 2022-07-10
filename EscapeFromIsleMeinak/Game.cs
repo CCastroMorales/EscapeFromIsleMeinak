@@ -31,10 +31,17 @@ namespace EscapeFromIsleMainak
         public void Run(string[] args)
         {
             Scenes = new SceneHandler();
+            ClearInventory();
+            
             ParseCommandLineArguments(args);
             Display.TitleScreen(Debug, Restarted, args);
             Scenes.LoadFirstScene();
             GameLoop();
+        }
+
+        private void ClearInventory()
+        {
+            Inventory = new List<Item>();
         }
 
         public void ParseCommandLineArguments(string[] args)
