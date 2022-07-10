@@ -3,6 +3,7 @@
     public enum ItemType
     {
         USELESS,
+        NOTE,
         MEAT,
         FIST,
         WEAPON_MELEE,

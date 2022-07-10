@@ -57,12 +57,15 @@ namespace MeinakEsc.GameObjects
         public JettyPerson()
         {
             Id = Id.ENTITY_JETTY_PERSON;
-            Description = "There is a hunched down person near the road that leads to the village promenade.";
-            TriggerDescription = "The person turns around and launches toward you. You can't escape. The person is somehow faster than you. The person eventually catches up to from behind and you can't get free. You realize that you have been bit somewhere and you pass out. It's over.";
+            Description = "There is however a person next to the boat as well. The person... looks awfully similar to your... friend?! It can't be. There's something different about the person but the clothes are similar to your friend's style... and the face...";
+            TriggerDescription = "The person looks directly at you and launches toward you. You don't know what to do; this is the enemy but it looks like your friend! You try to run away but you are overrun as other people start noticing you and flock around you. You know what is going to happen and you close your eyes. It's over.";
 
-            KilledDescription = "The person is not moving anymore. Was this your friend? No, the person looks nothing like them...";
+            KilledDescription = "The person... is not moving anymore. Was this your friend? What happe... How did they become like this and what is happening on this island?! You need to escape and quickly before you end up just like...... them.";
             ShowDescriptionWhenDead = false;
             TriggerGameOver = true;
+
+            PacifyWith.Add(ItemType.NOTE);
+            PacifyDescription = "In a desperate attempt you try to hand over the note to the person. The person looks at you and you immediately regret your decision.... The person doesn't attack you however. They stare at the note for a while. The person pushes away your hand, makes some noises and starts moving slowly toward the other people who are mesmerized by the boats and the decorations.";
         }
     }
 

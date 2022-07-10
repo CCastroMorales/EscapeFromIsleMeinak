@@ -9,6 +9,7 @@ namespace MeinakEsc.GameObjects
             Id = Id.ITEM_NOTE;
             Name = "Note";
             InventoryLabel = "Note";
+            Type = ItemType.NOTE;
             Description = "There appears to be a wrinkled NOTE in the trash can.";
             InventoryDescription = "The note is from your friend; you recognize their sloppy handwriting.";
             Labels.Add("note");

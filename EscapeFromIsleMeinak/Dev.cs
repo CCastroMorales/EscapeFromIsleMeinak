@@ -12,5 +12,11 @@ namespace MeinakEsc
             Item item = new JeepKey();
             inventory.Add(item);
         }
+
+        public static void SpawnNote(Inventory inventory)
+        {
+            Item item = new Note();
+            inventory.Add(item);
+        }
     }
 }

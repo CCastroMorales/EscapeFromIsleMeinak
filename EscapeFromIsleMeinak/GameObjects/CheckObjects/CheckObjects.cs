@@ -68,4 +68,15 @@ namespace EscapeFromIsleMeinak.GameObjects
             Description = "The bungalow room is tiny. There is only room for two beds, a small cabinet with a television on top that barely fits. You notice the open BATHROOM door that's next to the entrance DOOR.";
         }
     }
+
+    public class Body : CheckObject
+    {
+        public Body()
+        {
+            Id = Id.CHECK_OBJECT_BEACH_BODY;
+            Name = "Body";
+            Labels.AddRange(new string[] { "body", "person", "zombie", "zombi", "dead" });
+            Description = "The person seems to have passed out. ITEM_DESCRIPTIONS";
+        }
+    }
 }

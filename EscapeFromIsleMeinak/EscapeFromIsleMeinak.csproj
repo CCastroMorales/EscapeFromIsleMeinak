@@ -48,7 +48,7 @@
     <Compile Include="Controllers\Interaction\Check.cs" />
     <Compile Include="Controllers\Interaction\InputBundle.cs" />
     <Compile Include="GameObjects\CheckObjects\CheckObjects.cs" />
-    <Compile Include="GameObjects\Items\BoatKey.cs" />
+    <Compile Include="GameObjects\Items\Keys.cs" />
     <Compile Include="GameObjects\Items\Pistol.cs" />
     <Compile Include="GameObjects\Items\Bottles.cs" />
     <Compile Include="GameObjects\Scenes\Boat.cs" />
@@ -68,7 +68,6 @@
     <Compile Include="Components\Entity.cs" />
     <Compile Include="GameObjects\Entities\Human.cs" />
     <Compile Include="GameObjects\Entities\Rat.cs" />
-    <Compile Include="GameObjects\Items\JeepKey.cs" />
     <Compile Include="GameObjects\Items\PassedOutRat.cs" />
     <Compile Include="GameObjects\Items\Note.cs" />
     <Compile Include="GameObjects\Scenes\BetweenBungalows.cs" />

@@ -220,7 +220,7 @@ namespace MeinakEsc
                     return true;
                 }
                 // Check for special boat use case
-                else if (item != null && item.Id == Id.ITEM_BOAT_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
+                else if (item != null && item.Id == Id.ITEM_BOAT_KEY_46 && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
                 {
                     Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
                     return true;
@@ -248,7 +248,7 @@ namespace MeinakEsc
                     return true;
                 }
                 // Check for special boat use case
-                else if (item != null && item.Id == Id.ITEM_BOAT_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
+                else if (item != null && item.Id == Id.ITEM_BOAT_KEY_46 && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
                 {
                     Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
                     return true;

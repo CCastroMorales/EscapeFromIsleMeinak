@@ -25,7 +25,7 @@ namespace MeinakEsc.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_HARBOR_ENTRANCE, new string[] { "out", "harbor", "entrance", "pier", "jetty" });
-            RegisterCheckObject<LockBox>().SpawnItem<BoatKey>();
+            RegisterCheckObject<LockBox>().SpawnItem<BoatKey46>();
         }
 
         public override Id OnRegisterId()
@@ -39,8 +39,8 @@ namespace MeinakEsc.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_HARBOR_ENTRANCE, new string[] { "harbor", "entrance", "village", "north" });
-            AddExit(Id.SCENE_SPECIAL_VEHICLE_BOAT, new string[] { "boat", "46" });
-            SpawnItem<BoatKey>();
+            AddExit(Id.SCENE_SPECIAL_VEHICLE_BOAT, Id.ENTITY_JETTY_PERSON, new string[] { "boat", "46" });
+            SpawnEntity<JettyPerson>();
         }
 
         public override Id OnRegisterId()

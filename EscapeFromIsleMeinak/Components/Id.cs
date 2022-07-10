@@ -28,7 +28,8 @@
         ITEM_BROKEN_BOTTLE,
         ITEM_PISTOL,
         ITEM_PASSED_OUT_RAT,
-        ITEM_BOAT_KEY,
+        ITEM_BOAT_KEY_46,
+        ITEM_BOAT_KEY_86,
         ITEM_JEEP_KEY,
         /* Check objects */
         CHECK_OBJECT_BED,
@@ -37,6 +38,7 @@
         CHECK_OBJECT_LOCK_BOX,
         CHECK_OBJECT_MIRROR,
         CHECK_OBJECT_MOTOR,
+        CHECK_OBJECT_BEACH_BODY,
         /* Actions */
         ACTION_READ,
         ACTION_USE,

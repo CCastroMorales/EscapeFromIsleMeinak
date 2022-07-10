@@ -1,6 +1,15 @@
 ﻿scene.title EXT. VILLAGE HARBOR JETTY - DAWN
+scene.initialScriptBegin
+
+You feel like you're making good progress. There are several different fishing boats around and they are numbered differently but have similar decorations. Some of the numbers are 03, 46, 14, 52 and 86. There are several people here. Why are they gathering here? They seem occupied, distracted, by the different boats and their decorations.
+
+The boat closest to you is BOAT 46. ENTITY_DESCRIPTIONS You can GO back to the harbor ENTRANCE.
+
+scene.initialScriptEnd
 scene.scriptBegin
 
-Debug: ITEM_DESCRIPTIONS
+There are several different fishing boats around and they are numbered differently but have similar decorations. Some of the numbers are 03, 46, 14, 52 and 86. There are several people here. They still seem distracted by the boats and their decorations.
+
+The boat closest to you is BOAT 46. ENTITY_DESCRIPTIONS You can GO back to the harbor ENTRANCE.
 
 scene.scriptEnd

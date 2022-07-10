@@ -55,6 +55,8 @@ namespace MeinakEsc
                         Debug = true;
                     if (arg == "+jeepkey")
                         Dev.SpawnJeepKey(Inventory);
+                    if (arg == "+note")
+                        Dev.SpawnNote(Inventory);
                     if (arg == "+scene")
                     {
                         if (i <= args.Length - 2)

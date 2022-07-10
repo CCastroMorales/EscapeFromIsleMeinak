@@ -1,4 +1,5 @@
-﻿using MeinakEsc.Components;
+﻿using EscapeFromIsleMeinak.GameObjects;
+using MeinakEsc.Components;
 
 namespace MeinakEsc.GameObjects
 {
@@ -23,6 +24,7 @@ namespace MeinakEsc.GameObjects
             AddExit(Id.SCENE_VILLAGE_PROMENADE, new string[] { "promenade", "road", "up " });
             AddExit(Id.SCENE_VILLAGE_BAR, new string[] { "bar" });
             AddExit(Id.SCENE_HARBOR_ENTRANCE, new string[] { "harbor", "entrance", "pier" });
+            RegisterCheckObject<Body>().SpawnItem<BoatKey86>();
         }
 
         public override Id OnRegisterId()
