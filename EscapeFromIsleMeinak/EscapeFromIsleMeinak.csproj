@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameObjects\CheckObjects\Mirror.cs" />
     <Compile Include="GameObjects\CheckObjects\Compartment.cs" />
     <Compile Include="GameObjects\CheckObjects\Room.cs" />
     <Compile Include="GameObjects\CheckObjects\Bed.cs" />

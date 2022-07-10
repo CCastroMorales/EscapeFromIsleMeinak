@@ -33,6 +33,7 @@
         CHECK_OBJECT_BED,
         CHECK_OBJECT_BUNGALOW_ROOM,
         CHECK_OBJECT_COMPARTMENT,
+        CHECK_OBJECT_MIRROR,
         /* Actions */
         ACTION_READ,
         ACTION_USE,

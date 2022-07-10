@@ -1,4 +1,5 @@
 ﻿using EscapeFromIsleMainak.Components;
+using EscapeFromIsleMeinak.GameObjects;
 
 namespace EscapeFromIsleMainak.GameObjects
 {
@@ -48,6 +49,7 @@ namespace EscapeFromIsleMainak.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM, new string[] { "room", "out" });
+            RegisterCheckObject<Mirror>();
         }
     }
 }
