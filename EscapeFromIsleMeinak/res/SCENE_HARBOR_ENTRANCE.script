@@ -1,15 +1,15 @@
 ﻿scene.title EXT. VILLAGE HARBOR ENTRANCE - DAWN
 scene.initialScriptBegin
 
-This is the entrance to the harbor. You see a JETTY in front of you. Could this be the way to escape the island? Or should you stay to continue looking for your friend?
+This is the entrance to the harbor. You see a JETTY in front of you; could this be the way to escape the island? There's also a SHED nearby. ENTITY_DESCRIPTIONS Should you continue forward or stay to continue looking for your friend?
 
-You can proceed to the JETTY or go back to the village. You can go to the village BAR to the left but you can also GO right and down to the BEACH.
+You can proceed to the JETTY, the SHED or head back to the village. You can GO to the village BAR to the left but you can also GO right and down to the BEACH.
 
 scene.initialScriptEnd
 scene.scriptBegin
 
-You're back to the harbor entrance. You see the JETTY in front of you. Could this be the way to escape the island? Or should you stay to continue looking for your friend?
+You're back to the harbor entrance. You see a JETTY in front of you; could this be the way to escape the island? There's also a SHED nearby. ENTITY_DESCRIPTIONS Should you continue forward or stay to continue looking for your friend?
 
-You can GO to the JETTY or GO left to reach the village BAR. You can also GO right and down to the BEACH.
+You can proceed to the JETTY, the SHED or head back to the village. You can GO to the village BAR to the left but you can also GO right and down to the BEACH.
 
 scene.scriptEnd

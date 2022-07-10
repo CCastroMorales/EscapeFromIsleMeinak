@@ -20,6 +20,7 @@
         SCENE_VILLAGE_BAR,
         SCENE_HARBOR_ENTRANCE,
         SCENE_HARBOR_JETTY,
+        SCENE_HARBOR_SHED,
         SCENE_TEST,
         /* Items */
         ITEM_NOTE,
@@ -33,6 +34,7 @@
         CHECK_OBJECT_BED,
         CHECK_OBJECT_BUNGALOW_ROOM,
         CHECK_OBJECT_COMPARTMENT,
+        CHECK_OBJECT_LOCK_BOX,
         CHECK_OBJECT_MIRROR,
         CHECK_OBJECT_MOTOR,
         /* Actions */
@@ -41,7 +43,9 @@
         /* Entities */
         ENTITY_BUNGALOW_RAT,
         ENTITY_BUNGALOW_SHADOWY_PERSON,
-        ENTITY_GAS_STATION_PERSON
+        ENTITY_GAS_STATION_PERSON,
+        ENTITY_JETTY_PERSON,
+        ENTITY_SHED_PERSON
     }
 
 }

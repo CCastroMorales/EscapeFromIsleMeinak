@@ -33,6 +33,7 @@ namespace MeinakEsc
             AddScene<SceneVillageBeach>();
             AddScene<SceneVillageBar>();
             AddScene<SceneHarborEntrance>();
+            AddScene<SceneHarborShed>();
             AddScene<SceneHarborJetty>();
             AddScene<SceneBoat>();
             AddScene<SceneBoatDriving>();

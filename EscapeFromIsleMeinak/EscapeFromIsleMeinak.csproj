@@ -47,11 +47,7 @@
     <Compile Include="Controllers\Inventory.cs" />
     <Compile Include="Controllers\Interaction\Check.cs" />
     <Compile Include="Controllers\Interaction\InputBundle.cs" />
-    <Compile Include="GameObjects\CheckObjects\Motor.cs" />
-    <Compile Include="GameObjects\CheckObjects\Mirror.cs" />
-    <Compile Include="GameObjects\CheckObjects\Compartment.cs" />
-    <Compile Include="GameObjects\CheckObjects\Room.cs" />
-    <Compile Include="GameObjects\CheckObjects\Bed.cs" />
+    <Compile Include="GameObjects\CheckObjects\CheckObjects.cs" />
     <Compile Include="GameObjects\Items\BoatKey.cs" />
     <Compile Include="GameObjects\Items\Pistol.cs" />
     <Compile Include="GameObjects\Items\Bottles.cs" />
@@ -97,6 +93,7 @@
     <None Include="App.config" />
     <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_BOAT.script" />
     <EmbeddedResource Include="res\SCENE_SPECIAL_VEHICLE_BOAT_DRIVING.script" />
+    <EmbeddedResource Include="res\SCENE_HARBOR_SHED.script" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\script.json" />

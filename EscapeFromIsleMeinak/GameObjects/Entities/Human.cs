@@ -6,6 +6,8 @@ namespace MeinakEsc.GameObjects
     {
         protected Human()
         {
+            Name = "Person";
+
             KillBy.Add(ItemType.WEAPON_MELEE);
             KillBy.Add(ItemType.WEAPON_FIREARM);
             Labels.AddRange(new string[] { "person", "zombie", "zombi", "figure", "it", "them" });
@@ -27,7 +29,6 @@ namespace MeinakEsc.GameObjects
         public ShadowyPerson()
         {
             Id = Id.ENTITY_GAS_STATION_PERSON;
-            Name = "Person";
             Description = "You can see the shadowy figure hunching over the balcony railing.";
             TriggerDescription = "The person turns around and launches toward you. You try to flee inside but you slip and fall. The person grabs you from behind and you can't get free. Eventually you start to feel dizzy and realize that you have a large wound on your shoulder. It's over.";
 
@@ -42,11 +43,38 @@ namespace MeinakEsc.GameObjects
         public StationPerson()
         {
             Id = Id.ENTITY_GAS_STATION_PERSON;
-            Name = "Person";
             Description = "There is a hunched down person near the road that leads to the village promenade.";
             TriggerDescription = "The person turns around and launches toward you. You can't escape. The person is somehow faster than you. The person eventually catches up to from behind and you can't get free. You realize that you have been bit somewhere and you pass out. It's over.";
 
             KilledDescription = "The person is not moving anymore. Was this your friend? No, the person looks nothing like them...";
+            ShowDescriptionWhenDead = false;
+            TriggerGameOver = true;
+        }
+    }
+
+    public class JettyPerson : Human
+    {
+        public JettyPerson()
+        {
+            Id = Id.ENTITY_JETTY_PERSON;
+            Description = "There is a hunched down person near the road that leads to the village promenade.";
+            TriggerDescription = "The person turns around and launches toward you. You can't escape. The person is somehow faster than you. The person eventually catches up to from behind and you can't get free. You realize that you have been bit somewhere and you pass out. It's over.";
+
+            KilledDescription = "The person is not moving anymore. Was this your friend? No, the person looks nothing like them...";
+            ShowDescriptionWhenDead = false;
+            TriggerGameOver = true;
+        }
+    }
+
+    public class ShedPerson : Human
+    {
+        public ShedPerson()
+        {
+            Id = Id.ENTITY_SHED_PERSON;
+            Description = "You find another person by the SHED. The person is standing close to the shed entrance.";
+            TriggerDescription = "The person's head turns to you and it looks straight into your eyes. You see darkness. Before you know it you're trapped and the person pushes you down. You close your eyes because you know it is over...";
+
+            KilledDescription = "The person is not moving anymore. You don't know how much longer you can hold on. Your sanity is dwindling away...";
             ShowDescriptionWhenDead = false;
             TriggerGameOver = true;
         }
