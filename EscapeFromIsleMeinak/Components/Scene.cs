@@ -13,6 +13,7 @@ namespace MeinakEsc.Components
         public List<string> InitialScript { get; } = new List<string>();
         public List<string> Script { get; } = new List<string>();
         public List<Item> Items { get; } = new List<Item>();
+        public List<Item> DroppedItems { get; } = new List<Item>();
         public List<Entity> Entities { get; } = new List<Entity>();
         public List<CheckObject> Objects { get; } = new List<CheckObject>();
         public List<Exit> Exits { get; } = new List<Exit>();
@@ -121,6 +122,10 @@ namespace MeinakEsc.Components
         public Item FindItem(string itemLabel)
         {
             foreach (Item item in Items)
+                if (item.Labels.Contains(itemLabel.ToLower()))
+                    return item;
+
+            foreach (Item item in DroppedItems)
                 if (item.Labels.Contains(itemLabel.ToLower()))
                     return item;
 

@@ -1,6 +1,7 @@
 ﻿using MeinakEsc.Components;
 using MeinakEsc.GameObjects;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace MeinakEsc
@@ -231,7 +232,7 @@ namespace MeinakEsc
             PrintSceneScript(scene);
         }
 
-        private void PrintInventory(bool show)
+        public void PrintInventory(bool show)
         {
             // Allow the margins to be set even if we're not displaying the inventory.
 
@@ -339,32 +340,53 @@ namespace MeinakEsc
                 scriptLines = scene.Script.ToArray();
             
             Console.CursorTop = TextMarginTop;
-            PrintLines(scriptLines, Scenes.Active.Items.ToArray(), Scenes.Active.Entities.ToArray());
+            PrintLines(scriptLines, Scenes.Active.Items.ToArray(), Scenes.Active.DroppedItems.ToArray(), Scenes.Active.Entities.ToArray());
 
             Scenes.Active.InitialVisit = false;
         }
 
         public void PrintLine(string line)
         {
-            PrintLines(new string[] { line }, null, null);
+            PrintLines(new string[] { line }, null, null, null);
         }
 
         public void PrintLine(string line, Item[] items)
         {
-            PrintLines(new string[] { line }, items, null);
+            PrintLines(new string[] { line }, items, null, null);
         }
 
         public void PrintLines(string[] lines)
         {
-            PrintLines(lines, null, null);
+            PrintLines(lines, null, null, null);
         }
 
-        public void PrintLines(string[] lines, Item[] items, Entity[] entities)
+        public void PrintLines(string[] lines, Item[] items, Item[] dropped, Entity[] entities)
         {
             Console.CursorVisible = false;
             Console.CursorLeft = TextMarginLeft;
 
-            foreach (string line in lines)
+            // Last minute hack.
+            List<string> hackyLines = new List<string>();
+            hackyLines.AddRange(lines);
+
+            if (dropped != null && dropped.Length > 0)
+            {
+                string droppedItemsText = "Dropped items: ";
+                foreach (Item item in dropped)
+                {
+                    droppedItemsText += item.Name;
+
+                    // is not last item...
+                    if (dropped[dropped.Length - 1] != item)
+                        droppedItemsText += ", ";                
+                }
+
+                hackyLines.Add("");
+                hackyLines.Add(droppedItemsText);
+            }
+
+            // Go through all the lines and print them. Replace special tokens with data.
+            foreach (string line in hackyLines)
             {
                 string output = line;
 
@@ -746,7 +768,7 @@ namespace MeinakEsc
             UpdateInventoryScreen();
         }
 
-        private void UpdateInventoryScreen()
+        public void UpdateInventoryScreen()
         {
             int x = Console.CursorLeft;
             int y = Console.CursorTop;

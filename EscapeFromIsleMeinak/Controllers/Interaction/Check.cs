@@ -1,8 +1,9 @@
-﻿using MeinakEsc.Components;
+﻿using EscapeFromIsleMeinak;
+using MeinakEsc.Components;
 
 namespace MeinakEsc
 {
-    public class Check
+    public class Check : IParser
     {
         /// <summary>
         /// Parses CHECK commands and prints the descriptions of objects, items and entities.

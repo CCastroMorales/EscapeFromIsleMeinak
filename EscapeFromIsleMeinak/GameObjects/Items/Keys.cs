@@ -11,7 +11,7 @@ namespace MeinakEsc.GameObjects
             InventoryLabel = "Jeep Key";
             Description = "You spot a KEY on the table. They resemble car keys.";
             InventoryDescription = "The key to a jeep; probably the one parked outside the bungalows.";
-            Labels.AddRange(new string[] { "key", "keys" });
+            Labels.AddRange(new string[] { "key", "keys", "jeepkey" });
             LoseOnUse = true;
         }
     }
@@ -25,7 +25,7 @@ namespace MeinakEsc.GameObjects
             InventoryLabel = "Key 46";
             Description = "One of the KEYS hanging from the wall is marked 46.";
             InventoryDescription = "This must be the key that will start the motor on boat 46.";
-            Labels.AddRange(new string[] { "key", "46", "keys" });
+            Labels.AddRange(new string[] { "key46" });
             LoseOnUse = true;
         }
     }
@@ -39,7 +39,7 @@ namespace MeinakEsc.GameObjects
             InventoryLabel = "Key 86";
             Description = "One of the keys hanging from the wall is marked 46.";
             InventoryDescription = "This must be the key that will start the motor on boat 46.";
-            Labels.AddRange(new string[] { "key", "86", "keys" });
+            Labels.AddRange(new string[] { "key86" });
             LoseOnUse = true;
         }
     }

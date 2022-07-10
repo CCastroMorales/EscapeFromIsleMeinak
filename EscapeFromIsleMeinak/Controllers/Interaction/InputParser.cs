@@ -1,4 +1,5 @@
-﻿using MeinakEsc.Components;
+﻿using EscapeFromIsleMeinak;
+using MeinakEsc.Components;
 using System.Collections.Generic;
 
 namespace MeinakEsc
@@ -22,6 +23,7 @@ namespace MeinakEsc
         public Scene ActiveScene { get; set; }
         public Inventory Inventory { get; set; }
         private Check Check { get; } = new Check();
+        private Drop Drop { get; } = new Drop();
 
         public InputParser(ParseCallback callback)
         {
@@ -44,11 +46,14 @@ namespace MeinakEsc
 
             ParseArguments(input, out command, out arguments);
 
+            InputBundle bundle = new InputBundle(command, arguments);
 
             if (ParseGO(command, arguments))
                 Done = true;
             // Testing a new interpreter design with parsers for each action.
-            if (Check.Parse(ctx, new InputBundle(command, arguments)))
+            if (Drop.Parse(ctx, bundle))
+                Done = true;
+            if (Check.Parse(ctx, bundle))
                 Done = true;
             if (ParseTAKE(command, arguments))
                 Done = true;

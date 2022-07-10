@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Context.cs" />
+    <Compile Include="Controllers\Interaction\Drop.cs" />
+    <Compile Include="Controllers\Interaction\IParser.cs" />
     <Compile Include="Controllers\Inventory.cs" />
     <Compile Include="Controllers\Interaction\Check.cs" />
     <Compile Include="Controllers\Interaction\InputBundle.cs" />
