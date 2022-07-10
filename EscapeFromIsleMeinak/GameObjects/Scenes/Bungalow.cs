@@ -1,4 +1,5 @@
 ﻿using EscapeFromIsleMainak.Components;
+using EscapeFromIsleMeinak.GameObjects;
 using System;
 
 namespace EscapeFromIsleMainak.GameObjects
@@ -45,6 +46,8 @@ namespace EscapeFromIsleMainak.GameObjects
         {
             AddExit(Id.SCENE_BUNGALOW_BATHROOM, new string[] { "bathroom", "toilet", "bath" });
             AddExit(Id.SCENE_BUNGALOW_BALCONY, new string[] { "outside", "out", "balcony" } );
+            RegisterCheckObject<Room>();
+            RegisterCheckObject<Bed>();
             SpawnEntity<Rat>();
         }
     }

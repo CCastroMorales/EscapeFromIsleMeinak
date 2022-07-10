@@ -28,6 +28,10 @@
         ITEM_PASSED_OUT_RAT,
         ITEM_BOAT_KEY,
         ITEM_JEEP_KEY,
+        /* Check objects */
+        CHECK_OBJECT_BED,
+        CHECK_OBJECT_BUNGALOW_ROOM,
+        CHECK_OBJECT_COMPARTMENT,
         /* Actions */
         ACTION_READ,
         ACTION_USE,

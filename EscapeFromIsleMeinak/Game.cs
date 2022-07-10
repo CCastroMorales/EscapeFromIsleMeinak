@@ -539,8 +539,11 @@ namespace EscapeFromIsleMainak
 
         public void OnCheckDescription(string objectName)
         {
-            /*InteractiveObject interactiveObject = Scene.ObjectbyName(objectName);
-            PrintCheckDescription(Scene, interactiveObject);*/
+            CheckObject checkObject = Scenes.Active.FindCheckObject(objectName);
+            if (checkObject != null)
+            {
+                PrintLine(checkObject.Description);
+            }
         }
 
         public void OnTakeItem(Item item, string label)

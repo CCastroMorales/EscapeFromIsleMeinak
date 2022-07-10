@@ -14,6 +14,7 @@ namespace EscapeFromIsleMainak.Components
         public List<string> Script { get; } = new List<string>();
         public List<Item> Items { get; } = new List<Item>();
         public List<Entity> Entities { get; } = new List<Entity>();
+        public List<CheckObject> Objects { get; } = new List<CheckObject>();
         public List<Exit> Exits { get; } = new List<Exit>();
         public bool AllowGoBack { get; set; } = true;
         public bool InitialVisit { get; set; } = true;
@@ -135,6 +136,28 @@ namespace EscapeFromIsleMainak.Components
                 if (entity.Id == entityId)
                     return entity;
             return null;
+        }
+
+        public CheckObject FindCheckObject(Id objectId)
+        {
+            foreach (CheckObject checkObject in Objects)
+                if (checkObject.Id == objectId)
+                    return checkObject;
+            return null;
+        }
+
+        public CheckObject FindCheckObject(string objectName)
+        {
+            foreach (CheckObject checkObject in Objects)
+                if (checkObject.Labels.Contains(objectName))
+                    return checkObject;
+            return null;
+        }
+
+        public void RegisterCheckObject<T>() where T : CheckObject, new()
+        {
+            CheckObject checkObject = new T();
+            Objects.Add(checkObject);
         }
     }
 }

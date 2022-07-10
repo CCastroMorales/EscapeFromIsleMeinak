@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameObjects\CheckObjects\Compartment.cs" />
+    <Compile Include="GameObjects\CheckObjects\Room.cs" />
+    <Compile Include="GameObjects\CheckObjects\Bed.cs" />
     <Compile Include="GameObjects\Items\BoatKey.cs" />
     <Compile Include="GameObjects\Items\Bottle.cs" />
     <Compile Include="GameObjects\Scenes\Boat.cs" />
@@ -56,7 +59,7 @@
     <Compile Include="TitleScreen.cs" />
     <Compile Include="Components\ItemType.cs" />
     <Compile Include="Components\Exit.cs" />
-    <Compile Include="Components\InteractiveObject.cs" />
+    <Compile Include="Components\CheckObject.cs" />
     <Compile Include="Components\ItemAction.cs" />
     <Compile Include="Components\Item.cs" />
     <Compile Include="Components\Entity.cs" />

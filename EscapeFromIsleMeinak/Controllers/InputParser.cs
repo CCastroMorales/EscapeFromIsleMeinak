@@ -47,8 +47,8 @@ namespace EscapeFromIsleMainak
 
             if (ParseGO(command, arguments))
                 Done = true;
-            /*if (ParseCHECK(command, arguments))
-                Done = true;*/
+            if (ParseCHECK(command, arguments))
+                Done = true;
             if (ParseTAKE(command, arguments))
                 Done = true;
             if (ParseActionREAD(command, arguments))
@@ -112,7 +112,7 @@ namespace EscapeFromIsleMainak
             return false;
         }
 
-        /*protected bool ParseCHECK(string command, string[] arguments)
+        protected bool ParseCHECK(string command, string[] arguments)
         {
             if (command != Commands.CHECK)
                 return false;
@@ -125,14 +125,16 @@ namespace EscapeFromIsleMainak
 
             string objectName = arguments[0];
 
-            if (ActiveScene.HasInteractiveObject(objectName))
+            CheckObject checkObject = ActiveScene.FindCheckObject(objectName.ToLower());
+
+            if (checkObject != null)
             {
                 Callback.OnCheckDescription(objectName);
                 return false;
             }
 
             return false;
-        }*/
+        }
 
         protected bool ParseTAKE(string command, string[] arguments)
         {

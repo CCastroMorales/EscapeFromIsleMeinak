@@ -1,4 +1,5 @@
 ﻿using EscapeFromIsleMainak.Components;
+using EscapeFromIsleMeinak.GameObjects;
 
 namespace EscapeFromIsleMainak.GameObjects
 {
@@ -12,6 +13,7 @@ namespace EscapeFromIsleMainak.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_INBETWEEN_BUNGALOWS, new string[] { "patio", "between", "stairs", "inbetween" });
+            RegisterCheckObject<Compartment>();
         }
 
     }
