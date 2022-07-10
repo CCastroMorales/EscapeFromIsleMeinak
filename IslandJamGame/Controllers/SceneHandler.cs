@@ -87,7 +87,7 @@ namespace IslandJamGame
         public void LoadScript(Scene scene)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string path = $"IslandJamGame.res.{scene.Id}.script";
+            string path = $"EscapeFromIsleMeinak.res.{scene.Id}.script";
 
             bool resourceExits = false;
             foreach (string resourceName in assembly.GetManifestResourceNames())

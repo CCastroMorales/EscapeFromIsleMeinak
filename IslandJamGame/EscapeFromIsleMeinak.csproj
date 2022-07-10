@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1FE70236-F7DF-455E-B929-BC150DA197A7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>IslandJamGame</RootNamespace>
-    <AssemblyName>IslandJamGame</AssemblyName>
+    <RootNamespace>EscapeFromIsleMeinak</RootNamespace>
+    <AssemblyName>EscapeFromIsleMeinak</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

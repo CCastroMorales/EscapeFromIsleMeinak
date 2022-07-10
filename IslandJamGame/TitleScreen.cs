@@ -60,7 +60,7 @@ namespace IslandJamGame
             string[] ascii;
 
             var assembly = Assembly.GetExecutingAssembly();
-            string path = $"IslandJamGame.res.TITLE_ASCII.txt";
+            string path = $"EscapeFromIsleMeinak.res.TITLE_ASCII.txt";
 
             using (var stream = assembly.GetManifestResourceStream(path))
             {
