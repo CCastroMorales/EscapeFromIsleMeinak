@@ -10,7 +10,7 @@ namespace EscapeFromIsleMeinak
     {
         public SceneHandler Scenes { get; set; } = new SceneHandler();
         public InputParser Parser { get; set; }
-        public List<Item> Inventory { get; set; } = new List<Item>();
+        public Inventory Inventory { get; set; } = new Inventory();
         public int InventoryLimit { get; set; } = 6;
         public bool Running { get; set; } = true;
         public int DefaultSleepMillis { get; set; } = 100;
@@ -41,7 +41,7 @@ namespace EscapeFromIsleMeinak
 
         private void ClearInventory()
         {
-            Inventory = new List<Item>();
+            Inventory = new Inventory();
         }
 
         public void ParseCommandLineArguments(string[] args)
@@ -81,7 +81,6 @@ namespace EscapeFromIsleMeinak
             {
                 Clear();
                 PlayScene(Scenes.Active);
-                //PresentOptions(scene);
                 ParseInput(Scenes.Active);
             }
         }
@@ -121,7 +120,9 @@ namespace EscapeFromIsleMeinak
                 Console.CursorLeft = TextMarginLeft;
                 int y = Console.CursorTop;
                 Console.Write('»');
+                Console.CursorVisible = true;
                 string input = Console.ReadLine().Trim();
+                Console.CursorVisible = false;
 
                 if (input != "")
                 {
@@ -133,11 +134,7 @@ namespace EscapeFromIsleMeinak
                         LoadScene(sceneId);
                         return;
                     } else*/
-                    Ctx context = new Ctx()
-                    {
-                        Game = this,
-                        Scene = Scenes.Active
-                    };
+                    Ctx context = new Ctx(this, Scenes.Active, Inventory);
                     Parser.Parse(context, input, scene);
                 }
                 else
@@ -275,7 +272,7 @@ namespace EscapeFromIsleMeinak
 
             // Print items
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            foreach (Item item in Inventory)
+            foreach (Item item in Inventory.Items)
             {
                 string label;
 
@@ -332,9 +329,6 @@ namespace EscapeFromIsleMeinak
 
         private void PrintSceneScript(Scene scene)
         {
-            Console.CursorVisible = false;
-            Console.CursorLeft = TextMarginLeft;
-            Console.CursorTop = TextMarginTop;
 
             string[] scriptLines;
 
@@ -342,16 +336,46 @@ namespace EscapeFromIsleMeinak
                 scriptLines = scene.InitialScript.ToArray();
             else
                 scriptLines = scene.Script.ToArray();
+            
+            Console.CursorTop = TextMarginTop;
+            PrintLines(scriptLines, Scenes.Active.Items.ToArray(), Scenes.Active.Entities.ToArray());
 
+            Scenes.Active.InitialVisit = false;
+        }
 
-            foreach (string originalText in scriptLines)
+        public void PrintLine(string line)
+        {
+            PrintLines(new string[] { line }, null, null);
+        }
+
+        public void PrintLine(string line, Item[] items)
+        {
+            PrintLines(new string[] { line }, items, null);
+        }
+
+        public void PrintLines(string[] lines)
+        {
+            PrintLines(lines, null, null);
+        }
+
+        public void PrintLines(string[] lines, Item[] items, Entity[] entities)
+        {
+            Console.CursorVisible = false;
+            Console.CursorLeft = TextMarginLeft;
+
+            foreach (string line in lines)
             {
-                string textWithItemDesc = InsertItemDescriptions(Scenes.Active.Items, originalText);
-                string text = InsertEntityDescriptions(Scenes.Active, textWithItemDesc);
-                text = text.Replace("\r","");
-                text = text.Replace("  ", " ");
+                string output = line;
 
-                string[] words = text.Split(' ');
+                if (items != null)
+                    output = InsertItemDescriptions(items, output);
+                if (entities != null)
+                    output = InsertEntityDescriptions(entities, output);
+                
+                output = output.Replace("\r", "");
+                output = output.Replace("  ", " ");
+
+                string[] words = output.Split(' ');
 
                 foreach (string word in words)
                 {
@@ -373,7 +397,7 @@ namespace EscapeFromIsleMeinak
 
                     if (word.Length > 0)
                     {
-                        foreach (Char c in word)
+                        foreach (char c in word)
                         {
                             Console.Write(c);
 
@@ -397,12 +421,9 @@ namespace EscapeFromIsleMeinak
                 Console.SetCursorPosition(TextMarginLeft, Console.CursorTop);
                 Thread.Sleep(DefaultSleepMillis);
             }
-            Console.CursorVisible = true;
-
-            Scenes.Active.InitialVisit = false;
         }
 
-        public string InsertItemDescriptions(List<Item> items, string text)
+        public string InsertItemDescriptions(Item[] items, string text)
         {
             string descriptions = "";
 
@@ -412,12 +433,12 @@ namespace EscapeFromIsleMeinak
             return text.Replace("ITEM_DESCRIPTIONS", descriptions.Trim()); ;
         }
 
-        public string InsertEntityDescriptions(Scene scene, string text)
+        public string InsertEntityDescriptions(Entity[] entities, string text)
         {
             string descriptions = "";
             Func<Entity, string> addEntityDescription = x => descriptions += x.Description + " ";
 
-            foreach (Entity entity in scene.Entities)
+            foreach (Entity entity in entities)
             {
                 if (entity.Dead)
                 {
@@ -451,12 +472,6 @@ namespace EscapeFromIsleMeinak
                 Console.WriteLine(option.text);
             }
         }*/
-
-        public void PrintLine(string text)
-        {
-            Print(text);
-            Console.Write('\n');
-        }
 
         public void Print(string text)
         {

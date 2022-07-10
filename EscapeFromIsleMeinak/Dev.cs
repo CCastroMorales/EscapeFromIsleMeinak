@@ -7,7 +7,7 @@ namespace EscapeFromIsleMeinak
 {
     public class Dev
     {
-        public static void SpawnJeepKey(List<Item> inventory)
+        public static void SpawnJeepKey(Inventory inventory)
         {
             Item item = new JeepKey();
             inventory.Add(item);

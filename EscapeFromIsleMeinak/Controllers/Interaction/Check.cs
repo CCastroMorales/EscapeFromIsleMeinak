@@ -25,6 +25,8 @@ namespace EscapeFromIsleMeinak
                 return false;
             else if (CheckSceneItem(ctx, input.FirstArgument))
                 return false;
+            else if (CheckInventoryItem(ctx, input.FirstArgument))
+                return false;
             else if (CheckSceneEntity(ctx, input.FirstArgument))
                 return false;
             else
@@ -39,7 +41,7 @@ namespace EscapeFromIsleMeinak
 
             if (@object != null)
             {
-                ctx.Game.PrintLine(@object.Description);
+                ctx.Game.PrintLine(@object.Description, @object.Items.ToArray());
                 return true;
             }
 
@@ -49,6 +51,19 @@ namespace EscapeFromIsleMeinak
         private bool CheckSceneItem(Ctx ctx, string objectName)
         {
             Item item = ctx.Scene.FindItem(objectName.ToLower());
+
+            if (item != null)
+            {
+                ctx.Game.PrintLine(item.Description);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CheckInventoryItem(Ctx ctx, string objectName)
+        {
+            Item item = ctx.Inventory.FindItem(objectName.ToLower());
 
             if (item != null)
             {
