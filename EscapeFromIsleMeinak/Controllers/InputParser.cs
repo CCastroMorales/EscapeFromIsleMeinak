@@ -235,13 +235,13 @@ namespace EscapeFromIsleMainak
             {
                 // Check for special jeep use case
                 Item item = FindItem(Inventory, itemName);
-                if (item != null && item.Id == Id.ITEM_JEEP_KEY)
+                if (item != null && item.Id == Id.ITEM_JEEP_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_JEEP)
                 {
                     Callback.OnUse(item, itemName, "VEHICLE_JEEP");
                     return true;
                 }
                 // Check for special boat use case
-                else if (item != null && item.Id == Id.ITEM_BOAT_KEY)
+                else if (item != null && item.Id == Id.ITEM_BOAT_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
                 {
                     Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
                     return true;
@@ -263,13 +263,13 @@ namespace EscapeFromIsleMainak
                 Item item = FindItem(Inventory, itemName);
 
                 // Check for special jeep use case
-                if (item != null && item.Id == Id.ITEM_JEEP_KEY)
+                if (item != null && item.Id == Id.ITEM_JEEP_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_JEEP)
                 {
                     Callback.OnUse(item, itemName, "VEHICLE_JEEP");
                     return true;
                 }
                 // Check for special boat use case
-                else if (item != null && item.Id == Id.ITEM_BOAT_KEY)
+                else if (item != null && item.Id == Id.ITEM_BOAT_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
                 {
                     Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
                     return true;
