@@ -5,9 +5,9 @@ using System.Threading;
 
 namespace EscapeFromIsleMainak
 {
-    public static class TitleScreen
+    public static class Display
     {
-        public static void Display(bool debug, bool restarted, string[] args)
+        public static void TitleScreen(bool debug, bool restarted, string[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.CursorVisible = false;
@@ -31,7 +31,7 @@ namespace EscapeFromIsleMainak
             string text = Strings.PROMPT_ENTER_TO_PLAY;
             x = (Console.BufferWidth / 2) - (text.Length / 2);
 
-            Thread.Sleep(Timing.GameOverPressPromptDelay);
+            Thread.Sleep(Timing.EndScreenPressPromptDelay);
             Console.SetCursorPosition(x, y + 3);
             Console.WriteLine(text);
 
@@ -73,6 +73,55 @@ namespace EscapeFromIsleMainak
             }
 
             return ascii;
+        }
+
+        public static void EndScreen()
+        {
+            Console.CursorVisible = false;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            string theEnd = Strings.THE_END.Replace(' ', '═');
+
+            int x = (Console.BufferWidth / 2) - (theEnd.Length / 2);
+            int y = (Console.WindowHeight / 3);
+
+            Console.SetCursorPosition(0, y);
+
+            for (int i = 0; i < x; i++)
+            {
+                Console.Write('═');
+                Thread.Sleep(Timing.GameOverAnimationDuration);
+            }
+
+            for (int i = 0; i < theEnd.Length; i++)
+            {
+                Console.Write(theEnd[i]);
+                Thread.Sleep(Timing.GameOverAnimationDuration);
+            }
+
+            for (int i = x + theEnd.Length; i < Console.BufferWidth; i++)
+            {
+                Console.Write('═');
+                Thread.Sleep(Timing.GameOverAnimationDuration);
+            }
+
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            string text = Strings.PROMPT_ENTER_TO_CONTINUE;
+            x = (Console.BufferWidth / 2) - (text.Length / 2);
+
+            Thread.Sleep(Timing.EndScreenPressPromptDelay);
+            Console.SetCursorPosition(x, y + 3);
+            Console.WriteLine(text);
+
+            var readkey = Console.ReadKey(true);
+            while (readkey.Key != ConsoleKey.Enter)
+            {
+                readkey = Console.ReadKey(true);
+            }
+
+            Console.CursorVisible = true;
         }
     }
 }

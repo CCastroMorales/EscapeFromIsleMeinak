@@ -8,7 +8,7 @@ namespace EscapeFromIsleMainak
 {
     public class Game : ParseCallback
     {
-        public SceneHandler Scenes { get; } = new SceneHandler();
+        public SceneHandler Scenes { get; set; } = new SceneHandler();
         public InputParser Parser { get; set; }
         public List<Item> Inventory { get; set; } = new List<Item>();
         public int InventoryLimit { get; set; } = 6;
@@ -30,9 +30,40 @@ namespace EscapeFromIsleMainak
 
         public void Run(string[] args)
         {
-            TitleScreen.Display(Debug, Restarted, args);
+            Scenes = new SceneHandler();
+            ParseCommandLineArguments(args);
+            Display.TitleScreen(Debug, Restarted, args);
             Scenes.LoadFirstScene();
             GameLoop();
+        }
+
+        public void ParseCommandLineArguments(string[] args)
+        {
+            int i = 0;
+            if (args.Length > 0)
+                foreach (string arg in args)
+                {
+                    if (arg == "+ff")
+                        FastForward = true;
+                    if (arg == "+debug")
+                        Debug = true;
+                    if (arg == "+jeepkey")
+                        Dev.SpawnJeepKey(Inventory);
+                    if (arg == "+scene")
+                    {
+                        if (i <= args.Length - 2)
+                        {
+                            string sceneId = args[i + 1];
+                            Id id;
+                            Id.TryParse(sceneId, out id);
+
+                            Scene scene = Scenes.LoadScene(id);
+                            Scenes.Scenes.Remove(scene);
+                            Scenes.Scenes.Insert(0, scene);
+                        }
+                    }
+                    i++;
+                }
         }
 
         private void GameLoop()
@@ -63,7 +94,7 @@ namespace EscapeFromIsleMainak
                 string text = Strings.PROMPT_ENTER_TO_TRY_AGAIN;
                 x = (Console.BufferWidth / 2) - (text.Length / 2);
 
-                Thread.Sleep(Timing.GameOverPressPromptDelay);
+                Thread.Sleep(Timing.EndScreenPressPromptDelay);
                 Console.SetCursorPosition(x, y + 3);
                 Console.WriteLine(text);
 
@@ -158,7 +189,7 @@ namespace EscapeFromIsleMainak
             string text = Strings.PROMPT_ENTER_TO_TRY_AGAIN;
             x = (Console.BufferWidth / 2) - (text.Length / 2);
 
-            Thread.Sleep(Timing.GameOverPressPromptDelay);
+            Thread.Sleep(Timing.EndScreenPressPromptDelay);
             Console.SetCursorPosition(x, y+3);
             Console.WriteLine(text);
 
@@ -176,9 +207,7 @@ namespace EscapeFromIsleMainak
         private void End()
         {
             Clear();
-            Console.WriteLine("You're winner.");
-            Console.ReadLine();
-
+            Display.EndScreen();
             Clear();
             Running = false;
             Restarted = true;

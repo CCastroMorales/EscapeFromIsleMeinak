@@ -8,6 +8,6 @@
         public static int MaxPunctuationDuration { get; } = 600;
         public static int PunctuationDuration { get; } = 350;
         public static int GameOverAnimationDuration { get; } = 12;
-        public static int GameOverPressPromptDelay { get; } = 500;
+        public static int EndScreenPressPromptDelay { get; } = 500;
     }
 }
