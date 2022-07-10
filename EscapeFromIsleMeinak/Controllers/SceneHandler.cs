@@ -71,6 +71,7 @@ namespace EscapeFromIsleMainak
         /// </summary>
         public void RestorePreviousScene()
         {
+            Active.Restore();
             Active = Previous;
             Previous = null;
         }

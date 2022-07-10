@@ -4,6 +4,7 @@
     {
         USELESS,
         MEAT,
-        MELEE
+        FIST,
+        WEAPON_MELEE
     }
 }

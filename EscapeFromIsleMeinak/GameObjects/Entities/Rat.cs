@@ -8,9 +8,10 @@ namespace EscapeFromIsleMainak.GameObjects
         {
             Id = Id.ENTITY_BUNGALOW_RAT;
             Name = "Rat";
-            Labels = new string[] { "Rat", "Animal", "Vermin", "It" };
+            Labels.AddRange(new string[] { "rat", "animal", "vermin", "it" });
             Description = "There is a RAT in the corner. It seems to be comfortable and not at all afraid of you.";
-            KillBy.Add(ItemType.MELEE);
+            KillBy.Add(ItemType.WEAPON_MELEE);
+            KillBy.Add(ItemType.FIST);
             ShowDescriptionWhenDead = false;
             DropItem = new PassedOutRat();
         }

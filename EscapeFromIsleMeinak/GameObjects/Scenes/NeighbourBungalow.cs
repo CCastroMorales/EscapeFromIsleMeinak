@@ -13,7 +13,13 @@ namespace EscapeFromIsleMainak.GameObjects
         {
             AddExit(Id.SCENE_INBETWEEN_BUNGALOWS, new string[] { "down", "stairs" });
             AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM, Id.ENTITY_BUNGALOW_SHADOWY_ZOMBIE, new string[] { "room", "inside", "in" });
-            SpawnEntity<ShadowyZombie>();
+            SpawnEntity<ShadowyPerson>();
+        }
+
+        public override void OnRestore()
+        {
+            Entities.Clear();
+            SpawnEntity<ShadowyPerson>();
         }
     }
 

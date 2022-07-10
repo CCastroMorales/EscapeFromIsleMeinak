@@ -9,7 +9,7 @@ namespace EscapeFromIsleMainak.GameObjects
             Id = Id.ITEM_BROKEN_BOTTLE;
             Name = "Broken bottle";
             InventoryLabel = "Brk. Bottle";
-            Type = ItemType.MELEE;
+            Type = ItemType.WEAPON_MELEE;
             Description = "There is a broken BOTTLE on the sink.";
             InventoryDescription = "You don't drink so this bottle was left and broken by your friend.";
             // TODO Add actions

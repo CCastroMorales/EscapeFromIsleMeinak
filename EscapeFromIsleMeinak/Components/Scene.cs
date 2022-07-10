@@ -69,6 +69,16 @@ namespace EscapeFromIsleMainak.Components
         // TODO: Change to OnInit as OnLoad implies being loaded in-game by the player.
         public abstract void OnLoad();
 
+        public void Restore()
+        {
+            OnRestore();
+        }
+
+        public virtual void OnRestore()
+        {
+            // Do nothing
+        }
+
         protected void AddExit(Id id, Id triggerEntityId, string[] commands)
         {
             Exit exit = new Exit();
@@ -124,9 +134,8 @@ namespace EscapeFromIsleMainak.Components
         public Entity FindEntity(string searchLabel)
         {
             foreach (Entity entity in Entities)
-                foreach (string label in entity.Labels)
-                    if (label.ToLower() == searchLabel.ToLower())
-                        return entity;
+                if (entity.Labels.Contains(searchLabel.ToLower()))
+                    return entity;
             return null;
         }
 

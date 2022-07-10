@@ -1,4 +1,5 @@
 ﻿using EscapeFromIsleMainak.Components;
+using EscapeFromIsleMainak.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -578,20 +579,22 @@ namespace EscapeFromIsleMainak
 
         public void OnPunchEntity(Entity entity, string entityName)
         {
-            // Consider the punch a melee "item".
-            if (entity.KillBy.Contains(ItemType.MELEE))
+            if (entity is Human && entity.MaxKillAttempts > 0)
             {
-                Scene scene = Scenes.Active;
+                entity.KillAttempt++;
 
-                Item drop = entity.Kill();
-                scene.Entities.Remove(entity);
+                string description = entity.KillFailDescriptions[0];
+                entity.KillFailDescriptions.RemoveAt(0);
+                PrintLine(description);
 
-                if (drop != null)
+                if (entity.KillAttempt > entity.MaxKillAttempts)
                 {
-                    PrintLine(drop.Description);
-                    scene.Items.Add(drop);
+                    Parser.Done = true; // hacky.
+                    PrintEnterToContinue();
+                    GameOver();
+                    return;
                 }
-            } 
+            }
             else
             {
                 PrintLine($"You tried to punch {entity.Name} but hit nothing but air.");

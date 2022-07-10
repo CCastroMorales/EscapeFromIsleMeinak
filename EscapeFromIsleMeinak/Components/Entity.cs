@@ -6,7 +6,7 @@ namespace EscapeFromIsleMainak.Components
     {
         public Id Id { get; set; }
         public string Name { get; set; } = "";
-        public string[] Labels { get; set; } = new string[0];
+        public List<string> Labels { get; set; } = new List<string>();
         public string Description { get; set; } = "";
         public string TriggerDescription { get; set; } = "";
         public string KilledDescription { get; set; } = "";
@@ -18,6 +18,9 @@ namespace EscapeFromIsleMainak.Components
         public bool ShowDescriptionWhenPassive { get; set; } = false; 
         public List<ItemType> KillBy { get; set; } = new List<ItemType>();
         public List<ItemType> PassifyWith { get; set; } = new List<ItemType>();
+        public int MaxKillAttempts { get; set; } = 0;
+        public int KillAttempt { get; set; } = 0;
+        public List<string> KillFailDescriptions { get; set; } = new List<string>();
         public Item DropItem { get; set; } = null;
         public bool HasDropItem { get => DropItem != null; }
 
