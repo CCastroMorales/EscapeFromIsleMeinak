@@ -1,6 +1,15 @@
 ﻿scene.title INT/EXT. JEEP - NIGHT
-scene.scriptBegin
+scene.initialScriptBegin
+
 You're driving to the village nearby. The island is quite large but all of it is covered by lush rainforest.
 
-You hear and feel the jeep engine break down. Darn it. But it's probably going to be alright because you can see the GAS STATION in the distance.
+You hear and feel the jeep ENGINE break down. Darn it. But it's probably going to be alright because you can see the GAS STATION in the distance. The COMPARTMENT is still open.
+
+scene.initialScriptEnd
+scene.scriptBegin
+
+You're back at the broken down jeep that took you to the village. The COMPARTMENT is still open.
+
+You can't go back to the bungalows; it's too far away and who knows what will jump out and attack you from the jungle while you walk on the dirt road. No... you must try to find your friend and escape the island. You're close to the village GAS STATION.
+
 scene.scriptEnd

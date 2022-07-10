@@ -1,5 +1,4 @@
 ﻿using MeinakEsc.Components;
-using MeinakEsc.GameObjects;
 
 namespace MeinakEsc.GameObjects
 {
@@ -13,7 +12,7 @@ namespace MeinakEsc.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_INBETWEEN_BUNGALOWS, new string[] { "down", "stairs" });
-            AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM, Id.ENTITY_BUNGALOW_SHADOWY_ZOMBIE, new string[] { "room", "inside", "in" });
+            AddExit(Id.SCENE_NEIGHBOUR_BUNGALOW_ROOM, Id.ENTITY_GAS_STATION_PERSON, new string[] { "room", "inside", "in" });
             SpawnEntity<ShadowyPerson>();
         }
 

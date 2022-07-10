@@ -1,5 +1,5 @@
-﻿using MeinakEsc.Components;
-using MeinakEsc.GameObjects;
+﻿using EscapeFromIsleMeinak.GameObjects;
+using MeinakEsc.Components;
 
 namespace MeinakEsc.GameObjects
 {
@@ -23,6 +23,7 @@ namespace MeinakEsc.GameObjects
         public override void OnLoad()
         {
             AddExit(Id.SCENE_GAS_STATION, new string[] { "gas", "station", "gas station", "distance" });
+            RegisterCheckObject<Motor>();
         }
 
         public override Id OnRegisterId()

@@ -1,8 +1,8 @@
 ﻿scene.title EXT. GAS STATION - DAWN
 scene.scriptBegin
 
-You're at the gas station by the village outskirts. Station might be an overstatement as it is just a rusty tank with a wooden roof over it. The jeep has broken down. You have no choice but to enter the village.
+You're at the gas station by the village outskirts. Station might be an overstatement as it is just a rusty tank with a tiny wooden roof over it. The jeep has broken down.
 
-You can GO to the village road PROMENADE or ???
+You have no choice but to enter the village. From here you can reach the village road PROMENADE. ENTITY_DESCRIPTIONS
 
 scene.scriptEnd

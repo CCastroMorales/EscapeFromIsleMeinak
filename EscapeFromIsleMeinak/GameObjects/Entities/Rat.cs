@@ -11,6 +11,7 @@ namespace MeinakEsc.GameObjects
             Labels.AddRange(new string[] { "rat", "animal", "vermin", "it" });
             Description = "There is a RAT in the corner. It seems to be comfortable and not at all afraid of you.";
             KillBy.Add(ItemType.WEAPON_MELEE);
+            KillBy.Add(ItemType.WEAPON_FIREARM);
             KillBy.Add(ItemType.FIST);
             ShowDescriptionWhenDead = false;
             DropItem = new PassedOutRat();

@@ -688,22 +688,27 @@ namespace MeinakEsc
                     ItemUsed(item, false);
                     return;
                 }
-                else if (entity.PassifyWith.Contains(item.Type))
+                else if (entity.PacifyWith.Contains(item.Type))
                 {
-                    PrintLine(entity.PassifyDescription);
+                    PrintLine(entity.PacifyDescription);
                     entity.Passify();
 
                     ItemUsed(item, false);
                     return;
                 }
-                
-                // Do we really reach this?
+
+                PrintLine("Huh?");
                 ItemUsed(item, false);
                 return;
             }
             else if (target == "VEHICLE_JEEP")
             {
-                Scenes.LoadScene(Id.SCENE_SPECIAL_VEHICLE_JEEP_DRIVING);
+                // Hack: transfer glove compartment.
+                var gloveCompartment = Scenes.Active.FindCheckObject(Id.CHECK_OBJECT_COMPARTMENT);
+                Id nextSceneId = Id.SCENE_SPECIAL_VEHICLE_JEEP_DRIVING;
+                Scene drivingScene = Scenes.LoadScene(nextSceneId);
+                drivingScene.Objects.Add(gloveCompartment);
+                
                 Scenes.Previous = null;
                 ItemUsed(item, true);
                 return;

@@ -67,7 +67,7 @@ namespace MeinakEsc
 
             if (item != null)
             {
-                ctx.Game.PrintLine(item.Description);
+                ctx.Game.PrintLine(item.InventoryDescription);
                 return true;
             }
 

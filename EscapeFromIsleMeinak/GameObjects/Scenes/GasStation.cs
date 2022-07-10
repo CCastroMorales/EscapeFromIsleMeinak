@@ -6,8 +6,8 @@ namespace MeinakEsc.GameObjects
     {
         public override void OnLoad()
         {
-            AllowGoBack = false;
-            AddExit(Id.SCENE_VILLAGE_PROMENADE, "promenade");
+            AddExit(Id.SCENE_VILLAGE_PROMENADE, Id.ENTITY_GAS_STATION_PERSON, new string[] { "promenade" });
+            SpawnEntity<StationPerson>();
         }
 
         public override Id OnRegisterId()

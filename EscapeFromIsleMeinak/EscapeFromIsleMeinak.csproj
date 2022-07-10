@@ -47,6 +47,7 @@
     <Compile Include="Controllers\Inventory.cs" />
     <Compile Include="Controllers\Interaction\Check.cs" />
     <Compile Include="Controllers\Interaction\InputBundle.cs" />
+    <Compile Include="GameObjects\CheckObjects\Motor.cs" />
     <Compile Include="GameObjects\CheckObjects\Mirror.cs" />
     <Compile Include="GameObjects\CheckObjects\Compartment.cs" />
     <Compile Include="GameObjects\CheckObjects\Room.cs" />

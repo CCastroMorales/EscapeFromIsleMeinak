@@ -10,7 +10,7 @@ namespace MeinakEsc.GameObjects
             Name = "Jeep Key";
             InventoryLabel = "Jeep Key";
             Description = "You spot a KEY on the table. They resemble car keys.";
-            InventoryDescription = "";
+            InventoryDescription = "The key to a jeep; probably the one parked outside the bungalows.";
             Labels.AddRange(new string[] { "key", "keys" });
             LoseOnUse = true;
         }        
