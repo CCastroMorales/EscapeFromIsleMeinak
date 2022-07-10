@@ -1,5 +1,5 @@
-﻿using EscapeFromIsleMeinak;
-using EscapeFromIsleMeinak.Components;
+﻿using MeinakEsc;
+using MeinakEsc.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ScriptingTests

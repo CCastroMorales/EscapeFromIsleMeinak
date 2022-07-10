@@ -1,7 +1,7 @@
-﻿using EscapeFromIsleMeinak.Components;
+﻿using MeinakEsc.Components;
 using System;
 
-namespace EscapeFromIsleMeinak.GameObjects
+namespace MeinakEsc.GameObjects
 {
     public class SceneBoat : Scene
     {

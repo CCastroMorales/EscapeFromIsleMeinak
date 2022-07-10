@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EscapeFromIsleMeinak.Components
+namespace MeinakEsc.Components
 {
     public abstract class Item
     {

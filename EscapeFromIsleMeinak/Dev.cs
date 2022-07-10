@@ -1,9 +1,9 @@
-﻿using EscapeFromIsleMeinak.Components;
-using EscapeFromIsleMeinak.GameObjects;
+﻿using MeinakEsc.Components;
+using MeinakEsc.GameObjects;
 using System;
 using System.Collections.Generic;
 
-namespace EscapeFromIsleMeinak
+namespace MeinakEsc
 {
     public class Dev
     {

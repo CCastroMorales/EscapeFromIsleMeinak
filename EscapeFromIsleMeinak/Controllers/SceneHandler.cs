@@ -1,12 +1,12 @@
-﻿using EscapeFromIsleMeinak.Components;
-using EscapeFromIsleMeinak.GameObjects;
+﻿using MeinakEsc.Components;
+using MeinakEsc.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace EscapeFromIsleMeinak
+namespace MeinakEsc
 {
     public class SceneHandler
     {
@@ -89,7 +89,7 @@ namespace EscapeFromIsleMeinak
         public void LoadScript(Scene scene)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string path = $"EscapeFromIsleMeinak.res.{scene.Id}.script";
+            string path = $"{assembly.GetName().Name}.res.{scene.Id}.script";
 
             bool resourceExits = false;
             foreach (string resourceName in assembly.GetManifestResourceNames())

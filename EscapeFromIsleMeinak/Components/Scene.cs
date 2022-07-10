@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace EscapeFromIsleMeinak.Components
+namespace MeinakEsc.Components
 {
     public abstract class Scene
     {
@@ -23,7 +23,7 @@ namespace EscapeFromIsleMeinak.Components
         public void LoadTextFromResource(string resource)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string path = $"EscapeFromIsleMeinak.res.{resource}";
+            string path = $"{assembly.GetName().Name}.res.{resource}";
 
             bool resourceExits = false;
             foreach (string resourceName in assembly.GetManifestResourceNames())

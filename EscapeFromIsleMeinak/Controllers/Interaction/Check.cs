@@ -1,6 +1,6 @@
-﻿using EscapeFromIsleMeinak.Components;
+﻿using MeinakEsc.Components;
 
-namespace EscapeFromIsleMeinak
+namespace MeinakEsc
 {
     public class Check
     {

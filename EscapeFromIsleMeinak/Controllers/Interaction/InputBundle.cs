@@ -1,4 +1,4 @@
-﻿namespace EscapeFromIsleMeinak
+﻿namespace MeinakEsc
 {
     public struct InputBundle
     {

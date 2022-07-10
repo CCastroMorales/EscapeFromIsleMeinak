@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 
-namespace EscapeFromIsleMeinak
+namespace MeinakEsc
 {
     public static class Display
     {
@@ -61,7 +61,7 @@ namespace EscapeFromIsleMeinak
             string[] ascii;
 
             var assembly = Assembly.GetExecutingAssembly();
-            string path = $"EscapeFromIsleMeinak.res.TITLE_ASCII.txt";
+            string path = $"{assembly.GetName().Name}.res.TITLE_ASCII.txt";
 
             using (var stream = assembly.GetManifestResourceStream(path))
             {

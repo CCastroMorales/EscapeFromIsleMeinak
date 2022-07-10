@@ -1,6 +1,6 @@
-﻿using EscapeFromIsleMeinak.Components;
+﻿using MeinakEsc.Components;
 
-namespace EscapeFromIsleMeinak.GameObjects
+namespace MeinakEsc.GameObjects
 {
     public abstract class Human : Entity
     {
