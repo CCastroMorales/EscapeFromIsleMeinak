@@ -25,7 +25,7 @@ namespace MeinakEsc.GameObjects
             InventoryLabel = "Key 46";
             Description = "One of the KEYS hanging from the wall is marked 46.";
             InventoryDescription = "This must be the key that will start the motor on boat 46.";
-            Labels.AddRange(new string[] { "key46" });
+            Labels.AddRange(new string[] { "key", "key46", "key 46" });
             LoseOnUse = true;
         }
     }
@@ -37,9 +37,9 @@ namespace MeinakEsc.GameObjects
             Id = Id.ITEM_BOAT_KEY_86;
             Name = "Key 86";
             InventoryLabel = "Key 86";
-            Description = "One of the keys hanging from the wall is marked 46.";
-            InventoryDescription = "This must be the key that will start the motor on boat 46.";
-            Labels.AddRange(new string[] { "key86" });
+            Description = "There is a KEY dangling from the persons belt.";
+            InventoryDescription = "This must be the key that will start the motor on boat 86.";
+            Labels.AddRange(new string[] { "key", "key86", "key 86" });
             LoseOnUse = true;
         }
     }

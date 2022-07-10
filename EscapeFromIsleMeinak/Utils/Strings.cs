@@ -10,5 +10,8 @@
         public static string PROMPT_ENTER_TO_TRY_AGAIN { get; } = "[Press ENTER to try again]";
         public static string GAME_OVER { get; } = "G  A  M  E        O  V  E  R";
         public static string THE_END { get; } = "T  H  E        E  N  D";
+        public static string INVENTORY { get; } = "INVENTORY";
+        public static string COMMANDS { get; } = "COMMANDS";
+
     }
 }

@@ -99,7 +99,7 @@ namespace MeinakEsc
                 int x = TextMarginLeft;
                 int y = Console.CursorTop;
 
-                string text = Strings.PROMPT_ENTER_TO_TRY_AGAIN;
+                string text = Strings.PROMPT_ENTER_TO_CONTINUE;
                 x = (Console.BufferWidth / 2) - (text.Length / 2);
 
                 Thread.Sleep(Timing.EndScreenPressPromptDelay);
@@ -228,6 +228,7 @@ namespace MeinakEsc
         private void PlayScene(Scene scene)
         {
             PrintInventory(true);
+            PrintCommandBox();
             PrintSceneTitle(scene);
             PrintSceneScript(scene);
         }
@@ -329,6 +330,70 @@ namespace MeinakEsc
             Console.CursorVisible = true;
         }
 
+        private void PrintCommandBox()
+        {
+            Console.SetCursorPosition(0, 9);
+            Console.CursorVisible = false;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            int w = 15;
+            int p = 0;
+            string cmds = Strings.COMMANDS;
+
+            for (int i = 0; i < w; i++)
+                if (i == 0)
+                    Console.Write('╠');
+                else if (i == w - 1)
+                    Console.Write('╣');
+                else
+                    Console.Write('═');
+
+            Console.SetCursorPosition(3, 9);
+
+            for (int i = 0; i < cmds.Length; i++)
+                Console.Write(cmds[i]);
+
+
+            // Print commands
+            int y = 10;
+
+            string[] commands = new string[] {
+                "go",
+                "use",
+                "check",
+                "take",
+                "hit",
+                "drop"
+            };
+
+            foreach (string command in commands)
+            {
+                Console.SetCursorPosition(0, y);
+
+                string cmd = $" {command.PadRight(w - 3)}";
+                
+                Console.Write('║');
+                Console.Write(cmd);
+                Console.Write('║');
+
+                y++;
+            }
+
+
+            Console.SetCursorPosition(0, y);
+
+            for (int i = 0; i < w; i++)
+            {
+                if (i == 0)
+                    Console.Write('╚');
+                else if (i == w - 1)
+                    Console.Write('╝');
+                else
+                    Console.Write('═');
+            }
+            Console.Write('\n');
+        }
+
         private void PrintSceneScript(Scene scene)
         {
 
@@ -385,6 +450,8 @@ namespace MeinakEsc
                 hackyLines.Add(droppedItemsText);
             }
 
+            List<char> punctuation = new List<char> { ' ', '.', ';', ',', '?', '!', '\"', '\'', '-' };
+
             // Go through all the lines and print them. Replace special tokens with data.
             foreach (string line in hackyLines)
             {
@@ -402,10 +469,12 @@ namespace MeinakEsc
 
                 foreach (string word in words)
                 {
-                    if (IsCapitalized(word))
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                    ConsoleColor wordColor;
+
+                    if (IsCapitalizedKeyword(word, punctuation.ToArray()))
+                        wordColor = ConsoleColor.Blue;
                     else
-                        Console.ForegroundColor = DefaultConsoleColor;
+                        wordColor = DefaultConsoleColor;
 
                     int x = Console.CursorLeft;
                     int y = Console.CursorTop;
@@ -422,9 +491,14 @@ namespace MeinakEsc
                     {
                         foreach (char c in word)
                         {
+                            if (punctuation.Contains(c))
+                                Console.ForegroundColor = DefaultConsoleColor;
+                            else
+                                Console.ForegroundColor = wordColor;
+
                             Console.Write(c);
 
-                            if (c == '.' || c == ',' || c == ';' || c == ':' || c == '?' || c == '"')
+                            if (punctuation.Contains(c))
                             {
                                 if (!FastForward)
                                     Thread.Sleep(Timing.PunctuationDuration);
@@ -480,10 +554,19 @@ namespace MeinakEsc
             return text.Replace("ENTITY_DESCRIPTIONS", descriptions.Trim());
         }
 
-        private bool IsCapitalized(string word)
+        private bool IsCapitalizedKeyword(string wordWithPunctuation, char[] symbols)
         {
+            string word = wordWithPunctuation;
+
+            // Probably could've regex'd this.
+            foreach (char symbol in symbols)
+                word = word.Replace($"{symbol}","");
+
+            if (word == "I")
+                return false;
+
             for (int i = 0; i < word.Length; i++)
-                if (Char.IsLetter(word[i]) && !Char.IsUpper(word[i]))
+                if (char.IsLetter(word[i]) && !char.IsUpper(word[i]))
                     return false;
             return true;
         }
@@ -643,6 +726,7 @@ namespace MeinakEsc
             int y = Console.CursorTop;
 
             PrintInventory(true);
+            PrintCommandBox();
             Console.SetCursorPosition(x, y);
         }
 
@@ -774,6 +858,7 @@ namespace MeinakEsc
             int y = Console.CursorTop;
 
             PrintInventory(true);
+            PrintCommandBox();
             Console.SetCursorPosition(x, y);
         }
     }

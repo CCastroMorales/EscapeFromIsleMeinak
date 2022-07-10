@@ -63,9 +63,11 @@ namespace MeinakEsc.GameObjects
             KilledDescription = "The person... is not moving anymore. Was this your friend? What happe... How did they become like this and what is happening on this island?! You need to escape and quickly before you end up just like...... them.";
             ShowDescriptionWhenDead = false;
             TriggerGameOver = true;
+            Labels.Add("friend");
 
             PacifyWith.Add(ItemType.NOTE);
             PacifyDescription = "In a desperate attempt you try to hand over the note to the person. The person looks at you and you immediately regret your decision.... The person doesn't attack you however. They stare at the note for a while. The person pushes away your hand, makes some noises and starts moving slowly toward the other people who are mesmerized by the boats and the decorations.";
+
         }
     }
 

@@ -9,6 +9,7 @@ namespace MeinakEsc
     {
         public static void TitleScreen(bool debug, bool restarted, string[] args)
         {
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
             Console.CursorVisible = false;
 
