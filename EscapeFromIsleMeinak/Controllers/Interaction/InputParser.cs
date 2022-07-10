@@ -1,4 +1,6 @@
 ﻿using EscapeFromIsleMainak.Components;
+using EscapeFromIsleMeinak;
+using EscapeFromIsleMeinak.Components;
 using System.Collections.Generic;
 
 namespace EscapeFromIsleMainak
@@ -9,7 +11,6 @@ namespace EscapeFromIsleMainak
         bool HasPreviousScene();
         void OnPreviousScene();
         void OnExitScene(Exit exit);
-        void OnCheckDescription(string objectName);
         void OnTakeItem(Item item, string itemLabel);
         void OnReadItem(Item item, ItemAction action, string label);
         void OnPunchEntity(Entity entity, string entityName);
@@ -22,6 +23,7 @@ namespace EscapeFromIsleMainak
         public bool Done { get; set; } = false;
         public Scene ActiveScene { get; set; }
         public List<Item> Inventory { get; set; }
+        private Check Check { get; } = new Check();
 
         public InputParser(ParseCallback callback)
         {
@@ -33,7 +35,7 @@ namespace EscapeFromIsleMainak
             Done = false;
         }
 
-        public void Parse(string rawInput, Scene scene)
+        public void Parse(Ctx ctx, string rawInput, Scene scene)
         {
             ActiveScene = scene;
 
@@ -47,7 +49,8 @@ namespace EscapeFromIsleMainak
 
             if (ParseGO(command, arguments))
                 Done = true;
-            if (ParseCHECK(command, arguments))
+            // Testing a new interpreter design with parsers for each action.
+            if (Check.Parse(ctx, new InputBundle(command, arguments)))
                 Done = true;
             if (ParseTAKE(command, arguments))
                 Done = true;
@@ -107,30 +110,6 @@ namespace EscapeFromIsleMainak
             {
                 Callback.OnExitScene(exit);
                 return true;
-            }
-
-            return false;
-        }
-
-        protected bool ParseCHECK(string command, string[] arguments)
-        {
-            if (command != Commands.CHECK)
-                return false;
-
-            if (arguments.Length == 0)
-            {
-                Callback.OnPrint("Check what?");
-                return false;
-            }
-
-            string objectName = arguments[0];
-
-            CheckObject checkObject = ActiveScene.FindCheckObject(objectName.ToLower());
-
-            if (checkObject != null)
-            {
-                Callback.OnCheckDescription(objectName);
-                return false;
             }
 
             return false;

@@ -1,5 +1,6 @@
 ﻿using EscapeFromIsleMainak.Components;
 using EscapeFromIsleMainak.GameObjects;
+using EscapeFromIsleMeinak.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -133,7 +134,12 @@ namespace EscapeFromIsleMainak
                         LoadScene(sceneId);
                         return;
                     } else*/
-                    Parser.Parse(input, scene);
+                    Ctx context = new Ctx()
+                    {
+                        Game = this,
+                        Scene = Scenes.Active
+                    };
+                    Parser.Parse(context, input, scene);
                 }
                 else
                     Console.SetCursorPosition(Console.CursorLeft, y);
@@ -397,7 +403,7 @@ namespace EscapeFromIsleMainak
             Scenes.Active.InitialVisit = false;
         }
 
-        private string InsertItemDescriptions(List<Item> items, string text)
+        public string InsertItemDescriptions(List<Item> items, string text)
         {
             string descriptions = "";
 
@@ -407,7 +413,7 @@ namespace EscapeFromIsleMainak
             return text.Replace("ITEM_DESCRIPTIONS", descriptions.Trim()); ;
         }
 
-        private string InsertEntityDescriptions(Scene scene, string text)
+        public string InsertEntityDescriptions(Scene scene, string text)
         {
             string descriptions = "";
             Func<Entity, string> addEntityDescription = x => descriptions += x.Description + " ";
@@ -447,13 +453,13 @@ namespace EscapeFromIsleMainak
             }
         }*/
 
-        private void PrintLine(string text)
+        public void PrintLine(string text)
         {
             Print(text);
             Console.Write('\n');
         }
 
-        private void Print(string text)
+        public void Print(string text)
         {
             int x = TextMarginLeft;
             int y = Console.CursorTop;
@@ -578,16 +584,6 @@ namespace EscapeFromIsleMainak
                 GameOver();
 
             return true;
-        }
-
-        public void OnCheckDescription(string objectName)
-        {
-            CheckObject @object = Scenes.Active.FindCheckObject(objectName);
-            if (@object != null)
-            {
-                string description = InsertItemDescriptions(@object.Items, @object.Description);
-                PrintLine(description);
-            }
         }
 
         public void OnTakeItem(Item item, string label)
