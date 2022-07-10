@@ -20,13 +20,29 @@ namespace EscapeFromIsleMainak.GameObjects
     {
         public override void OnLoad()
         {
-            AddExit(Id.SCENE_VILLAGE_PROMENADE, "promenade");
-            AddExit(Id.SCENE_HARBOR_ENTRANCE, "harbor");
+            AddExit(Id.SCENE_VILLAGE_PROMENADE, new string[] { "promenade", "road", "up " });
+            AddExit(Id.SCENE_VILLAGE_BAR, new string[] { "bar" });
+            AddExit(Id.SCENE_HARBOR_ENTRANCE, new string[] { "harbor", "entrance", "pier" });
         }
 
         public override Id OnRegisterId()
         {
             return Id.SCENE_VILLAGE_BEACH;
+        }
+    }
+
+    public class SceneVillageBar : Scene
+    {
+        public override void OnLoad()
+        {
+            AddExit(Id.SCENE_VILLAGE_BEACH, "beach");
+            AddExit(Id.SCENE_HARBOR_ENTRANCE, new string[] { "harbor", "entrance", "pier" });
+            SpawnItem<Bottle>();
+        }
+
+        public override Id OnRegisterId()
+        {
+            return Id.SCENE_VILLAGE_BAR;
         }
     }
 }

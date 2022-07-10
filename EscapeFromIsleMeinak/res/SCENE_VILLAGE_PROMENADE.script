@@ -1,4 +1,12 @@
-﻿scene.title EXT. VILLAGE PROMENADE - DAWN
+﻿scene.title EXT. VILLAGE ROAD PROMENADE - DAWN
 scene.scriptBegin
-<<Village promenade>>
+
+The village road promenade is a paved road that you remember taking yesterday when you arrived. You and your friend rented a car by the harbor and later drove from on this very road past the gas station all the way to the bungalow. You can see the harbor from here.
+
+You spot the car that you rented yesterday. It has crashed into one of the houses. The front seems to be totally wrecked. There is smoke coming from the car. Did your friend crash the car?
+
+You can reach the harbor by going to the BEACH or you can go back to the gas STATION.
+
+ENTITY_DESCRIPTIONS
+
 scene.scriptEnd

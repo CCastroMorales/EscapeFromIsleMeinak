@@ -17,11 +17,13 @@
         SCENE_GAS_STATION,
         SCENE_VILLAGE_PROMENADE,
         SCENE_VILLAGE_BEACH,
+        SCENE_VILLAGE_BAR,
         SCENE_HARBOR_ENTRANCE,
         SCENE_HARBOR_JETTY,
         SCENE_TEST,
         /* Items */
         ITEM_NOTE,
+        ITEM_BOTTLE,
         ITEM_BROKEN_BOTTLE,
         ITEM_PASSED_OUT_RAT,
         ITEM_BOAT_KEY,

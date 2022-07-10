@@ -31,6 +31,7 @@ namespace EscapeFromIsleMainak
             AddScene<SceneGasStation>();
             AddScene<SceneVillagePromenade>();
             AddScene<SceneVillageBeach>();
+            AddScene<SceneVillageBar>();
             AddScene<SceneHarborEntrance>();
             AddScene<SceneHarborJetty>();
             AddScene<SceneBoat>();

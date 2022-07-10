@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameObjects\Items\BoatKey.cs" />
+    <Compile Include="GameObjects\Items\Bottle.cs" />
     <Compile Include="GameObjects\Scenes\Boat.cs" />
     <Compile Include="Controllers\Scripting.cs" />
     <Compile Include="Dev.cs" />
@@ -107,13 +108,15 @@
     <EmbeddedResource Include="res\SCENE_VILLAGE_BEACH.script" />
     <EmbeddedResource Include="res\SCENE_HARBOR_JETTY.script" />
     <EmbeddedResource Include="res\SCENE_BUNGALOW_ROOM.script" />
-    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\SCENE_VILLAGE_BAR.script" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
