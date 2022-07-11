@@ -7,7 +7,7 @@ You're confused and your head hurts. As if you have been hit. You look around th
 
 No... You remember now. You are in a small bungalow on vacation, the well-deserved vacation with your friend on a paradise island. Speaking of, where is your friend? You look around the room. You get a strange feeling in your gut. Something's wrong.
 
-You should CHECK the ROOM or your friend's BED. Or maybe you should just GO somewhere. ENTITY_DESCRIPTIONS ITEM_DESCRIPTIONS You hear a faint noise coming from OUTSIDE.
+The bungalow room is tiny. There is only room for two beds, a small cabinet with a television on top that barely fits. You notice the open BATHROOM door that's next to the entrance door. You should CHECK your friend's BED. Or maybe you should just GO somewhere. ENTITY_DESCRIPTIONS ITEM_DESCRIPTIONS You hear a faint noise coming from OUTSIDE.
 
 scene.initialScriptEnd
 scene.scriptBegin
