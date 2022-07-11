@@ -35,7 +35,7 @@ namespace MeinakEsc.Components
             return DropItem;
         }
 
-        public void Passify()
+        public void Pacify()
         {
             Passive = true;
         }

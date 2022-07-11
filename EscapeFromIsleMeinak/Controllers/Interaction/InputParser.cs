@@ -14,7 +14,6 @@ namespace MeinakEsc
         void OnTakeItem(Item item, string itemLabel);
         void OnReadItem(Item item, ItemAction action, string label);
         void OnPunchEntity(Entity entity, string entityName);
-        void OnUse(Item item, string itemName, string target);
     }
 
     public class InputParser
@@ -25,6 +24,7 @@ namespace MeinakEsc
         public Inventory Inventory { get; set; }
         private Check Check { get; } = new Check();
         private Drop Drop { get; } = new Drop();
+        private Use Use { get; } = new Use();
 
         public InputParser(ParseCallback callback)
         {
@@ -58,14 +58,16 @@ namespace MeinakEsc
                 Done = true;
             if (Check.Parse(ctx, bundle))
                 Done = true;
+            if (Use.Parse(ctx, bundle))
+                Done = true;
             if (ParseTAKE(command, arguments))
                 Done = true;
             if (ParseActionREAD(command, arguments))
                 Done = true;
             if (ParseActionHIT(command, arguments))
                 Done = true;
-            if (ParseActionUSE(command, arguments))
-                Done = true;
+            /*if (ParseActionUSE(command, arguments))
+                Done = true;*/
         }
 
         private bool ParseQuit(Ctx ctx, string command)
@@ -228,80 +230,6 @@ namespace MeinakEsc
                 Callback.OnPunchEntity(entity, arguments[0]);
             }
 
-            return false;
-        }
-
-        private bool ParseActionUSE(string command, string[] arguments)
-        {
-            if (command != Commands.USE)
-                return false;
-
-            if (arguments.Length == 0)
-            {
-                Callback.OnPrint("What do you want to use it on?");
-                return false;
-            }
-
-            string itemName = arguments[0];
-
-            if (arguments.Length == 1)
-            {
-                // Check for special jeep use case
-                Item item = FindItem(Inventory.Items, itemName);
-                if (item != null && item.Id == Id.ITEM_JEEP_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_JEEP)
-                {
-                    Callback.OnUse(item, itemName, "VEHICLE_JEEP");
-                    return true;
-                }
-                // Check for special boat use case
-                else if (item != null && item.Id == Id.ITEM_BOAT_KEY_46 && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
-                {
-                    Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
-                    return true;
-                }
-                else
-                    Callback.OnPrint("What do you want to use it on?");
-                return false;
-            }
-
-            if (arguments.Length >= 2)
-            {
-                string target = arguments[1];
-
-                // Check for "on" preposition
-                if (arguments.Length >= 3 && arguments[1].ToLower() == "on")
-                    target = arguments[2];
-
-                // Check for item in inventory first
-                Item item = FindItem(Inventory.Items, itemName);
-
-                // Check for special jeep use case
-                if (item != null && item.Id == Id.ITEM_JEEP_KEY && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_JEEP)
-                {
-                    Callback.OnUse(item, itemName, "VEHICLE_JEEP");
-                    return true;
-                }
-                // Check for special boat use case
-                else if (item != null && item.Id == Id.ITEM_BOAT_KEY_46 && ActiveScene.Id == Id.SCENE_SPECIAL_VEHICLE_BOAT)
-                {
-                    Callback.OnUse(item, itemName, "VEHICLE_BOAT_46");
-                    return true;
-                }
-                else if (item != null)
-                    Callback.OnUse(item, itemName, target);
-                else
-                // Check for item in scene.
-                {
-                    item = ActiveScene.FindItem(itemName);
-
-                    if (item != null)
-                        Callback.OnUse(item, itemName, target);
-                }
-
-                return false;
-            }
-
-            Callback.OnPrint($"You can't use that!");
             return false;
         }
 

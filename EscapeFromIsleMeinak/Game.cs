@@ -20,6 +20,7 @@ namespace MeinakEsc
         protected int TextMarginLeft { get; set; } = 0;
         protected int TextMarginTop { get; set; } = 0;
         public bool Debug { get; set; } = false;
+        public bool SkipTitle { get; set; } = false;
         private bool Restarted { get; set; } = false;
 
         public Game()
@@ -34,7 +35,8 @@ namespace MeinakEsc
             ClearInventory();
             
             ParseCommandLineArguments(args);
-            Display.TitleScreen(Debug, Restarted, args);
+            if (!SkipTitle)
+                Display.TitleScreen(Debug, Restarted, args);
             Scenes.LoadFirstScene();
             GameLoop();
         }
@@ -54,10 +56,18 @@ namespace MeinakEsc
                         FastForward = true;
                     if (arg == "+debug")
                         Debug = true;
+                    if (arg == "+skipTitle")
+                        SkipTitle = true;
                     if (arg == "+jeepkey")
                         Dev.SpawnJeepKey(Inventory);
                     if (arg == "+note")
                         Dev.SpawnNote(Inventory);
+                    if (arg == "+keys")
+                        Dev.SpawnKeys(Inventory);
+                    if (arg == "+bottle")
+                        Dev.SpawnBottle(Inventory);
+                    if (arg == "+pistol")
+                        Dev.SpawnPistol(Inventory);
                     if (arg == "+scene")
                     {
                         if (i <= args.Length - 2)
@@ -739,7 +749,7 @@ namespace MeinakEsc
                 PrintLine(action.Text);
         }
 
-        private bool KillEntityWith(Entity entity, ItemType itemType)
+        public bool KillEntityWith(Entity entity, ItemType itemType)
         {
             if (entity.KillBy.Contains(itemType))
             {
@@ -783,57 +793,7 @@ namespace MeinakEsc
                 PrintLine($"You tried to punch {entity.Name.ToLower()} but hit nothing but air.");
         }
 
-        public void OnUse(Item item, string itemName, string target)
-        {
-            Scene scene = Scenes.Active;
-
-            // Check if target is an entity
-            Entity entity = scene.FindEntity(target);
-
-            if (entity != null)
-            {
-                if (KillEntityWith(entity, item.Type))
-                {
-                    ItemUsed(item, false);
-                    return;
-                }
-                else if (entity.PacifyWith.Contains(item.Type))
-                {
-                    PrintLine(entity.PacifyDescription);
-                    entity.Passify();
-
-                    ItemUsed(item, false);
-                    return;
-                }
-
-                PrintLine("Huh?");
-                ItemUsed(item, false);
-                return;
-            }
-            else if (target == "VEHICLE_JEEP")
-            {
-                // Hack: transfer glove compartment.
-                var gloveCompartment = Scenes.Active.FindCheckObject(Id.CHECK_OBJECT_COMPARTMENT);
-                Id nextSceneId = Id.SCENE_SPECIAL_VEHICLE_JEEP_DRIVING;
-                Scene drivingScene = Scenes.LoadScene(nextSceneId);
-                drivingScene.Objects.Add(gloveCompartment);
-                
-                Scenes.Previous = null;
-                ItemUsed(item, true);
-                return;
-            }
-            else if (target == "VEHICLE_BOAT_46")
-            {
-                Scenes.LoadScene(Id.SCENE_SPECIAL_VEHICLE_BOAT_DRIVING);
-                Scenes.Previous = null;
-                ItemUsed(item, true);
-                return;
-            }
-
-            PrintLine($"You can't use {item.LowerCaseName} like that!");
-        }
-
-        private void ItemUsed(Item item, bool silenceLoseDescription)
+        public void ItemUsed(Item item, bool silenceLoseDescription)
         {
             item.Use();
 

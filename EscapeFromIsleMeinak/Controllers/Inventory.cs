@@ -16,6 +16,14 @@ namespace MeinakEsc
             return null;
         }
 
+        public Item FindItem(Id id)
+        {
+            foreach (Item item in Items)
+                if (item.Id == id)
+                    return item;
+            return null;
+        }
+
         public void Add(Item item)
         {
             Items.Add(item);
