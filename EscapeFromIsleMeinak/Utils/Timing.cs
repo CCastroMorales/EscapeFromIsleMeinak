@@ -1,4 +1,4 @@
-﻿namespace MeinakEsc
+﻿namespace EscapeFromIsleMeinak
 {
     public static class Timing
     {

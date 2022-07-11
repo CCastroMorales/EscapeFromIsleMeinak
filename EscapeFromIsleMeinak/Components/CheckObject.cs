@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MeinakEsc.Components
+namespace EscapeFromIsleMeinak.Components
 {
     public abstract class CheckObject
     {

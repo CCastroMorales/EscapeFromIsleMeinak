@@ -1,9 +1,9 @@
 ﻿using EscapeFromIsleMeinak.GameObjects;
-using MeinakEsc.Components;
-using MeinakEsc.GameObjects;
+using EscapeFromIsleMeinak.Components;
+using EscapeFromIsleMeinak.GameObjects;
 using System;
 
-namespace MeinakEsc.GameObjects
+namespace EscapeFromIsleMeinak.GameObjects
 {
     public class SceneBungalowBalcony : Scene
     {

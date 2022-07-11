@@ -1,7 +1,7 @@
-﻿using MeinakEsc.Components;
+﻿using EscapeFromIsleMeinak.Components;
 using System.Collections.Generic;
 
-namespace MeinakEsc
+namespace EscapeFromIsleMeinak
 {
     public class Inventory
     {

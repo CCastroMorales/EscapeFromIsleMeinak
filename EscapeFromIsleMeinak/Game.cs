@@ -1,10 +1,10 @@
-﻿using MeinakEsc.Components;
-using MeinakEsc.GameObjects;
+﻿using EscapeFromIsleMeinak.Components;
+using EscapeFromIsleMeinak.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace MeinakEsc
+namespace EscapeFromIsleMeinak
 {
     public class Game : ParseCallback
     {

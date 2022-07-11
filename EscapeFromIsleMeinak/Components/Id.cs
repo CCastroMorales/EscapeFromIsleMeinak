@@ -1,4 +1,4 @@
-﻿namespace MeinakEsc.Components
+﻿namespace EscapeFromIsleMeinak.Components
 {
     public enum Id
     {

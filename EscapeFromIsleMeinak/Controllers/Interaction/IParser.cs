@@ -1,5 +1,5 @@
-﻿using MeinakEsc;
-using MeinakEsc.Components;
+﻿using EscapeFromIsleMeinak;
+using EscapeFromIsleMeinak.Components;
 
 namespace EscapeFromIsleMeinak
 {

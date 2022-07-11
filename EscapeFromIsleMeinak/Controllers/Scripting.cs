@@ -1,8 +1,8 @@
-﻿using MeinakEsc.Components;
+﻿using EscapeFromIsleMeinak.Components;
 using System;
 using System.Collections.Generic;
 
-namespace MeinakEsc
+namespace EscapeFromIsleMeinak
 {
     public class Scripting
     {

@@ -1,6 +1,6 @@
-﻿using MeinakEsc.Components;
+﻿using EscapeFromIsleMeinak.Components;
 
-namespace MeinakEsc.GameObjects
+namespace EscapeFromIsleMeinak.GameObjects
 {
     public class Pistol : Item
     {

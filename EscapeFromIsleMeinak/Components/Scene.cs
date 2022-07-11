@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace MeinakEsc.Components
+namespace EscapeFromIsleMeinak.Components
 {
     public abstract class Scene
     {
