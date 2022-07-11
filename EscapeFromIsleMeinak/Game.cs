@@ -461,7 +461,7 @@ namespace EscapeFromIsleMeinak
                 hackyLines.Add(droppedItemsText);
             }
 
-            List<char> punctuation = new List<char> { ' ', '.', ';', ',', '?', '!', '\"', '\'', '-' };
+            List<char> punctuation = new List<char> { ' ', '.', ';', ',', '?', '!', '\"', '-' };
 
             // Go through all the lines and print them. Replace special tokens with data.
             foreach (string line in hackyLines)

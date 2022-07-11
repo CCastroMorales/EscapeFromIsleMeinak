@@ -1,6 +1,4 @@
-﻿using EscapeFromIsleMeinak;
-using EscapeFromIsleMeinak.Components;
-using System;
+﻿using EscapeFromIsleMeinak.Components;
 
 namespace EscapeFromIsleMeinak
 {

@@ -65,6 +65,7 @@ namespace EscapeFromIsleMeinak.GameObjects
             TriggerGameOver = true;
             Labels.Add("friend");
 
+            PacifyWith.Clear();
             PacifyWith.Add(ItemType.NOTE);
             PacifyDescription = "In a desperate attempt you try to hand over the note to the person. The person looks at you and you immediately regret your decision.... The person doesn't attack you however. They stare at the note for a while. The person pushes away your hand, makes some noises and starts moving slowly toward the other people who are mesmerized by the boats and the decorations.";
 

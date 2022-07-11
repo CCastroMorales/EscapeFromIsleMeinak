@@ -144,6 +144,11 @@ namespace EscapeFromIsleMeinak.Components
                 Items.Remove(item);
                 return true;
             }
+            else if (DroppedItems.Contains(item))
+            {
+                DroppedItems.Remove(item);
+                return true;
+            }
             else
                 foreach (CheckObject @object in Objects)
                     if (@object.Items.Contains(item))

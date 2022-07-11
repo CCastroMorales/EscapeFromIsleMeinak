@@ -24,7 +24,7 @@ namespace EscapeFromIsleMeinak.GameObjects
             Name = "Key 46";
             InventoryLabel = "Key 46";
             Description = "One of the KEYS hanging from the wall is marked 46.";
-            InventoryDescription = "This must be the key that will start the motor on boat 46.";
+            InventoryDescription = "It looks like an ignition key. Someone has carved in the number 46.";
             Labels.AddRange(new string[] { "key", "key46", "key 46" });
             LoseOnUse = true;
         }
@@ -38,7 +38,7 @@ namespace EscapeFromIsleMeinak.GameObjects
             Name = "Key 86";
             InventoryLabel = "Key 86";
             Description = "There is a KEY dangling from the persons belt.";
-            InventoryDescription = "This must be the key that will start the motor on boat 86.";
+            InventoryDescription = "It looks like an ignition key. Someone has carved in the number 86.";
             Labels.AddRange(new string[] { "key", "key86", "key 86" });
             LoseOnUse = true;
         }

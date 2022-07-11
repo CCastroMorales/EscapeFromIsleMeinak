@@ -53,7 +53,7 @@ namespace EscapeFromIsleMeinak.GameObjects
         {
             Id = Id.CHECK_OBJECT_MOTOR;
             Name = "Motor";
-            Description = "You open the hood and look at the motor and wonder why you're pretending to be a mechanic. You don't know what you're looking at and close the hood again.";
+            Description = "You open the hood and look at the engine and wonder why you're pretending to be a mechanic. You don't know what you're looking at and close the hood again.";
             Labels.AddRange(new string[] { "motor", "engine" });
         }
     }
